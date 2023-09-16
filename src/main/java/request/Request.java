@@ -2,8 +2,8 @@ package request;
 
 import request.header.Header;
 
-public interface Request<T> {
-    Header header();
-    T payload();
+public abstract class Request<T> {
+    public abstract Header header();
+    public abstract T payload();
 
 }

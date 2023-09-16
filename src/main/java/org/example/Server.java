@@ -1,11 +1,11 @@
 package org.example;
 
-import com.auth0.jwt.JWT;
-import com.auth0.jwt.algorithms.Algorithm;
-import com.auth0.jwt.exceptions.JWTCreationException;
 import com.google.gson.Gson;
+import request.RequisitionOperations;
 import request.requisition.LoginRequisition;
-import response.LoginResponse;
+import response.Response;
+import response.error.ErrorResponse;
+import server.router.Router;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -16,9 +16,13 @@ import java.net.Socket;
 
 public class Server extends Thread {
     protected Socket clientSocket;
+    protected Router<?, ?> routes;
 
     private Server(Socket clientSoc) {
         clientSocket = clientSoc;
+        routes = Router.builder()
+                .addRoute(RequisitionOperations.LOGIN, null)
+                .build();
         start();
     }
 
@@ -67,21 +71,14 @@ public class Server extends Thread {
                 System.out.println("Server: " + inputLine);
                 LoginRequisition req = gson.fromJson(inputLine, LoginRequisition.class);
                 System.out.println(req.toString());
-                String token = null;
-                try {
-                    Algorithm alg = Algorithm.HMAC256("hiuhi");
-                    token = JWT.create()
-                            .withIssuer("me")
-                            .withClaim("isAdmin", false)
-                            .withClaim("userId", userId)
-                            .sign(alg);
-                    userId += 1;
-                } catch (JWTCreationException e) {
-                    System.err.println("oh no");
+                userId += 1;
+                if (userId % 2 == 0) {
+                    Response<?> response = routes.serve(RequisitionOperations.LOGIN);
+                    out.println(response.toJson());
+                } else {
+                    ErrorResponse error = new ErrorResponse(123123, "asdfkjhasdf");
+                    out.println(error.toJson());
                 }
-
-                LoginResponse response = new LoginResponse(token);
-                out.println(response.toJson());
 
                 if (inputLine.equals("Bye."))
                     break;

@@ -1,8 +1,9 @@
 package response;
 
-import response.error.ErrorResponse;
+import response.payload.ResponsePayload;
 
-public interface Response<T> {
-    T payload();
-    ErrorResponse error();
+public abstract class Response<T extends ResponsePayload> {
+    public abstract T payload();
+
+   public abstract String toJson();
 }

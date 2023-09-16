@@ -4,6 +4,7 @@ import com.auth0.jwt.interfaces.DecodedJWT;
 import com.google.gson.Gson;
 import request.requisition.LoginRequisition;
 import response.LoginResponse;
+import response.error.ErrorResponse;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -16,13 +17,12 @@ public class Main {
     public static void main(String[] args) throws IOException {
 
         BufferedReader stdin = new BufferedReader(new InputStreamReader(System.in));
-        System.out.println("Forneça o host");
-        String serverHost = stdin.readLine();
-
-        System.out.println("Forneça a porta");
-        int port = Integer.parseInt(stdin.readLine());
-
-        System.out.println(serverHost);
+//        System.out.println("Forneça o host");
+//        String serverHost = stdin.readLine();
+        String serverHost = "localhost";
+//        System.out.println("Forneça a porta");
+//        int port = Integer.parseInt(stdin.readLine());
+        int port = 24800;
 
         Socket echoSocket = null;
         PrintWriter out = null;
@@ -44,7 +44,6 @@ public class Main {
 
 
         String userInput;
-        boolean isLogged = false;
         while((userInput = stdin.readLine()) != null) {
             if(userInput.equals("Bye.")) {
                 break;
@@ -55,10 +54,16 @@ public class Main {
 
             System.out.println("Sending data: " + request);
             String response = in.readLine();
-            var a = new Gson().fromJson(response, LoginResponse.class);
-            DecodedJWT token = JWT.decode(a.payload().token());
-            int userId = token.getClaim("userId").asInt();
-            System.out.println("User id: " + userId);
+            System.out.println("Recebido: " + response);
+            try {
+                var a = new Gson().fromJson(response, LoginResponse.class);
+                DecodedJWT token = JWT.decode(a.payload().getToken());
+                int userId = token.getClaim("userId").asInt();
+                System.out.println("User id: " + userId);
+            }catch (NullPointerException e) {
+                ErrorResponse error = new Gson().fromJson(response, ErrorResponse.class);
+                System.out.println(error.toString());
+            }
         }
 
         out.close();
