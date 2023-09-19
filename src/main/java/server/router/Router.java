@@ -5,28 +5,30 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
-import request.Request;
-import request.payload.RequestPayload;
+import request.abstractclasses.Request;
+import request.header.Header;
+import request.abstractclasses.RequestPayload;
 import response.LoginResponse;
 import response.Response;
 import response.error.ErrorResponse;
 import response.payload.ResponsePayload;
-import server.layer.Layer;
+import server.layer.InitialLayer;
 
 import java.util.HashMap;
 import java.util.Map;
 
 @AllArgsConstructor
 public class Router<Req extends Request<? extends RequestPayload>, Res extends Response<? extends ResponsePayload>> {
+
     @NonNull
-    private Map<String, Layer<Req, Res>> routes;
+    private Map<String, InitialLayer<Req, Res>> routes;
 
 
     public static class RouterBuilder<Req extends Request<? extends RequestPayload>, Res extends Response<? extends ResponsePayload>> {
         @NonNull
-        private final Map<String, Layer<Req, Res>> routes = new HashMap<>();
+        private final Map<String, InitialLayer<Req, Res>> routes = new HashMap<>();
 
-        public RouterBuilder<Req, Res> addRoute(String operation, Layer<Req, Res> handler) {
+        public RouterBuilder<Req, Res> addRoute(String operation, InitialLayer<Req, Res> handler) {
             routes.put(operation, handler);
             return this;
         }
@@ -40,7 +42,7 @@ public class Router<Req extends Request<? extends RequestPayload>, Res extends R
         return new RouterBuilder<>();
     }
 
-    public Response<?> serve(String operation) {
+    public Response<?> serve(Header header, String string_request) {
         String token;
         try {
             Algorithm alg = Algorithm.HMAC256("hiuhi");

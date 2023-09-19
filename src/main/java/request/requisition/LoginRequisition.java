@@ -3,30 +3,24 @@ package request.requisition;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NonNull;
-import request.Request;
+import request.abstractclasses.Request;
 import request.RequisitionOperations;
 import request.header.Header;
-import request.payload.LoginPayload;
+import request.abstractclasses.RequestPayload;
 
 @EqualsAndHashCode(callSuper = false)
-@Data
-public class LoginRequisition extends Request<LoginPayload> {
-    @NonNull
-    private Header header;
-    private LoginPayload payload;
+public class LoginRequisition extends Request<LoginRequisition.Payload> {
     public LoginRequisition(String email, String password) {
-        header = new Header(RequisitionOperations.LOGIN, null) ;
-        payload = new LoginPayload(email, password) ;
+        super(new Header(RequisitionOperations.LOGIN, null),
+                new LoginRequisition.Payload(email, password));
     }
 
-    @Override
-    public Header header() {
-        return header;
-    }
-
-    @Override
-    public LoginPayload payload() {
-        return payload;
+    @EqualsAndHashCode(callSuper = false)
+    @Data
+    public static class Payload extends RequestPayload {
+        @NonNull
+        private final String email;
+        @NonNull private final String password;
     }
 }
 

@@ -2,7 +2,7 @@ package org.example;
 
 import com.google.gson.Gson;
 import request.RequisitionOperations;
-import request.requisition.LoginRequisition;
+import request.requisition.EmptyRequest;
 import response.Response;
 import response.error.ErrorResponse;
 import server.router.Router;
@@ -69,11 +69,11 @@ public class Server extends Thread {
             int userId = 0;
             while ((inputLine = in.readLine()) != null) {
                 System.out.println("Server: " + inputLine);
-                LoginRequisition req = gson.fromJson(inputLine, LoginRequisition.class);
+                EmptyRequest req = gson.fromJson(inputLine, EmptyRequest.class);
                 System.out.println(req.toString());
                 userId += 1;
                 if (userId % 2 == 0) {
-                    Response<?> response = routes.serve(RequisitionOperations.LOGIN);
+                    Response<?> response = routes.serve(req.getHeader(), inputLine);
                     out.println(response.toJson());
                 } else {
                     ErrorResponse error = new ErrorResponse(123123, "asdfkjhasdf");

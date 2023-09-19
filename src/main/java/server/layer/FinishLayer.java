@@ -1,7 +1,7 @@
 package server.layer;
 
-import request.Request;
-import request.payload.RequestPayload;
+import request.abstractclasses.Request;
+import request.abstractclasses.RequestPayload;
 import response.Response;
 import response.payload.ResponsePayload;
 

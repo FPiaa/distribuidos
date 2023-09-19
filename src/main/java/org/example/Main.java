@@ -1,4 +1,5 @@
 package org.example;
+
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.google.gson.Gson;
@@ -28,7 +29,7 @@ public class Main {
         PrintWriter out = null;
         BufferedReader in = null;
 
-        try{
+        try {
             echoSocket = new Socket(serverHost, port);
             out = new PrintWriter(echoSocket.getOutputStream(), true);
             in = new BufferedReader(new InputStreamReader(
@@ -44,13 +45,13 @@ public class Main {
 
 
         String userInput;
-        while((userInput = stdin.readLine()) != null) {
-            if(userInput.equals("Bye.")) {
+        while ((userInput = stdin.readLine()) != null) {
+            if (userInput.equals("Bye.")) {
                 break;
             }
-                LoginRequisition login = new LoginRequisition("email", "senha");
-                String request = new Gson().toJson(login);
-                out.println(request);
+            LoginRequisition login = new LoginRequisition("email", "senha");
+            String request = new Gson().toJson(login);
+            out.println(request);
 
             System.out.println("Sending data: " + request);
             String response = in.readLine();
@@ -60,7 +61,7 @@ public class Main {
                 DecodedJWT token = JWT.decode(a.payload().getToken());
                 int userId = token.getClaim("userId").asInt();
                 System.out.println("User id: " + userId);
-            }catch (NullPointerException e) {
+            } catch (NullPointerException e) {
                 ErrorResponse error = new Gson().fromJson(response, ErrorResponse.class);
                 System.out.println(error.toString());
             }
