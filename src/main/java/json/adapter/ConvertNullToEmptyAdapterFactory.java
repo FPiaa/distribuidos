@@ -42,7 +42,7 @@ public final class ConvertNullToEmptyAdapterFactory
             return emptyList();
         }
         final Collection<Field> optionalFields = new ArrayList<>();
-        for (Class<?> c = clazz; c != Object.class; c = c.getSuperclass()) {
+        for (Class<?> c = clazz; c != null && c != Object.class; c = c.getSuperclass()) {
             for (final Field f : c.getDeclaredFields()) {
                 if (f.trySetAccessible() && !Modifier.isStatic(f.getModifiers()) && f.getType() == Optional.class) {
                     f.setAccessible(true);
