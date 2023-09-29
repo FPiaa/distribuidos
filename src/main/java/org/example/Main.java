@@ -14,15 +14,11 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
+
 public class Main {
     public static void main(String[] args) throws IOException {
-
         BufferedReader stdin = new BufferedReader(new InputStreamReader(System.in));
-//        System.out.println("Forneça o host");
-//        String serverHost = stdin.readLine();
         String serverHost = "localhost";
-//        System.out.println("Forneça a porta");
-//        int port = Integer.parseInt(stdin.readLine());
         int port = 24800;
 
         Socket echoSocket = null;
@@ -49,7 +45,7 @@ public class Main {
             if (userInput.equals("Bye.")) {
                 break;
             }
-            LoginRequisition login = new LoginRequisition("email", "senha");
+            LoginRequisition login = new LoginRequisition("email", "senah");
             String request = new Gson().toJson(login);
             out.println(request);
 
