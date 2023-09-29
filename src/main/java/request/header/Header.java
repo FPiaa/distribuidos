@@ -1,6 +1,11 @@
 package request.header;
 
-import lombok.NonNull;
+import lombok.Data;
 
-public record Header(@NonNull String operation, String token) {
+import java.util.Optional;
+
+@Data
+public class Header {
+    private final String operation;
+    private final Optional<String> token;
 }
