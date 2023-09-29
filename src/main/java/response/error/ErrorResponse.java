@@ -12,11 +12,13 @@ import response.payload.ResponsePayload;
 @EqualsAndHashCode(callSuper = false)
 @Data
 public class ErrorResponse extends Response<ErrorResponse.Payload> {
-    @NonNull private final ErrorResponse.Payload error;
+    @NonNull
+    private final ErrorResponse.Payload error;
 
     public ErrorResponse(int code, String message) {
         error = new ErrorResponse.Payload(code, message);
     }
+
     @Override
     public ErrorResponse.Payload payload() {
         return error;
@@ -33,7 +35,8 @@ public class ErrorResponse extends Response<ErrorResponse.Payload> {
     @Data
     public static class Payload extends ResponsePayload {
         private int code;
-        @NonNull private String message;
+        @NonNull
+        private String message;
     }
 }
 

@@ -2,6 +2,7 @@ package json.adapter;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import lombok.Data;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -18,35 +19,6 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 public class OptionalTypeAdapterFactoryTest {
     private final static Gson gson = new GsonBuilder().registerTypeAdapterFactory(OptionalTypeAdapterFactory.FACTORY)
             .registerTypeAdapterFactory(ConvertNullToEmptyAdapterFactory.FACTORY).create();
-
-    @ParameterizedTest
-    @MethodSource("provideValidJsons")
-    public void givenValidJson_whenFromJson_thenReturnObject(String json) {
-
-        assertNotNull(gson.fromJson(json, TestClass1.class));
-    }
-
-    @ParameterizedTest
-    @MethodSource("provideObjects")
-    public void givenObject_whenToJsprivateon_thenSerializeObject(TestClass1 o) {
-        gson.toJson(o);
-    }
-
-    @ParameterizedTest
-    @MethodSource("provideMissingOptionalFields")
-    public void givenMissingObligatoryFieldsJson_whenFromJson_thenThrowsMalformedJsonException(String json) {
-        var obj = gson.fromJson(json, TestClass1.class);
-        assertNotNull(obj.field1);
-        assertNotNull(obj.field1);
-    }
-
-    @ParameterizedTest
-    @MethodSource("provideNullInOptionalFields")
-    public void givenNullInObligatoryFieldsJson_whenFromJson_thenThrowsMalformedJsonException(String json) {
-        var obj = gson.fromJson(json, TestClass1.class);
-        assertNotNull(obj.field1);
-        assertNotNull(obj.field1);
-    }
 
     private static Stream<Arguments> provideObjects() {
         return Stream.of(
@@ -109,6 +81,36 @@ public class OptionalTypeAdapterFactoryTest {
                 .toString();
     }
 
+    @ParameterizedTest
+    @MethodSource("provideValidJsons")
+    public void givenValidJson_whenFromJson_thenReturnObject(String json) {
+
+        assertNotNull(gson.fromJson(json, TestClass1.class));
+    }
+
+    @ParameterizedTest
+    @MethodSource("provideObjects")
+    public void givenObject_whenToJson_thenSerializeObject(TestClass1 o) {
+        gson.toJson(o);
+    }
+
+    @ParameterizedTest
+    @MethodSource("provideMissingOptionalFields")
+    public void givenMissingObligatoryFieldsJson_whenFromJson_thenThrowsMalformedJsonException(String json) {
+        var obj = gson.fromJson(json, TestClass1.class);
+        assertNotNull(obj.field1);
+        assertNotNull(obj.field1);
+    }
+
+    @ParameterizedTest
+    @MethodSource("provideNullInOptionalFields")
+    public void givenNullInObligatoryFieldsJson_whenFromJson_thenThrowsMalformedJsonException(String json) {
+        var obj = gson.fromJson(json, TestClass1.class);
+        assertNotNull(obj.field1);
+        assertNotNull(obj.field1);
+    }
+
+    @Data
     public static class TestClass1 {
         private final Optional<String> field1;
         private final Optional<Map<String, Integer>> field2;

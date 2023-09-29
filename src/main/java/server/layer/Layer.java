@@ -5,12 +5,15 @@ import request.abstractclasses.RequestPayload;
 import response.Response;
 import response.payload.ResponsePayload;
 
+@SuppressWarnings("unused")
 public interface Layer<Req extends Request<? extends RequestPayload>, Res extends Response<? extends ResponsePayload>> {
     boolean check();
+
+
     Res next(Req requisition);
 
     Layer<Req, Res> addLayer(Layer<Req, Res> newLayer);
 
-    Layer<Req, Res> buildService(FinishLayer<Req, Res> consumer) ;
+    Layer<Req, Res> buildService(FinishLayer<Req, Res> consumer);
 
 }

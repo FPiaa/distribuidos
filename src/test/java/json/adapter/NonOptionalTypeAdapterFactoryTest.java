@@ -3,6 +3,7 @@ package json.adapter;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonSyntaxException;
+import lombok.Data;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -13,27 +14,11 @@ import java.util.Random;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class NonOptionalTypeAdapterFactoryTest {
     private final Gson gson = new GsonBuilder().registerTypeAdapterFactory(NonOptionalTypeAdapterFactory.FACTORY).create();
-
-    @ParameterizedTest
-    @MethodSource("provideValidJsons")
-    public void givenValidJson_whenFromJson_thenReturnObject(String json) {
-
-        assert (gson.fromJson(json, TestClass1.class) != null);
-    }
-    @ParameterizedTest
-    @MethodSource("provideMissingObligatoryFields")
-    public void givenMissingObligatoryFieldsJson_whenFromJson_thenThrowsMalformedJsonException(String json) {
-        assertThrows(JsonSyntaxException.class, () -> gson.fromJson(json, TestClass1.class));
-    }
-    @ParameterizedTest
-    @MethodSource("provideNullInObligatoryFields")
-    public void givenNullInObligatoryFieldsJson_whenFromJson_thenThrowsMalformedJsonException(String json) {
-        assertThrows(JsonSyntaxException.class, () -> gson.fromJson(json, TestClass1.class));
-    }
 
     private static Stream<Arguments> provideValidJsons() {
         var gson = new Gson();
@@ -48,6 +33,7 @@ public class NonOptionalTypeAdapterFactoryTest {
         return classWithNulls().map(gson::toJson)
                 .map(Arguments::of);
     }
+
     private static Stream<Arguments> provideNullInObligatoryFields() {
         var gson = new GsonBuilder().serializeNulls().create();
         return classWithNulls().map(gson::toJson)
@@ -55,13 +41,12 @@ public class NonOptionalTypeAdapterFactoryTest {
     }
 
     private static Stream<TestClass1> classWithNulls() {
-        var gson = new Gson();
         return IntStream.iterate(5, n -> n + 1)
                 .limit(40)
                 .mapToObj(x -> {
-                    if(x % 2 == 0)
+                    if (x % 2 == 0)
                         return new TestClass1(null, randomMaps(x));
-                    else if(x % 3 == 0)
+                    else if (x % 3 == 0)
                         return new TestClass1(randomString(x), null);
                     else
                         return new TestClass1(null, null);
@@ -90,6 +75,26 @@ public class NonOptionalTypeAdapterFactoryTest {
                 .toString();
     }
 
+    @ParameterizedTest
+    @MethodSource("provideValidJsons")
+    public void givenValidJson_whenFromJson_thenReturnObject(String json) {
+
+        assertNotNull(gson.fromJson(json, TestClass1.class));
+    }
+
+    @ParameterizedTest
+    @MethodSource("provideMissingObligatoryFields")
+    public void givenMissingObligatoryFieldsJson_whenFromJson_thenThrowsMalformedJsonException(String json) {
+        assertThrows(JsonSyntaxException.class, () -> gson.fromJson(json, TestClass1.class));
+    }
+
+    @ParameterizedTest
+    @MethodSource("provideNullInObligatoryFields")
+    public void givenNullInObligatoryFieldsJson_whenFromJson_thenThrowsMalformedJsonException(String json) {
+        assertThrows(JsonSyntaxException.class, () -> gson.fromJson(json, TestClass1.class));
+    }
+
+    @Data
     private static class TestClass1 {
         private final String field1;
         private final Map<String, Integer> field2;
