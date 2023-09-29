@@ -1,8 +1,9 @@
 package org.example;
 
 import com.google.gson.Gson;
+import json.JsonHelper;
 import request.RequisitionOperations;
-import request.requisition.EmptyRequest;
+import request.requisition.LoginRequisition;
 import response.Response;
 import response.error.ErrorResponse;
 import server.router.Router;
@@ -65,11 +66,11 @@ public class Server extends Thread {
                     new InputStreamReader(clientSocket.getInputStream()));
 
             String inputLine;
-            Gson gson = new Gson();
             int userId = 0;
+            Gson gson = JsonHelper.gson;
             while ((inputLine = in.readLine()) != null) {
                 System.out.println("Server: " + inputLine);
-                EmptyRequest req = gson.fromJson(inputLine, EmptyRequest.class);
+                LoginRequisition req = gson.fromJson(inputLine, LoginRequisition.class);
                 System.out.println(req.toString());
                 userId += 1;
                 if (userId % 2 == 0) {
