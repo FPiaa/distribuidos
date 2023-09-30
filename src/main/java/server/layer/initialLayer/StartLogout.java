@@ -1,11 +1,11 @@
 package server.layer.initialLayer;
 
 import json.JsonHelper;
-import request.requisition.LogoutRequest;
+import request.LogoutRequest;
 import response.LogoutResponse;
 import response.Response;
-import server.interfaces.InitialLayer;
-import server.interfaces.Layer;
+import server.layer.interfaces.InitialLayer;
+import server.layer.interfaces.Layer;
 import server.layer.finishLayer.ProcessLogout;
 import server.layer.middleware.ValidateUser;
 

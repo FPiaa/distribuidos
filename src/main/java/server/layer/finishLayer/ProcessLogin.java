@@ -1,11 +1,11 @@
 package server.layer.finishLayer;
 
 import jwt.JwtHelper;
-import request.requisition.LoginRequest;
+import request.LoginRequest;
 import response.LoginResponse;
 import response.Response;
-import server.interfaces.FinishLayer;
-import server.interfaces.Layer;
+import server.layer.interfaces.FinishLayer;
+import server.layer.interfaces.Layer;
 
 public class ProcessLogin implements FinishLayer<LoginRequest, LoginResponse> {
 

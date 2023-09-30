@@ -5,7 +5,7 @@ import lombok.NonNull;
 import request.header.Header;
 import response.ErrorResponse;
 import response.Response;
-import server.interfaces.InitialLayer;
+import server.layer.interfaces.InitialLayer;
 
 import java.util.HashMap;
 import java.util.Map;

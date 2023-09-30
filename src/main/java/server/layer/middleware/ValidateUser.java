@@ -6,8 +6,8 @@ import jwt.JwtHelper;
 import request.Request;
 import response.Response;
 import response.ErrorResponse;
-import server.interfaces.FinishLayer;
-import server.interfaces.Layer;
+import server.layer.interfaces.FinishLayer;
+import server.layer.interfaces.Layer;
 
 public class ValidateUser<Req extends Request<?>, Res extends Response<?>> implements Layer<Req, Res> {
     private Layer<Req, Res> next ;
@@ -16,6 +16,7 @@ public class ValidateUser<Req extends Request<?>, Res extends Response<?>> imple
     public boolean check(Req request) {
         String token = request.header().token();
         try {
+            @SuppressWarnings("unused")
             DecodedJWT _jwt = JwtHelper.verify(token);
             return true;
         }catch (JWTVerificationException ex) {

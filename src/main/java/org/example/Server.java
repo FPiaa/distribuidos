@@ -3,7 +3,7 @@ package org.example;
 import com.google.gson.Gson;
 import json.JsonHelper;
 import request.RequisitionOperations;
-import request.requisition.EmptyRequest;
+import request.EmptyRequest;
 import response.LogoutResponse;
 import response.Response;
 import server.layer.initialLayer.StartLogin;
@@ -58,7 +58,6 @@ public class Server extends Thread {
                     new InputStreamReader(clientSocket.getInputStream()));
 
             String inputLine;
-            int userId = 0;
             Gson gson = JsonHelper.gson;
             while ((inputLine = in.readLine()) != null) {
                 System.out.println("Recebido: " + inputLine);

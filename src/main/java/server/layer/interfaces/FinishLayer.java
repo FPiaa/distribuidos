@@ -1,4 +1,4 @@
-package server.interfaces;
+package server.layer.interfaces;
 
 import request.Request;
 import response.Response;

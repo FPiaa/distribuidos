@@ -1,10 +1,10 @@
 package server.layer.finishLayer;
 
-import request.requisition.LogoutRequest;
+import request.LogoutRequest;
 import response.LogoutResponse;
 import response.Response;
-import server.interfaces.FinishLayer;
-import server.interfaces.Layer;
+import server.layer.interfaces.FinishLayer;
+import server.layer.interfaces.Layer;
 
 public class ProcessLogout implements FinishLayer<LogoutRequest, LogoutResponse> {
 

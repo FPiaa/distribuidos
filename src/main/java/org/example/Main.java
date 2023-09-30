@@ -5,8 +5,8 @@ import com.auth0.jwt.interfaces.DecodedJWT;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import json.JsonHelper;
-import request.requisition.LoginRequest;
-import request.requisition.LogoutRequest;
+import request.LoginRequest;
+import request.LogoutRequest;
 import response.LoginResponse;
 import response.ErrorResponse;
 

@@ -1,9 +1,7 @@
-package request.requisition;
+package request;
 
 import json.annotation.JsonOptional;
 import org.checkerframework.checker.nullness.qual.NonNull;
-import request.Request;
-import request.RequisitionOperations;
 import request.header.Header;
 
 public record LogoutRequest(@NonNull Header header, @JsonOptional Payload payload) implements Request<LogoutRequest.Payload> {

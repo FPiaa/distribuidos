@@ -1,9 +1,9 @@
 package server.layer.initialLayer;
 
 import json.JsonHelper;
-import request.requisition.LoginRequest;
+import request.LoginRequest;
 import response.Response;
-import server.interfaces.InitialLayer;
+import server.layer.interfaces.InitialLayer;
 import server.layer.finishLayer.ProcessLogin;
 
 public class StartLogin implements InitialLayer {
