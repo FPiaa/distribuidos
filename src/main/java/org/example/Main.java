@@ -3,9 +3,12 @@ package org.example;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.google.gson.Gson;
-import request.requisition.LoginRequisition;
+import com.google.gson.JsonSyntaxException;
+import json.JsonHelper;
+import request.requisition.LoginRequest;
+import request.requisition.LogoutRequest;
 import response.LoginResponse;
-import response.error.ErrorResponse;
+import response.ErrorResponse;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -39,25 +42,34 @@ public class Main {
             System.exit(1);
         }
 
-
+        String token = "";
         String userInput;
         while ((userInput = stdin.readLine()) != null) {
             if (userInput.equals("Bye.")) {
+                var logoutRequest = new LogoutRequest(token);
+                String request = JsonHelper.gson.toJson(logoutRequest);
+                out.println(request);
+
+                System.out.println("Enviado: " + request);
+                String response = in.readLine();
+                System.out.println("Recebido: " + response);
                 break;
             }
-            LoginRequisition login = new LoginRequisition("email", "senah");
-            String request = new Gson().toJson(login);
+            LoginRequest login = new LoginRequest("email", "senah");
+            String request = JsonHelper.gson.toJson(login);
             out.println(request);
 
-            System.out.println("Sending data: " + request);
+
+            System.out.println("Enviado: " + request);
             String response = in.readLine();
             System.out.println("Recebido: " + response);
             try {
-                var a = new Gson().fromJson(response, LoginResponse.class);
-                DecodedJWT token = JWT.decode(a.payload().getToken());
-                int userId = token.getClaim("userId").asInt();
+                var loginResponse = new Gson().fromJson(response, LoginResponse.class);
+                token = loginResponse.payload().token();
+                DecodedJWT decodedJWT = JWT.decode(token);
+                int userId = decodedJWT.getClaim("userId").asInt();
                 System.out.println("User id: " + userId);
-            } catch (NullPointerException e) {
+            } catch (JsonSyntaxException e) {
                 ErrorResponse error = new Gson().fromJson(response, ErrorResponse.class);
                 System.out.println(error.toString());
             }
