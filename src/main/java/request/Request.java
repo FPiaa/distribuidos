@@ -7,6 +7,7 @@ import request.header.Header;
 
 public interface Request<T> {
     @NonNull Header header();
+
     @SuppressWarnings("unused")
     @Nullable T payload();
 

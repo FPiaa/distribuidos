@@ -7,8 +7,8 @@ import com.google.gson.JsonSyntaxException;
 import json.JsonHelper;
 import request.LoginRequest;
 import request.LogoutRequest;
-import response.LoginResponse;
 import response.ErrorResponse;
+import response.LoginResponse;
 
 import java.io.BufferedReader;
 import java.io.IOException;

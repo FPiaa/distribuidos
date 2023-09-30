@@ -3,8 +3,8 @@ package server.layer.initialLayer;
 import json.JsonHelper;
 import request.LoginRequest;
 import response.Response;
-import server.layer.interfaces.InitialLayer;
 import server.layer.finishLayer.ProcessLogin;
+import server.layer.interfaces.InitialLayer;
 
 public class StartLogin implements InitialLayer {
 

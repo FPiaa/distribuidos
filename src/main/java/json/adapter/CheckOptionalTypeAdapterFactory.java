@@ -14,6 +14,7 @@ import java.lang.reflect.Field;
 
 public class CheckOptionalTypeAdapterFactory implements TypeAdapterFactory {
     public static final TypeAdapterFactory FACTORY = new CheckOptionalTypeAdapterFactory();
+
     @Override
     public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> typeToken) {
         final TypeAdapter<T> delegateAdapter = gson.getDelegateAdapter(this, typeToken);

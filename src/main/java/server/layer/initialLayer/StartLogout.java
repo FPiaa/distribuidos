@@ -4,15 +4,15 @@ import json.JsonHelper;
 import request.LogoutRequest;
 import response.LogoutResponse;
 import response.Response;
+import server.layer.finishLayer.ProcessLogout;
 import server.layer.interfaces.InitialLayer;
 import server.layer.interfaces.Layer;
-import server.layer.finishLayer.ProcessLogout;
 import server.layer.middleware.ValidateUser;
 
 public class StartLogout implements InitialLayer {
     @Override
     public Response<?> startService(String jsonString) {
-        Layer<LogoutRequest, LogoutResponse>  validate = new ValidateUser<>();
+        Layer<LogoutRequest, LogoutResponse> validate = new ValidateUser<>();
         validate.buildService(new ProcessLogout());
         var logout = JsonHelper.gson.fromJson(jsonString, LogoutRequest.class);
         return validate.next(logout);

@@ -99,6 +99,7 @@ public class CheckOptionalTypeAdapterFactoryTest {
         return class2WithNulls().map(gson::toJson)
                 .map(Arguments::of);
     }
+
     @ParameterizedTest
     @MethodSource("provideValidJsons")
     public void givenValidJson_whenFromJson_thenReturnObject(String json) {
@@ -131,7 +132,9 @@ public class CheckOptionalTypeAdapterFactoryTest {
     public void givenNullInOptionalFieldsJson_whenFromJson_thenCreateObject(String json) {
         var obj = gson.fromJson(json, TestClass2.class);
         assertNotNull(obj);
-    }    @Data
+    }
+
+    @Data
     private static class TestClass1 {
         private final String field1;
         private final Map<String, Integer> field2;
@@ -141,6 +144,7 @@ public class CheckOptionalTypeAdapterFactoryTest {
             this.field2 = field2;
         }
     }
+
     @Data
     private static class TestClass2 {
         @JsonOptional
