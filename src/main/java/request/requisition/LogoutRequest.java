@@ -1,15 +1,15 @@
 package request.requisition;
 
+import json.annotation.JsonOptional;
 import org.checkerframework.checker.nullness.qual.NonNull;
+import request.Request;
 import request.RequisitionOperations;
-import request.abstractclasses.Request;
-import request.abstractclasses.RequestPayload;
 import request.header.Header;
 
-public class LogoutRequest extends Request<LogoutRequest.Payload> {
+public record LogoutRequest(@NonNull Header header, @JsonOptional Payload payload) implements Request<LogoutRequest.Payload> {
     public LogoutRequest(@NonNull String userToken) {
-       super(new Header(RequisitionOperations.LOGOUT, userToken), null);
+       this(new Header(RequisitionOperations.LOGOUT, userToken), null);
     }
 
-    public static class Payload extends RequestPayload{}
+    public static class Payload {}
 }

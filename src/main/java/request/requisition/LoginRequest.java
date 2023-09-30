@@ -1,27 +1,16 @@
 package request.requisition;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
 import org.checkerframework.checker.nullness.qual.NonNull;
+import request.Request;
 import request.RequisitionOperations;
-import request.abstractclasses.Request;
-import request.abstractclasses.RequestPayload;
 import request.header.Header;
 
-@EqualsAndHashCode(callSuper = false)
-public class LoginRequest extends Request<LoginRequest.Payload> {
-    public LoginRequest(String email, String password) {
-        super(new Header(RequisitionOperations.LOGIN, null),
-                new LoginRequest.Payload(email, password));
-    }
+public record LoginRequest(@NonNull Header header, LoginRequest.@NonNull Payload payload) implements Request<LoginRequest.Payload> {
 
-    @EqualsAndHashCode(callSuper = false)
-    @Data
-    public static class Payload extends RequestPayload {
-        @NonNull
-        private final String email;
-        @NonNull
-        private final String password;
+    public LoginRequest(@NonNull String email, @NonNull String password) {
+        this(new Header(RequisitionOperations.LOGIN, null), new Payload(email, password));
+    }
+    public record Payload(@NonNull String email, @NonNull String password) {
     }
 }
 

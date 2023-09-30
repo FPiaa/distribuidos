@@ -1,18 +1,10 @@
 package request.requisition;
 
-import lombok.ToString;
-import request.abstractclasses.Request;
-import request.abstractclasses.RequestPayload;
+import json.annotation.JsonOptional;
+import org.checkerframework.checker.nullness.qual.NonNull;
+import request.Request;
 import request.header.Header;
 
-@ToString
-public class EmptyRequest extends Request<EmptyRequest.Payload> {
-
-    public EmptyRequest(Header header, EmptyRequest.Payload payload) {
-        super(header, payload);
-    }
-
-    public static class Payload extends RequestPayload {
-
-    }
+public record EmptyRequest(@NonNull Header header, @JsonOptional EmptyRequest.Payload payload) implements Request<EmptyRequest.Payload> {
+    public static class Payload { }
 }
