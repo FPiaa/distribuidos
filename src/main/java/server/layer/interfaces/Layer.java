@@ -2,13 +2,13 @@ package server.layer.interfaces;
 
 import protocol.request.Request;
 import protocol.response.Response;
+import server.exceptions.ServerResponseException;
 
 @SuppressWarnings("unused")
 public interface Layer<Req extends Request<?>, Res extends Response<?>> {
-    boolean check(Req request);
+    void check(Req request) throws ServerResponseException;
 
-
-    Response<?> next(Req request);
+    Res next(Req request) throws ServerResponseException;
 
     Layer<Req, Res> addLayer(Layer<Req, Res> newLayer);
 
