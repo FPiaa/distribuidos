@@ -21,10 +21,12 @@ public class Server extends Thread {
 
     private Server(Socket clientSoc) {
         clientSocket = clientSoc;
-        routes = Router.builder()
-                .addRoute(RequisitionOperations.LOGIN, new StartLogin())
-                .addRoute(RequisitionOperations.LOGOUT, new StartLogout())
-                .build();
+        if (routes == null) {
+            routes = Router.builder()
+                    .addRoute(RequisitionOperations.LOGIN, new StartLogin())
+                    .addRoute(RequisitionOperations.LOGOUT, new StartLogout())
+                    .build();
+        }
         start();
     }
 
