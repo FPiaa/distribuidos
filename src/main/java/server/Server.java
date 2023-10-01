@@ -1,7 +1,6 @@
 package server;
 
 import json.JsonHelper;
-import protocol.request.EmptyRequest;
 import protocol.request.RequisitionOperations;
 import protocol.response.LogoutResponse;
 import protocol.response.Response;
@@ -17,8 +16,8 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 public class Server extends Thread {
-    protected Socket clientSocket;
-    protected Router routes;
+    private final Socket clientSocket;
+    private Router routes = null;
 
     private Server(Socket clientSoc) {
         clientSocket = clientSoc;
@@ -50,11 +49,10 @@ public class Server extends Thread {
     public void run() {
         System.out.println("New Communication Thread Started");
 
-        try {
-            PrintWriter out = new PrintWriter(clientSocket.getOutputStream(),
-                    true);
-            BufferedReader in = new BufferedReader(
-                    new InputStreamReader(clientSocket.getInputStream()));
+        try (clientSocket;
+             PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
+             BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+        ) {
 
             String inputLine;
             while ((inputLine = in.readLine()) != null) {
@@ -67,13 +65,11 @@ public class Server extends Thread {
                 if (response instanceof LogoutResponse)
                     break;
             }
-
-            out.close();
-            in.close();
-            clientSocket.close();
         } catch (IOException e) {
             System.err.println("Problem with Communication Server");
             System.exit(1);
         }
+
+        assert (clientSocket.isClosed());
     }
 }
