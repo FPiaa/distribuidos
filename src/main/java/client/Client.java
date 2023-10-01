@@ -47,7 +47,7 @@ public class Client {
         while ((userInput = stdin.readLine()) != null) {
             if (userInput.equals("Bye.")) {
                 var logoutRequest = new LogoutRequest(token);
-                String request = JsonHelper.gson.toJson(logoutRequest);
+                String request = JsonHelper.toJson(logoutRequest);
                 out.println(request);
 
                 System.out.println("Enviado: " + request);
@@ -56,7 +56,7 @@ public class Client {
                 break;
             }
             LoginRequest login = new LoginRequest("email", "senah");
-            String request = JsonHelper.gson.toJson(login);
+            String request = JsonHelper.toJson(login);
             out.println(request);
 
 
