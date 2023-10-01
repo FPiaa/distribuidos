@@ -4,8 +4,9 @@ import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import jwt.JwtHelper;
 import protocol.request.Request;
-import protocol.response.ErrorResponse;
 import protocol.response.Response;
+import server.exceptions.ServerResponseException;
+import server.exceptions.UnauthorizedAccessException;
 import server.layer.interfaces.FinishLayer;
 import server.layer.interfaces.Layer;
 
@@ -13,22 +14,19 @@ public class ValidateUser<Req extends Request<?>, Res extends Response<?>> imple
     private Layer<Req, Res> next;
 
     @Override
-    public boolean check(Req request) {
+    public void check(Req request) throws ServerResponseException {
         String token = request.header().token();
         try {
             @SuppressWarnings("unused")
             DecodedJWT _jwt = JwtHelper.verify(token);
-            return true;
         } catch (JWTVerificationException ex) {
-            return false;
+             throw new UnauthorizedAccessException();
         }
     }
 
     @Override
-    public Response<?> next(Req request) {
-        if (!check(request)) {
-            return new ErrorResponse(321, "Unauthorized");
-        }
+    public Res next(Req request) throws ServerResponseException{
+        check(request);
         if (next instanceof FinishLayer<Req, Res>) {
             return ((FinishLayer<Req, Res>) next).finish(request);
         }
