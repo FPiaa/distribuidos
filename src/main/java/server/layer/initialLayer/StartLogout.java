@@ -4,6 +4,7 @@ import json.JsonHelper;
 import protocol.request.LogoutRequest;
 import protocol.response.LogoutResponse;
 import protocol.response.Response;
+import server.exceptions.ServerResponseException;
 import server.layer.finishLayer.ProcessLogout;
 import server.layer.interfaces.InitialLayer;
 import server.layer.interfaces.Layer;
@@ -11,10 +12,10 @@ import server.layer.middleware.ValidateUser;
 
 public class StartLogout implements InitialLayer {
     @Override
-    public Response<?> startService(String jsonString) {
+    public Response<?> startService(String jsonString) throws ServerResponseException {
         Layer<LogoutRequest, LogoutResponse> validate = new ValidateUser<>();
         validate.buildService(new ProcessLogout());
-        var logout = JsonHelper.gson.fromJson(jsonString, LogoutRequest.class);
+        var logout = JsonHelper.fromJson(jsonString, LogoutRequest.class);
         return validate.next(logout);
     }
 }
