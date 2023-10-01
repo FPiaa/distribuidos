@@ -1,10 +1,11 @@
 package server.router;
 
+import json.JsonHelper;
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
-import protocol.request.header.Header;
-import protocol.response.ErrorResponse;
+import protocol.request.EmptyRequest;
 import protocol.response.Response;
+import server.exceptions.ServerResponseException;
 import server.layer.interfaces.InitialLayer;
 
 import java.util.HashMap;
@@ -20,13 +21,13 @@ public class Router {
         return new RouterBuilder();
     }
 
-    @SuppressWarnings("unused")
-    public Response<?> serve(Header header, String string_request) {
+    public Response<?> serve(@NonNull final String string_request) {
 
         try {
-            return routes.get(header.operation()).startService(string_request);
-        } catch (Exception e) {
-            return new ErrorResponse(123, e.getMessage());
+            EmptyRequest req = JsonHelper.fromJson(string_request, EmptyRequest.class);
+            return routes.get(req.header().operation()).startService(string_request);
+        } catch (ServerResponseException e) {
+            return e.intoResponse();
         }
     }
 
