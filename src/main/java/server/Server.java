@@ -1,6 +1,5 @@
 package server;
 
-import com.google.gson.Gson;
 import json.JsonHelper;
 import protocol.request.EmptyRequest;
 import protocol.request.RequisitionOperations;
@@ -58,13 +57,12 @@ public class Server extends Thread {
                     new InputStreamReader(clientSocket.getInputStream()));
 
             String inputLine;
-            Gson gson = JsonHelper.gson;
             while ((inputLine = in.readLine()) != null) {
                 System.out.println("Recebido: " + inputLine);
-                EmptyRequest req = gson.fromJson(inputLine, EmptyRequest.class);
-                Response<?> response = routes.serve(req.header(), inputLine);
-                System.out.println("Enviado: " + gson.toJson(response));
-                out.println(gson.toJson(response));
+                Response<?> response = routes.serve(inputLine);
+                String jsonResponse = JsonHelper.toJson(response);
+                System.out.println("Enviado: " + jsonResponse);
+                out.println(jsonResponse);
 
                 if (response instanceof LogoutResponse)
                     break;
