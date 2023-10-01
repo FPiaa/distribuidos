@@ -1,8 +1,8 @@
 package server.layer.finishLayer;
 
-import request.LogoutRequest;
-import response.LogoutResponse;
-import response.Response;
+import protocol.request.LogoutRequest;
+import protocol.response.LogoutResponse;
+import protocol.response.Response;
 import server.layer.interfaces.FinishLayer;
 import server.layer.interfaces.Layer;
 

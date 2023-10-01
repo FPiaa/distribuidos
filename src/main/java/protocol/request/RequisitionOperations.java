@@ -1,4 +1,4 @@
-package request;
+package protocol.request;
 
 public interface RequisitionOperations {
     String LOGIN = "LOGIN";

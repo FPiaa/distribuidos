@@ -1,9 +1,9 @@
 package server.layer.initialLayer;
 
 import json.JsonHelper;
-import request.LogoutRequest;
-import response.LogoutResponse;
-import response.Response;
+import protocol.request.LogoutRequest;
+import protocol.response.LogoutResponse;
+import protocol.response.Response;
 import server.layer.finishLayer.ProcessLogout;
 import server.layer.interfaces.InitialLayer;
 import server.layer.interfaces.Layer;

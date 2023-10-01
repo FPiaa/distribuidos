@@ -1,7 +1,7 @@
 package server.layer.interfaces;
 
-import request.Request;
-import response.Response;
+import protocol.request.Request;
+import protocol.response.Response;
 
 @SuppressWarnings("unused")
 public interface Layer<Req extends Request<?>, Res extends Response<?>> {

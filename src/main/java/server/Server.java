@@ -1,11 +1,11 @@
-package org.example;
+package server;
 
 import com.google.gson.Gson;
 import json.JsonHelper;
-import request.EmptyRequest;
-import request.RequisitionOperations;
-import response.LogoutResponse;
-import response.Response;
+import protocol.request.EmptyRequest;
+import protocol.request.RequisitionOperations;
+import protocol.response.LogoutResponse;
+import protocol.response.Response;
 import server.layer.initialLayer.StartLogin;
 import server.layer.initialLayer.StartLogout;
 import server.router.Router;

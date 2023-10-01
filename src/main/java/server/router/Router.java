@@ -2,9 +2,9 @@ package server.router;
 
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
-import request.header.Header;
-import response.ErrorResponse;
-import response.Response;
+import protocol.request.header.Header;
+import protocol.response.ErrorResponse;
+import protocol.response.Response;
 import server.layer.interfaces.InitialLayer;
 
 import java.util.HashMap;

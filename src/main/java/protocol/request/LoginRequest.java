@@ -1,7 +1,7 @@
-package request;
+package protocol.request;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
-import request.header.Header;
+import protocol.request.header.Header;
 
 public record LoginRequest(@NonNull Header header,
                            LoginRequest.@NonNull Payload payload) implements Request<LoginRequest.Payload> {

@@ -1,8 +1,8 @@
-package request;
+package protocol.request;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
-import request.header.Header;
+import protocol.request.header.Header;
 
 
 public interface Request<T> {

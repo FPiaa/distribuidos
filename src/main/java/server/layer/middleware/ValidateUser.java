@@ -3,9 +3,9 @@ package server.layer.middleware;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import jwt.JwtHelper;
-import request.Request;
-import response.ErrorResponse;
-import response.Response;
+import protocol.request.Request;
+import protocol.response.ErrorResponse;
+import protocol.response.Response;
 import server.layer.interfaces.FinishLayer;
 import server.layer.interfaces.Layer;
 

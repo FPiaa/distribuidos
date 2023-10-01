@@ -1,9 +1,9 @@
 package server.layer.finishLayer;
 
 import jwt.JwtHelper;
-import request.LoginRequest;
-import response.LoginResponse;
-import response.Response;
+import protocol.request.LoginRequest;
+import protocol.response.LoginResponse;
+import protocol.response.Response;
 import server.layer.interfaces.FinishLayer;
 import server.layer.interfaces.Layer;
 

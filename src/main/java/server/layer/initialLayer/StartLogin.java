@@ -1,8 +1,8 @@
 package server.layer.initialLayer;
 
 import json.JsonHelper;
-import request.LoginRequest;
-import response.Response;
+import protocol.request.LoginRequest;
+import protocol.response.Response;
 import server.layer.finishLayer.ProcessLogin;
 import server.layer.interfaces.InitialLayer;
 

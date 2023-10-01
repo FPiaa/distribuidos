@@ -1,4 +1,4 @@
-package response;
+package protocol.response;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
 

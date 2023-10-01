@@ -1,14 +1,14 @@
-package org.example;
+package client;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import json.JsonHelper;
-import request.LoginRequest;
-import request.LogoutRequest;
-import response.ErrorResponse;
-import response.LoginResponse;
+import protocol.request.LoginRequest;
+import protocol.request.LogoutRequest;
+import protocol.response.ErrorResponse;
+import protocol.response.LoginResponse;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -18,7 +18,7 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 
 
-public class Main {
+public class Client {
     public static void main(String[] args) throws IOException {
         BufferedReader stdin = new BufferedReader(new InputStreamReader(System.in));
         String serverHost = "localhost";

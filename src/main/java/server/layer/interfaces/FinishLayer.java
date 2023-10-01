@@ -1,7 +1,7 @@
 package server.layer.interfaces;
 
-import request.Request;
-import response.Response;
+import protocol.request.Request;
+import protocol.response.Response;
 
 public interface FinishLayer<Req extends Request<?>, Res extends Response<?>> extends Layer<Req, Res> {
 

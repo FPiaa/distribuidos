@@ -1,4 +1,4 @@
-package request.header;
+package protocol.request.header;
 
 import json.annotation.JsonOptional;
 import org.checkerframework.checker.nullness.qual.NonNull;

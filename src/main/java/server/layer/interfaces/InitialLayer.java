@@ -1,6 +1,6 @@
 package server.layer.interfaces;
 
-import response.Response;
+import protocol.response.Response;
 
 public interface InitialLayer {
     Response<?> startService(String jsonString);
