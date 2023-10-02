@@ -19,7 +19,7 @@ import java.net.UnknownHostException;
 
 
 public class Client {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         String serverHost = "localhost";
         int port = 24800;
 
@@ -27,9 +27,9 @@ public class Client {
              PrintWriter out = new PrintWriter(echoSocket.getOutputStream(), true);
              BufferedReader in = new BufferedReader(new InputStreamReader(
                      echoSocket.getInputStream()));
-             BufferedReader stdin = new BufferedReader(new InputStreamReader(System.in));
+             BufferedReader stdin = new BufferedReader(new InputStreamReader(System.in))
         ) {
-            repl(echoSocket, out, in, stdin);
+            repl(out, in, stdin);
         } catch (UnknownHostException e) {
             System.err.println("Don't know about host: " + serverHost);
             System.exit(1);
@@ -40,7 +40,7 @@ public class Client {
         }
     }
 
-    private static void repl(Socket server, PrintWriter out, BufferedReader in, BufferedReader stdin) {
+    private static void repl(PrintWriter out, BufferedReader in, BufferedReader stdin) {
         String token = "";
         String userInput;
         try {
