@@ -1,19 +1,25 @@
 package client;
 
-import com.auth0.jwt.JWT;
-import com.auth0.jwt.interfaces.DecodedJWT;
-import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import json.JsonHelper;
+import json.annotation.JsonOptional;
 import protocol.request.LoginRequest;
 import protocol.request.LogoutRequest;
+import protocol.request.Request;
+import protocol.request.RequisitionOperations;
+import protocol.request.header.Header;
 import protocol.response.ErrorResponse;
 import protocol.response.LoginResponse;
+import protocol.response.LogoutResponse;
+import protocol.response.Response;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Parameter;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
@@ -41,42 +47,109 @@ public class Client {
     }
 
     private static void repl(PrintWriter out, BufferedReader in, BufferedReader stdin) {
-        String token = "";
-        String userInput;
+        String token = null;
         try {
-            while ((userInput = stdin.readLine()) != null) {
-                if (userInput.equals("Bye.")) {
-                    var logoutRequest = new LogoutRequest(token);
-                    String request = JsonHelper.toJson(logoutRequest);
-                    out.println(request);
+            while (true) {
+                Request<?> request = requestFactory(stdin, token);
+                String jsonRequest = JsonHelper.toJson(request);
+                out.println(jsonRequest);
+                System.out.println();
+                System.out.println("Objeto de envio criado: " + request);
+                System.out.println("Enviado: " + jsonRequest);
+                System.out.println();
 
-                    System.out.println("Enviado: " + request);
-                    String response = in.readLine();
-                    System.out.println("Recebido: " + response);
+                String jsonResponse = in.readLine();
+                if (jsonResponse == null) {
+                    System.err.println("Erro recebendo dados do servidor");
                     break;
                 }
-                LoginRequest login = new LoginRequest("email", "senah");
-                String request = JsonHelper.toJson(login);
-                out.println(request);
-
-
-                System.out.println("Enviado: " + request);
-                String response = in.readLine();
-                System.out.println("Recebido: " + response);
-                try {
-                    var loginResponse = JsonHelper.fromJson(response, LoginResponse.class);
-                    token = loginResponse.payload().token();
-                    DecodedJWT decodedJWT = JWT.decode(token);
-                    int userId = decodedJWT.getClaim("userId").asInt();
-                    System.out.println("User id: " + userId);
-                } catch (JsonSyntaxException e) {
-                    ErrorResponse error = new Gson().fromJson(response, ErrorResponse.class);
-                    System.out.println(error.toString());
+                System.out.println("Recebido: " + jsonResponse);
+                Response<?> response = handleResponse(jsonResponse,  request);
+                System.out.println("Objeto criado: " + response);
+                if(response instanceof LoginResponse) {
+                    token = ((LoginResponse) response).payload().token();
                 }
+
+                if(response instanceof LogoutResponse) {
+                    break;
+                }
+
+                System.out.println();
+
             }
         } catch (IOException e) {
             System.out.println("error reading stdin");
         }
+    }
+
+    private static Request<?> requestFactory(BufferedReader stdin, String token) throws IOException {
+
+        String operation;
+        while (true) {
+            System.out.print("Insira a operação: ");
+            operation = stdin.readLine();
+            if (operation == null) {
+                throw new IOException();
+            }
+
+            switch (operation) {
+                case RequisitionOperations.LOGIN:
+                    return makeRequest(stdin, token, LoginRequest.class);
+                case RequisitionOperations.LOGOUT:
+                    return makeRequest(stdin, token, LogoutRequest.class);
+            }
+        }
+    }
+
+    private static Response<?> handleResponse(String json, Request<?> request) {
+        try {
+            Class<?> clazz = request.getClass();
+            if (clazz == LoginRequest.class) {
+                return JsonHelper.fromJson(json, LoginResponse.class);
+            }
+            if (clazz == LogoutRequest.class) {
+                return JsonHelper.fromJson(json, LogoutResponse.class);
+            }
+        } catch (JsonSyntaxException e) {
+            return JsonHelper.fromJson(json, ErrorResponse.class);
+        }
+        return null;
+    }
+
+
+    @SuppressWarnings("unchecked")
+    private static <T> T makeRequest(BufferedReader stdin, String token, Class<T> clazz) throws IOException {
+        for (Constructor<?> constructor : clazz.getConstructors()) {
+            Parameter[] parameters = constructor.getParameters();
+            if (parameters.length == 2 && parameters[0].getType() == Header.class) {
+                // default constructor of every request record
+                continue;
+            }
+
+            Object[] constructorArguments = new Object[parameters.length];
+            for (int i = 0; i < parameters.length; i++) {
+                if (parameters[i].getName().toLowerCase().contains("token")) {
+                    constructorArguments[i] = token;
+                    continue;
+                }
+                System.out.print(parameters[i].getName());
+                if (parameters[0].isAnnotationPresent(JsonOptional.class)) {
+                    System.out.print(" (opcional)");
+                }
+                System.out.print(": ");
+                constructorArguments[i] = stdin.readLine();
+            }
+
+            // this casting is fine, but the compiler cant be sure because its generic type
+            // was erased up there
+            try {
+                return (T) constructor.newInstance(constructorArguments);
+            } catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        throw new RuntimeException("Unable to create a new instance of " + clazz.getName());
     }
 }
 
