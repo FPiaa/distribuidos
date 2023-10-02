@@ -1,5 +1,6 @@
 package server.layer.initialLayer;
 
+import com.google.gson.JsonSyntaxException;
 import json.JsonHelper;
 import protocol.request.LoginRequest;
 import protocol.response.Response;
@@ -10,7 +11,7 @@ import server.layer.interfaces.InitialLayer;
 public class StartLogin implements InitialLayer {
 
     @Override
-    public Response<?> startService(String jsonString) throws ServerResponseException {
+    public Response<?> startService(String jsonString) throws ServerResponseException, JsonSyntaxException {
         var loginRequest = JsonHelper.fromJson(jsonString, LoginRequest.class);
         return new ProcessLogin().finish(loginRequest);
     }

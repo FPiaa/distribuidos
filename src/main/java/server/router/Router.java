@@ -1,10 +1,12 @@
 package server.router;
 
+import com.google.gson.JsonSyntaxException;
 import json.JsonHelper;
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
 import protocol.request.EmptyRequest;
 import protocol.response.Response;
+import server.exceptions.BadRequestException;
 import server.exceptions.ServerResponseException;
 import server.layer.interfaces.InitialLayer;
 
@@ -28,6 +30,8 @@ public class Router {
             return routes.get(req.header().operation()).startService(string_request);
         } catch (ServerResponseException e) {
             return e.intoResponse();
+        } catch (JsonSyntaxException e) {
+            return new BadRequestException().intoResponse();
         }
     }
 
