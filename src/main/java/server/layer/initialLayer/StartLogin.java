@@ -13,6 +13,9 @@ import server.exceptions.WrongTypeException;
 import server.layer.finishLayer.ProcessLogin;
 import server.layer.interfaces.InitialLayer;
 
+import java.util.Set;
+import java.util.stream.Collectors;
+
 public class StartLogin implements InitialLayer {
 
     @Override

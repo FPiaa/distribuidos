@@ -30,7 +30,7 @@ public class Router {
         return new RouterBuilder();
     }
 
-    public Response<?> serve(@NonNull final String string_request) {
+    public Response<?> serve(final String string_request) throws ServerResponseException {
 
         EmptyRequest req = null;
         try {

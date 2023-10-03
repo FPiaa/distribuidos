@@ -1,12 +1,12 @@
 package server.exceptions;
 
-import org.checkerframework.checker.nullness.qual.NonNull;
+import jakarta.validation.constraints.NotNull;
 import protocol.response.ErrorResponse;
 
 public abstract class ServerResponseException extends Exception implements IntoResponse {
     private final int errorCode;
 
-    public ServerResponseException(int errorCode, @NonNull final String message) {
+    public ServerResponseException(int errorCode, @NotNull final String message) {
         super(message);
         this.errorCode = errorCode;
     }

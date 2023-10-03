@@ -1,16 +1,16 @@
 package protocol.response;
 
-import org.checkerframework.checker.nullness.qual.NonNull;
+import jakarta.validation.constraints.NotEmpty;
 
-public record LoginResponse(Payload payload) implements Response<LoginResponse.Payload> {
+public record LoginResponse(@NotEmpty Payload payload) implements Response<LoginResponse.Payload> {
 
 
-    public LoginResponse(@NonNull String token) {
+    public LoginResponse(final String token) {
         this(new Payload(token));
     }
 
 
-    public record Payload(@NonNull String token) {
+    public record Payload(@NotEmpty String token) {
     }
 
 }

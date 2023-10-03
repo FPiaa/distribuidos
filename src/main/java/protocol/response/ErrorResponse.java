@@ -1,10 +1,12 @@
 package protocol.response;
 
-import org.checkerframework.checker.nullness.qual.NonNull;
 
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 
-public record ErrorResponse(@NonNull Payload error) implements Response<ErrorResponse.Payload> {
-    public ErrorResponse(int code, String message) {
+public record ErrorResponse(@NotNull Payload error) implements Response<ErrorResponse.Payload> {
+    public ErrorResponse(@Positive int code, @NotEmpty String message) {
         this(new ErrorResponse.Payload(code, message));
     }
 
@@ -14,7 +16,7 @@ public record ErrorResponse(@NonNull Payload error) implements Response<ErrorRes
     }
 
 
-    public record Payload(int code, @NonNull String message) {
+    public record Payload(int code, @NotNull String message) {
     }
 }
 

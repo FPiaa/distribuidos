@@ -1,8 +1,7 @@
 package protocol.request.header;
 
-import json.annotation.JsonOptional;
-import org.checkerframework.checker.nullness.qual.NonNull;
-import org.checkerframework.checker.nullness.qual.Nullable;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 
-public record Header(@NonNull String operation, @Nullable @JsonOptional String token) {
+public record Header(@NotBlank String operation, String token) {
 }

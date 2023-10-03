@@ -4,6 +4,7 @@ import json.JsonHelper;
 import protocol.request.RequisitionOperations;
 import protocol.response.LogoutResponse;
 import protocol.response.Response;
+import server.exceptions.ServerResponseException;
 import server.layer.initialLayer.StartLogin;
 import server.layer.initialLayer.StartLogout;
 import server.router.Router;

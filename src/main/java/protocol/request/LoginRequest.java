@@ -1,16 +1,16 @@
 package protocol.request;
 
-import org.checkerframework.checker.nullness.qual.NonNull;
+import jakarta.validation.constraints.NotNull;
 import protocol.request.header.Header;
 
-public record LoginRequest(@NonNull Header header,
-                           LoginRequest.@NonNull Payload payload) implements Request<LoginRequest.Payload> {
+public record LoginRequest(@NotNull Header header,
+                           LoginRequest.@NotNull Payload payload) implements Request<LoginRequest.Payload> {
 
-    public LoginRequest(@NonNull String email, @NonNull String password) {
+    public LoginRequest(@NotNull String email, @NotNull String password) {
         this(new Header(RequisitionOperations.LOGIN, null), new Payload(email, password));
     }
 
-    public record Payload(@NonNull String email, @NonNull String password) {
+    public record Payload(@NotNull String email, @NotNull String password) {
     }
 }
 

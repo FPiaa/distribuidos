@@ -1,7 +1,8 @@
 package client;
 
-import com.google.gson.JsonSyntaxException;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import json.JsonHelper;
 import protocol.request.LoginRequest;
 import protocol.request.LogoutRequest;
@@ -137,7 +138,7 @@ public class Client {
                     continue;
                 }
                 System.out.print(parameters[i].getName());
-                if (parameters[0].isAnnotationPresent(JsonOptional.class)) {
+                if (!parameters[i].isAnnotationPresent(NotNull.class) && !parameters[i].isAnnotationPresent(NotEmpty.class)) {
                     System.out.print(" (opcional)");
                 }
                 System.out.print(": ");

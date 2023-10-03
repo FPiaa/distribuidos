@@ -1,12 +1,11 @@
 package protocol.request;
 
-import json.annotation.JsonOptional;
-import org.checkerframework.checker.nullness.qual.NonNull;
+import jakarta.validation.constraints.NotNull;
 import protocol.request.header.Header;
 
-public record LogoutRequest(@NonNull Header header,
-                            @JsonOptional Payload payload) implements Request<LogoutRequest.Payload> {
-    public LogoutRequest(@NonNull String userToken) {
+public record LogoutRequest(@NotNull Header header,
+                            Payload payload) implements Request<LogoutRequest.Payload> {
+    public LogoutRequest(final String userToken) {
         this(new Header(RequisitionOperations.LOGOUT, userToken), null);
     }
 

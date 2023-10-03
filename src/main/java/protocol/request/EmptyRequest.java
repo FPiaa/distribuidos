@@ -1,11 +1,10 @@
 package protocol.request;
 
-import json.annotation.JsonOptional;
-import org.checkerframework.checker.nullness.qual.NonNull;
+import jakarta.validation.constraints.NotNull;
 import protocol.request.header.Header;
 
-public record EmptyRequest(@NonNull Header header,
-                           @JsonOptional EmptyRequest.Payload payload) implements Request<EmptyRequest.Payload> {
+public record EmptyRequest(@NotNull Header header,
+                           EmptyRequest.Payload payload) implements Request<EmptyRequest.Payload> {
     public static class Payload {
     }
 }
