@@ -1,8 +1,8 @@
 package client;
 
 import com.google.gson.JsonSyntaxException;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import json.JsonHelper;
-import json.annotation.JsonOptional;
 import protocol.request.LoginRequest;
 import protocol.request.LogoutRequest;
 import protocol.request.Request;
@@ -110,8 +110,12 @@ public class Client {
             if (clazz == LogoutRequest.class) {
                 return JsonHelper.fromJson(json, LogoutResponse.class);
             }
-        } catch (JsonSyntaxException e) {
-            return JsonHelper.fromJson(json, ErrorResponse.class);
+        } catch (JsonProcessingException e) {
+            try {
+                return JsonHelper.fromJson(json, ErrorResponse.class);
+            } catch (JsonProcessingException ex) {
+                throw new RuntimeException(ex);
+            }
         }
         return null;
     }

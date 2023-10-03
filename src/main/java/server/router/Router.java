@@ -1,17 +1,24 @@
 package server.router;
 
-import com.google.gson.JsonSyntaxException;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.Validation;
+import jakarta.validation.Validator;
 import json.JsonHelper;
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
 import protocol.request.EmptyRequest;
 import protocol.response.Response;
 import server.exceptions.BadRequestException;
+import server.exceptions.MethodNotAllowedException;
 import server.exceptions.ServerResponseException;
+import server.exceptions.WrongTypeException;
 import server.layer.interfaces.InitialLayer;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @AllArgsConstructor
 public class Router {
@@ -25,14 +32,26 @@ public class Router {
 
     public Response<?> serve(@NonNull final String string_request) {
 
+        EmptyRequest req = null;
         try {
-            EmptyRequest req = JsonHelper.fromJson(string_request, EmptyRequest.class);
-            return routes.get(req.header().operation()).startService(string_request);
-        } catch (ServerResponseException e) {
-            return e.intoResponse();
-        } catch (JsonSyntaxException e) {
-            return new BadRequestException().intoResponse();
+            req = JsonHelper.fromJson(string_request, EmptyRequest.class);
+        } catch (JsonProcessingException e) {
+            throw new WrongTypeException();
         }
+        Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
+        Set<ConstraintViolation<EmptyRequest>> violations = validator.validate(req);
+        if (!violations.isEmpty()) {
+            String fields = violations.stream().map(ConstraintViolation::getMessage)
+                    .collect(Collectors.joining(", "));
+            throw new BadRequestException(fields);
+        }
+
+        var startLayer = routes.get(req.header().operation());
+        if (startLayer == null) {
+            throw new MethodNotAllowedException(req.header().operation());
+        }
+
+        return startLayer.startService(string_request);
     }
 
     public static class RouterBuilder {

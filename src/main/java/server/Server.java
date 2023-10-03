@@ -59,7 +59,14 @@ public class Server extends Thread {
             String inputLine;
             while ((inputLine = in.readLine()) != null) {
                 System.out.println("Recebido: " + inputLine);
-                Response<?> response = routes.serve(inputLine);
+                Response<?> response;
+
+                try {
+                    response = routes.serve(inputLine);
+                } catch (ServerResponseException e) {
+                    response = e.intoResponse();
+                }
+
                 String jsonResponse = JsonHelper.toJson(response);
                 System.out.println("Enviado: " + jsonResponse);
                 out.println(jsonResponse);
