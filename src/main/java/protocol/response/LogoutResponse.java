@@ -1,14 +1,12 @@
 package protocol.response;
 
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
+import com.fasterxml.jackson.annotation.JsonRootName;
+import jakarta.validation.constraints.NotBlank;
 
-public record LogoutResponse(@NotNull Payload payload) implements Response<LogoutResponse.Payload> {
+@JsonRootName(value = "payload")
+public record LogoutResponse(@NotBlank String payload) implements Response<String> {
 
     public LogoutResponse() {
-        this(new Payload("desconectado"));
-    }
-
-    public record Payload(@NotEmpty String message) {
+        this("desconectado");
     }
 }

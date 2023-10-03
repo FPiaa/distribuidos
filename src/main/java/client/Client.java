@@ -68,7 +68,7 @@ public class Client {
                 Response<?> response = handleResponse(jsonResponse,  request);
                 System.out.println("Objeto criado: " + response);
                 if(response instanceof LoginResponse) {
-                    token = ((LoginResponse) response).payload().token();
+                    token = ((LoginResponse) response).payload();
                 }
 
                 if(response instanceof LogoutResponse) {
