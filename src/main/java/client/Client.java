@@ -3,7 +3,7 @@ package client;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
-import json.JsonHelper;
+import helper.json.JsonHelper;
 import protocol.request.LoginRequest;
 import protocol.request.LogoutRequest;
 import protocol.request.Request;

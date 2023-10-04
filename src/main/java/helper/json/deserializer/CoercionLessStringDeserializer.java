@@ -1,4 +1,4 @@
-package json.deserializer;
+package helper.json.deserializer;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonToken;

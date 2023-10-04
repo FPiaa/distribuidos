@@ -1,11 +1,11 @@
-package json;
+package helper.json;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
-import json.deserializer.CoercionLessStringDeserializer;
+import helper.json.deserializer.CoercionLessStringDeserializer;
 
 public class JsonHelper {
     private static final ObjectMapper mapper = new ObjectMapper()

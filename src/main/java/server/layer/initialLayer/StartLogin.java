@@ -5,6 +5,9 @@ import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validation;
 import jakarta.validation.Validator;
 import json.JsonHelper;
+import helper.json.JsonHelper;
+import helper.validation.ConstraintViolated;
+import helper.validation.ValidationHelper;
 import protocol.request.LoginRequest;
 import protocol.response.Response;
 import server.exceptions.BadRequestException;
@@ -25,6 +28,7 @@ public class StartLogin implements InitialLayer {
             loginRequest = JsonHelper.fromJson(jsonString, LoginRequest.class);
         } catch (JsonProcessingException e) {
             throw new WrongTypeException();
+            throw new BadRequestException("");
         }
 
         Validator validator = Validation.buildDefaultValidatorFactory().getValidator();

@@ -1,6 +1,6 @@
 package server;
 
-import json.JsonHelper;
+import helper.json.JsonHelper;
 import protocol.request.RequisitionOperations;
 import protocol.response.LogoutResponse;
 import protocol.response.Response;

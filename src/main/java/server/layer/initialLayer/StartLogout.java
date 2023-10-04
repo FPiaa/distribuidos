@@ -1,7 +1,7 @@
 package server.layer.initialLayer;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import json.JsonHelper;
+import helper.json.JsonHelper;
 import protocol.request.LogoutRequest;
 import protocol.response.LogoutResponse;
 import protocol.response.Response;

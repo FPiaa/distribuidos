@@ -1,10 +1,9 @@
 package server.router;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import jakarta.validation.ConstraintViolation;
-import jakarta.validation.Validation;
-import jakarta.validation.Validator;
-import json.JsonHelper;
+import helper.json.JsonHelper;
+import helper.validation.ConstraintViolated;
+import helper.validation.ValidationHelper;
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
 import protocol.request.EmptyRequest;
@@ -37,6 +36,7 @@ public class Router {
             req = JsonHelper.fromJson(string_request, EmptyRequest.class);
         } catch (JsonProcessingException e) {
             throw new WrongTypeException();
+            throw new BadRequestException("Invalid header");
         }
         Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
         Set<ConstraintViolation<EmptyRequest>> violations = validator.validate(req);
