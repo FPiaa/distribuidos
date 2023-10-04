@@ -11,13 +11,10 @@ import protocol.response.Response;
 import server.exceptions.BadRequestException;
 import server.exceptions.MethodNotAllowedException;
 import server.exceptions.ServerResponseException;
-import server.exceptions.WrongTypeException;
 import server.layer.interfaces.InitialLayer;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 @AllArgsConstructor
 public class Router {
@@ -34,16 +31,11 @@ public class Router {
         EmptyRequest req = null;
         try {
             req = JsonHelper.fromJson(string_request, EmptyRequest.class);
+            ValidationHelper.validate(req);
         } catch (JsonProcessingException e) {
-            throw new WrongTypeException();
             throw new BadRequestException("Invalid header");
-        }
-        Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
-        Set<ConstraintViolation<EmptyRequest>> violations = validator.validate(req);
-        if (!violations.isEmpty()) {
-            String fields = violations.stream().map(ConstraintViolation::getMessage)
-                    .collect(Collectors.joining(", "));
-            throw new BadRequestException(fields);
+        } catch (ConstraintViolated e) {
+            throw new BadRequestException(e.getMessage());
         }
 
         var startLayer = routes.get(req.header().operation());
