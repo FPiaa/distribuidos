@@ -1,13 +1,14 @@
 package protocol.response;
 
-import com.fasterxml.jackson.annotation.JsonRootName;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
-@JsonRootName(value = "payload")
-public record LoginResponse(Payload payload) implements Response<LoginResponse.Payload> {
+public record LoginResponse(@NotNull @Valid Payload payload) implements Response<LoginResponse.Payload> {
 
     public LoginResponse(final String token) {
         this(new Payload(token));
     }
 
-    public record Payload(String token) {}
+    public record Payload(@NotBlank String token) {}
 }

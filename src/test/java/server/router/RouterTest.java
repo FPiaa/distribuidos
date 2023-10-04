@@ -3,8 +3,11 @@ package server.router;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
+import protocol.response.Response;
 import server.exceptions.BadRequestException;
 import server.exceptions.MethodNotAllowedException;
+import server.exceptions.ServerResponseException;
+import server.layer.initialLayer.StartTemplate;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -16,7 +19,13 @@ public class RouterTest {
     @BeforeEach
     public void createRouter() {
         router = Router.builder()
-                .addRoute("OP1", jsonString -> null)
+                .addRoute("OP1", new StartTemplate<>() {
+
+                    @Override
+                    public Response<?> startService(String jsonString) throws ServerResponseException {
+                        return null;
+                    }
+                })
                 .build();
     }
 

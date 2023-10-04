@@ -2,7 +2,8 @@ package client;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import helper.json.JsonHelper;
-import protocol.request.FindUserRequest;
+import helper.validation.ConstraintViolated;
+import helper.validation.ValidationHelper;
 import protocol.Optional;
 import protocol.request.*;
 import protocol.request.header.Header;
@@ -59,14 +60,19 @@ public class Client {
                     break;
                 }
                 System.out.println("Recebido: " + jsonResponse);
-                Response<?> response = handleResponse(jsonResponse,  request);
+                Response<?> response = handleResponse(jsonResponse, request);
                 System.out.println("Objeto criado: " + response);
-                if(response instanceof LoginResponse) {
+
+                if(response == null) {
+                    continue;
+                }
+
+                if (response instanceof LoginResponse) {
                     token = ((LoginResponse) response).payload().token();
                     System.out.println("token was set");
                 }
 
-                if(response instanceof LogoutResponse) {
+                if (response instanceof LogoutResponse) {
                     break;
                 }
 
@@ -103,26 +109,32 @@ public class Client {
     }
 
     private static Response<?> handleResponse(String json, Request<?> request) {
+        Response<?> response = null;
         try {
             Class<?> clazz = request.getClass();
             if (clazz == LoginRequest.class) {
-                return JsonHelper.fromJson(json, LoginResponse.class);
+                response = JsonHelper.fromJson(json, LoginResponse.class);
             }
             if (clazz == LogoutRequest.class) {
-                return JsonHelper.fromJson(json, LogoutResponse.class);
+                response = JsonHelper.fromJson(json, LogoutResponse.class);
             }
-            if(clazz == FindUsersRequest.class) {
-                return JsonHelper.fromJson(json, FindUsersResponse.class);
+            if (clazz == FindUsersRequest.class) {
+                response = JsonHelper.fromJson(json, FindUsersResponse.class);
             }
-            if(clazz == FindUserRequest.class) {
-                return JsonHelper.fromJson(json, FindUserResponse.class);
+            if (clazz == FindUserRequest.class) {
+                response = JsonHelper.fromJson(json, FindUserResponse.class);
             }
+
+            if (response == null || response.payload() == null) {
+                response = JsonHelper.fromJson(json, ErrorResponse.class);
+            }
+            ValidationHelper.validate(response);
+        } catch (ConstraintViolated e) {
+            System.err.println("Não foi possível validar a resposta%n" + e.getMessage());
+
+
         } catch (JsonProcessingException e) {
-            try {
-                return JsonHelper.fromJson(json, ErrorResponse.class);
-            } catch (JsonProcessingException ex) {
-                throw new RuntimeException(ex);
-            }
+            System.err.println("Erro no json recebido");
         }
         return null;
     }
@@ -149,10 +161,9 @@ public class Client {
                 }
                 System.out.print(": ");
                 String line = stdin.readLine();
-                if(parameters[i].getType() == Integer.class) {
+                if (parameters[i].getType() == Integer.class) {
                     constructorArguments[i] = Integer.parseInt(line);
-                }
-                else {
+                } else {
                     constructorArguments[i] = line;
                 }
             }

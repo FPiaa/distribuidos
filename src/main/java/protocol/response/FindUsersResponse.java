@@ -6,7 +6,7 @@ import server.entity.User;
 
 import java.util.List;
 
-public record FindUsersResponse(Payload payload) implements Response<FindUsersResponse.Payload> {
+public record FindUsersResponse(@NotNull @Valid Payload payload) implements Response<FindUsersResponse.Payload> {
 
     public FindUsersResponse(List<User> users) {
         this(new Payload(users));

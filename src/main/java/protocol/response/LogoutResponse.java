@@ -1,6 +1,9 @@
 package protocol.response;
 
-public record LogoutResponse(Payload payload) implements Response<LogoutResponse.Payload> {
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
+
+public record LogoutResponse(@NotNull @Valid Payload payload) implements Response<LogoutResponse.Payload> {
 
     public LogoutResponse() {
         this(new Payload("desconectado"));
