@@ -28,7 +28,7 @@ public class Router {
 
     public Response<?> serve(final String string_request) throws ServerResponseException {
 
-        EmptyRequest req = null;
+        EmptyRequest req;
         try {
             req = JsonHelper.fromJson(string_request, EmptyRequest.class);
             ValidationHelper.validate(req);

@@ -15,7 +15,7 @@ public class StartLogin implements InitialLayer {
 
     @Override
     public Response<?> startService(String jsonString) throws ServerResponseException {
-        LoginRequest loginRequest = null;
+        LoginRequest loginRequest;
         try {
             loginRequest = JsonHelper.fromJson(jsonString, LoginRequest.class);
             ValidationHelper.validate(loginRequest);
