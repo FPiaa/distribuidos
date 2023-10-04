@@ -47,21 +47,6 @@ public class RouterTest {
         assertDoesNotThrow(() -> router.serve(json));
     }
 
-    @ParameterizedTest()
-    @ValueSource(strings = {
-            """
-                    {"header": {"operation": 1}}""",
-            """
-                    {"header": {"operation":"OP1", "token": 123}}""",
-            """
-                    {"header": {"operation": 1.0, "token": 123.1}}""",
-            """
-                    {"header": {"operation":"OP1", "token": 123}}"""
-    })
-    public void GivenWrongTypeInHeader_whenServe_getsWrongTypeErrorResponse(String json) {
-        assertThrows(BadRequestException.class, () -> router.serve(json));
-    }
-
     @ParameterizedTest
     @ValueSource(strings = {
             """

@@ -20,7 +20,7 @@ import java.util.Map;
 public class Router {
 
     @SuppressWarnings("unused")
-    private Map<String, InitialLayer> routes;
+    private Map<String, InitialLayer<?>> routes;
 
     public static RouterBuilder builder() {
         return new RouterBuilder();
@@ -48,9 +48,9 @@ public class Router {
 
     public static class RouterBuilder {
         @NonNull
-        private final Map<String, InitialLayer> routes = new HashMap<>();
+        private final Map<String, InitialLayer<?>> routes = new HashMap<>();
 
-        public RouterBuilder addRoute(String operation, InitialLayer handler) {
+        public RouterBuilder addRoute(String operation, InitialLayer<?> handler) {
             routes.put(operation, handler);
             return this;
         }
