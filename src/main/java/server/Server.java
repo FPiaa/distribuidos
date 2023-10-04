@@ -5,6 +5,7 @@ import protocol.request.RequisitionOperations;
 import protocol.response.LogoutResponse;
 import protocol.response.Response;
 import server.exceptions.ServerResponseException;
+import server.layer.initialLayer.StartFindUsers;
 import server.layer.initialLayer.StartLogin;
 import server.layer.initialLayer.StartLogout;
 import server.router.Router;
@@ -26,6 +27,7 @@ public class Server extends Thread {
             routes = Router.builder()
                     .addRoute(RequisitionOperations.LOGIN, new StartLogin())
                     .addRoute(RequisitionOperations.LOGOUT, new StartLogout())
+                    .addRoute(RequisitionOperations.ADMIN_BUSCAR_USUARIOS, new StartFindUsers())
                     .build();
         }
         start();

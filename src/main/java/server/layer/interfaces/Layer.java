@@ -12,6 +12,6 @@ public interface Layer<Req extends Request<?>, Res extends Response<?>> {
 
     Layer<Req, Res> addLayer(Layer<Req, Res> newLayer);
 
-    void buildService(FinishLayer<Req, Res> consumer);
+    Layer<Req, Res> buildService(FinishLayer<Req, Res> consumer);
 
 }

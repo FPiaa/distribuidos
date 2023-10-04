@@ -3,15 +3,9 @@ package client;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import helper.json.JsonHelper;
 import protocol.Optional;
-import protocol.request.LoginRequest;
-import protocol.request.LogoutRequest;
-import protocol.request.Request;
-import protocol.request.RequisitionOperations;
+import protocol.request.*;
 import protocol.request.header.Header;
-import protocol.response.ErrorResponse;
-import protocol.response.LoginResponse;
-import protocol.response.LogoutResponse;
-import protocol.response.Response;
+import protocol.response.*;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -68,6 +62,7 @@ public class Client {
                 System.out.println("Objeto criado: " + response);
                 if(response instanceof LoginResponse) {
                     token = ((LoginResponse) response).payload().token();
+                    System.out.println("token was set");
                 }
 
                 if(response instanceof LogoutResponse) {
@@ -97,6 +92,8 @@ public class Client {
                     return makeRequest(stdin, token, LoginRequest.class);
                 case RequisitionOperations.LOGOUT:
                     return makeRequest(stdin, token, LogoutRequest.class);
+                case RequisitionOperations.ADMIN_BUSCAR_USUARIOS:
+                    return makeRequest(stdin, token, FindUsersRequest.class);
             }
         }
     }
@@ -109,6 +106,9 @@ public class Client {
             }
             if (clazz == LogoutRequest.class) {
                 return JsonHelper.fromJson(json, LogoutResponse.class);
+            }
+            if(clazz == FindUsersRequest.class) {
+                return JsonHelper.fromJson(json, FindUsersResponse.class);
             }
         } catch (JsonProcessingException e) {
             try {
