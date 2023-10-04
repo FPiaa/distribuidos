@@ -2,6 +2,7 @@ package client;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import helper.json.JsonHelper;
+import protocol.request.FindUserRequest;
 import protocol.Optional;
 import protocol.request.*;
 import protocol.request.header.Header;
@@ -94,6 +95,9 @@ public class Client {
                     return makeRequest(stdin, token, LogoutRequest.class);
                 case RequisitionOperations.ADMIN_BUSCAR_USUARIOS:
                     return makeRequest(stdin, token, FindUsersRequest.class);
+                case RequisitionOperations.ADMIN_BUSCAR_USUARIO:
+                    return makeRequest(stdin, token, FindUserRequest.class);
+
             }
         }
     }
@@ -109,6 +113,9 @@ public class Client {
             }
             if(clazz == FindUsersRequest.class) {
                 return JsonHelper.fromJson(json, FindUsersResponse.class);
+            }
+            if(clazz == FindUserRequest.class) {
+                return JsonHelper.fromJson(json, FindUserResponse.class);
             }
         } catch (JsonProcessingException e) {
             try {
@@ -141,7 +148,13 @@ public class Client {
                     System.out.print(" (opcional)");
                 }
                 System.out.print(": ");
-                constructorArguments[i] = stdin.readLine();
+                String line = stdin.readLine();
+                if(parameters[i].getType() == Integer.class) {
+                    constructorArguments[i] = Integer.parseInt(line);
+                }
+                else {
+                    constructorArguments[i] = line;
+                }
             }
 
             // this casting is fine, but the compiler cant be sure because its generic type
