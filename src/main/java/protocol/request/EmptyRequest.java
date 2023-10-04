@@ -6,6 +6,7 @@ import protocol.request.header.Header;
 
 public record EmptyRequest(
         @NotNull @Valid Header header,
-        Void payload
-) implements Request<Void> {
+        Payload payload
+) implements Request<EmptyRequest.Payload> {
+    public record Payload(){}
 }

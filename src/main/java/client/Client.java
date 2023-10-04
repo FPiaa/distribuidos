@@ -1,6 +1,6 @@
 package client;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
+import com.google.gson.JsonSyntaxException;
 import helper.json.JsonHelper;
 import helper.validation.ConstraintViolated;
 import helper.validation.ValidationHelper;
@@ -129,11 +129,11 @@ public class Client {
                 response = JsonHelper.fromJson(json, ErrorResponse.class);
             }
             ValidationHelper.validate(response);
+            return response;
         } catch (ConstraintViolated e) {
             System.err.println("Não foi possível validar a resposta%n" + e.getMessage());
-
-
-        } catch (JsonProcessingException e) {
+            return response;
+        } catch (JsonSyntaxException e) {
             System.err.println("Erro no json recebido");
         }
         return null;

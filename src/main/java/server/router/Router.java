@@ -1,6 +1,6 @@
 package server.router;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
+import com.google.gson.JsonSyntaxException;
 import helper.json.JsonHelper;
 import helper.validation.ConstraintViolated;
 import helper.validation.ValidationHelper;
@@ -32,7 +32,7 @@ public class Router {
         try {
             req = JsonHelper.fromJson(string_request, EmptyRequest.class);
             ValidationHelper.validate(req);
-        } catch (JsonProcessingException e) {
+        } catch (JsonSyntaxException e) {
             throw new BadRequestException("Invalid header");
         } catch (ConstraintViolated e) {
             throw new BadRequestException(e.getMessage());

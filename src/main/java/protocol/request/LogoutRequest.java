@@ -8,10 +8,13 @@ public record LogoutRequest(
         @NotNull
         @Valid
         Header header,
-        Void payload
-) implements Request<Void> {
+        Payload payload
+) implements Request<LogoutRequest.Payload> {
     public LogoutRequest(final String userToken) {
         this(new Header(RequisitionOperations.LOGOUT, userToken), null);
+    }
+
+    public record Payload() {
     }
 
 }

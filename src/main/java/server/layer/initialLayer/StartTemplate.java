@@ -1,6 +1,6 @@
 package server.layer.initialLayer;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
+import com.google.gson.JsonSyntaxException;
 import helper.json.JsonHelper;
 import helper.validation.ConstraintViolated;
 import helper.validation.ValidationHelper;
@@ -16,7 +16,7 @@ public abstract class StartTemplate<T> implements InitialLayer<T> {
              var request = JsonHelper.fromJson(jsonString, clazz);
              ValidationHelper.validate(request);
              return request;
-        } catch (JsonProcessingException e) {
+        } catch (JsonSyntaxException e) {
             throw new BadRequestException("");
         } catch (ConstraintViolated e) {
             throw new BadRequestException(e.getMessage());
