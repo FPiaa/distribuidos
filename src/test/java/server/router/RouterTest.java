@@ -34,17 +34,43 @@ public class RouterTest {
             {"header": {"operation":"OP1"}}
             """,
             """
-                    {"header": {"operation":"OP1", "token": "token"}}
+                    {"header": {"operation":"OP1", "token": "token.token.token"}}
                     """,
             """
-                    {"header": {"operation":"OP1", "token": "token"}, "payload": null}
+                    {"header": {"operation":"OP1", "token": "token.token.token"}, "payload": null}
                     """,
             """
-                    {"header": {"operation":"OP1", "token": "token"}, "payload": {"some": 123, "object": "foo"}}
+                    {"header": {"operation":"OP1", "token": "token.token.token"}, "payload": {"some": 123, "object": "foo"}}
                     """
     })
     public void GivenValidRequestHeader_whenServe_getsResponse(String json) {
         assertDoesNotThrow(() -> router.serve(json));
+    }
+
+
+
+    @ParameterizedTest
+    @ValueSource(strings = {"""
+            {"header": {"operation":"OP1", "token": "123.1"}}
+            """,
+            """
+                    {"header": {"operation":"OP1", "token": ""}}
+                    """,
+            """
+                    {"header": {"operation":"OP1", "token": "token.token"}}
+                    """,
+            """
+                    {"header": {"operation":"OP1", "token": ".token.token"}}
+                    """,
+            """
+                    {"header": {"operation":"OP1", "token": ".t123,123.123"}}
+                    """,
+            """
+                    {"header": {"operation":"OP1", "token": "´1´123´]~[][][;[][.;12;][.]123"}}
+                    """
+    })
+    public void GivenInvalidRequestTokenFormat_whenServe_getsBadRequestException(String json) {
+        assertThrows(BadRequestException.class, () -> router.serve(json));
     }
 
     @ParameterizedTest
@@ -57,13 +83,13 @@ public class RouterTest {
                     {"header": {"operation":""}}
                     """,
             """
-                    {"header": {"token": "token"}}
+                    {"header": {"token": "token.token.token"}}
                     """,
             """
                     {"header": {}}
                     """,
     })
-    public void GivenHeaderMissingOperation_whenServe_getsMissingObligatoryFieldsResponse(String json) {
+    public void GivenHeaderMissingOperation_whenServe_getsBadRequestException(String json) {
         assertThrows(BadRequestException.class, () -> router.serve(json));
     }
 
@@ -73,13 +99,13 @@ public class RouterTest {
                     {"header": {"operation":"OP2"}}
                     """,
             """
-                    {"header": {"operation":"OP2", "token": "token"}}
+                    {"header": {"operation":"OP2", "token": "token.token.token"}}
                     """,
             """
-                    {"header": {"operation":"OP2", "token": "token"}, "payload": null}
+                    {"header": {"operation":"OP2", "token": "token.token.token"}, "payload": null}
                     """,
             """
-                    {"header": {"operation":"OP2", "token": "token"}, "payload": {"some": 123, "object": "foo"}}
+                    {"header": {"operation":"OP2", "token": "token.token.token"}, "payload": {"some": 123, "object": "foo"}}
                     """
     })
     public void GivenValidHeaderWithoutKnownOperation_whenServe_getsMethodNotAllowedErrorResponse(String json) {
