@@ -1,11 +1,9 @@
 package protocol.response;
 
-import com.fasterxml.jackson.annotation.JsonRootName;
-
-@JsonRootName(value = "payload")
-public record LogoutResponse(String payload) implements Response<String> {
+public record LogoutResponse(Payload payload) implements Response<LogoutResponse.Payload> {
 
     public LogoutResponse() {
-        this("desconectado");
+        this(new Payload("desconectado"));
     }
+    public record Payload(String mensagem) { }
 }
