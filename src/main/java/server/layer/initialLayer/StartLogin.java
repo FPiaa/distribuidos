@@ -1,15 +1,18 @@
 package server.layer.initialLayer;
 
 import protocol.request.LoginRequest;
+import protocol.response.LoginResponse;
 import protocol.response.Response;
+import server.controller.UserController;
 import server.exceptions.ServerResponseException;
-import server.layer.finishLayer.ProcessLogin;
 
 public class StartLogin extends StartTemplate<LoginRequest> {
 
     @Override
     public Response<?> startService(String jsonString) throws ServerResponseException {
         LoginRequest loginRequest = buildRequest(jsonString, LoginRequest.class);
-        return new ProcessLogin().finish(loginRequest);
+
+        String token = UserController.getInstance().login(loginRequest.payload());
+        return new LoginResponse(token);
     }
 }
