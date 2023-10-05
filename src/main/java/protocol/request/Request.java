@@ -10,7 +10,7 @@ import protocol.request.header.Header;
 @Data
 @AllArgsConstructor
 public abstract class Request<T> {
-    @NotNull
+    @NotNull(message = "header não pode estar nulo")
     @Valid
     final Header header;
 

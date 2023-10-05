@@ -103,7 +103,8 @@ public class Client {
                     return makeRequest(stdin, token, AdminFindUsersRequest.class);
                 case RequisitionOperations.ADMIN_BUSCAR_USUARIO:
                     return makeRequest(stdin, token, AdminFindUserRequest.class);
-
+                case RequisitionOperations.ADMIN_CADASTRAR_USUARIO:
+                    return makeRequest(stdin, token, AdminCreateUserRequest.class);
             }
         }
     }
@@ -144,8 +145,16 @@ public class Client {
     private static <T> T makeRequest(BufferedReader stdin, String token, Class<T> clazz) throws IOException {
         for (Constructor<?> constructor : clazz.getConstructors()) {
             Parameter[] parameters = constructor.getParameters();
-            if (parameters.length == 2 && parameters[0].getType() == Header.class) {
-                // default constructor of every request record
+            boolean shouldSkip = false;
+
+            for (Parameter parameter: parameters) {
+               if (parameter.getType() == Header.class) {
+                   shouldSkip = true;
+                   break;
+               }
+            }
+            if (shouldSkip) {
+                // it is the default constructos
                 continue;
             }
 
@@ -163,7 +172,10 @@ public class Client {
                 String line = stdin.readLine();
                 if (parameters[i].getType() == Integer.class) {
                     constructorArguments[i] = Integer.parseInt(line);
-                } else {
+                }else if(parameters[i].getType() == Boolean.class) {
+                    constructorArguments[i] = Boolean.parseBoolean(line);
+                }
+                else {
                     constructorArguments[i] = line;
                 }
             }
