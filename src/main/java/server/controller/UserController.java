@@ -2,6 +2,7 @@ package server.controller;
 
 import jwt.JwtHelper;
 import protocol.request.LoginRequest;
+import server.dto.UpdateUser;
 import server.entity.UserEntity;
 import server.exceptions.ResourceNotFoundException;
 
@@ -37,6 +38,10 @@ public class UserController {
 
     public UserEntity createUser(UserEntity user) {
         return user;
+    }
+
+    public UserEntity updateUser(UpdateUser user) {
+        return null;
     }
 
 }

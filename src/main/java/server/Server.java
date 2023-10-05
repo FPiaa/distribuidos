@@ -28,6 +28,7 @@ public class Server extends Thread {
                     .addRoute(RequisitionOperations.ADMIN_BUSCAR_USUARIOS, new StartAdminFindUsers())
                     .addRoute(RequisitionOperations.ADMIN_BUSCAR_USUARIO, new StartAdminFindUser())
                     .addRoute(RequisitionOperations.ADMIN_CADASTRAR_USUARIO, new StartAdminCreateUser())
+                    .addRoute(RequisitionOperations.ADMIN_ATUALIZAR_USUARIO, new StartAdminUpdateUser())
                     .build();
         }
         start();
