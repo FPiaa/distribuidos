@@ -6,7 +6,7 @@ import protocol.response.Response;
 import server.controller.UserController;
 import server.exceptions.ServerResponseException;
 
-public class StartLogin extends StartTemplate<LoginRequest> {
+public class StartLogin extends StartTemplate {
 
     @Override
     public Response<?> startService(String jsonString) throws ServerResponseException {

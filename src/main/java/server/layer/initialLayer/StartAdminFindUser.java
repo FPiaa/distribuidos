@@ -11,7 +11,7 @@ import server.layer.interfaces.Layer;
 import server.layer.middleware.ValidateAdmin;
 import server.layer.middleware.ValidateToken;
 
-public class StartAdminFindUser extends StartTemplate<AdminFindUserRequest>{
+public class StartAdminFindUser extends StartTemplate {
     @Override
     public Response<?> startService(String jsonString) throws ServerResponseException {
         AdminFindUserRequest request = buildRequest(jsonString, AdminFindUserRequest.class);

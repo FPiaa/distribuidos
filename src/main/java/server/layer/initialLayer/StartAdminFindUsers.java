@@ -12,7 +12,7 @@ import server.layer.middleware.ValidateToken;
 
 import java.util.List;
 
-public class StartAdminFindUsers extends StartTemplate<AdminFindUsersRequest> {
+public class StartAdminFindUsers extends StartTemplate {
     @Override
     public Response<?> startService(String jsonString) throws ServerResponseException {
         AdminFindUsersRequest request = buildRequest(jsonString, AdminFindUsersRequest.class);

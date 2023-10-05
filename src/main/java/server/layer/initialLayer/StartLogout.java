@@ -7,7 +7,7 @@ import server.exceptions.ServerResponseException;
 import server.layer.interfaces.Layer;
 import server.layer.middleware.ValidateToken;
 
-public class StartLogout extends StartTemplate<LogoutRequest>{
+public class StartLogout extends StartTemplate{
     @Override
     public Response<?> startService(String jsonString) throws ServerResponseException {
         Layer<LogoutRequest, LogoutResponse> validate = new ValidateToken<>();

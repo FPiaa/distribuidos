@@ -8,10 +8,10 @@ import server.exceptions.BadRequestException;
 import server.exceptions.ServerResponseException;
 import server.layer.interfaces.InitialLayer;
 
-public abstract class StartTemplate<T> implements InitialLayer<T> {
+public abstract class StartTemplate implements InitialLayer {
 
     @Override
-    public T buildRequest(String jsonString, Class<T> clazz) throws ServerResponseException {
+    public <T>  T buildRequest(String jsonString, Class<T> clazz) throws ServerResponseException {
         try {
              var request = JsonHelper.fromJson(jsonString, clazz);
              ValidationHelper.validate(request);

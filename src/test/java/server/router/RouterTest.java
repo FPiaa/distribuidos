@@ -19,7 +19,7 @@ public class RouterTest {
     @BeforeEach
     public void createRouter() {
         router = Router.builder()
-                .addRoute("OP1", new StartTemplate<>() {
+                .addRoute("OP1", new StartTemplate() {
 
                     @Override
                     public Response<?> startService(String jsonString) throws ServerResponseException {
