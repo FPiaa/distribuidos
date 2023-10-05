@@ -12,7 +12,7 @@ public class StartLogin extends StartTemplate<LoginRequest> {
     public Response<?> startService(String jsonString) throws ServerResponseException {
         LoginRequest loginRequest = buildRequest(jsonString, LoginRequest.class);
 
-        String token = UserController.getInstance().login(loginRequest.payload());
+        String token = UserController.getInstance().login(loginRequest.getPayload());
         return new LoginResponse(token);
     }
 }

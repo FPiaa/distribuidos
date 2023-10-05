@@ -19,7 +19,7 @@ public class StartAdminFindUser extends StartTemplate<FindUserRequest>{
                 .addLayer(new ValidateAdmin<>())
                 .buildService((req) -> {
                     UserController controller = UserController.getInstance();
-                    User user = controller.findUser(req.payload().registro());
+                    User user = controller.findUser(req.getPayload().registro());
                     return new FindUserResponse(user);
                 });
 

@@ -13,7 +13,7 @@ public class ValidateUser<Req extends Request<?>, Res extends Response<?>> exten
 
     @Override
     public void check(Req request) throws ServerResponseException {
-        String token = request.header().token();
+        String token = request.getHeader().token();
         if (token == null) {
             throw new UnauthorizedAccessException();
         }

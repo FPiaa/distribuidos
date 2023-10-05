@@ -12,7 +12,7 @@ import server.exceptions.UnauthorizedAccessException;
 public class ValidateAdmin<Req extends Request<?>, Res extends Response<?>> extends LayerTemplate<Req, Res> {
     @Override
     public void check(Req request) throws ServerResponseException {
-        String token = request.header().token();
+        String token = request.getHeader().token();
         if (token == null) {
             throw new UnauthorizedAccessException();
         }

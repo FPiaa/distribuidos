@@ -38,9 +38,9 @@ public class Router {
             throw new BadRequestException(e.getMessage());
         }
 
-        var startLayer = routes.get(req.header().operation());
+        var startLayer = routes.get(req.getHeader().operation());
         if (startLayer == null) {
-            throw new MethodNotAllowedException(req.header().operation());
+            throw new MethodNotAllowedException(req.getHeader().operation());
         }
 
         return startLayer.startService(string_request);
