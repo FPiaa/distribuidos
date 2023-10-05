@@ -140,7 +140,7 @@ public class Client {
             ValidationHelper.validate(response);
             return response;
         } catch (ConstraintViolated e) {
-            System.err.println("Não foi possível validar a resposta%n" + e.getMessage());
+            System.err.println("Não foi possível validar a resposta\n" + e.getMessage());
             return response;
         } catch (JsonSyntaxException e) {
             System.err.println("Erro no json recebido");
