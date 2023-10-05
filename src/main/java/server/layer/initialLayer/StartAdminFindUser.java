@@ -9,14 +9,14 @@ import server.entity.UserEntity;
 import server.exceptions.ServerResponseException;
 import server.layer.interfaces.Layer;
 import server.layer.middleware.ValidateAdmin;
-import server.layer.middleware.ValidateUser;
+import server.layer.middleware.ValidateToken;
 
 public class StartAdminFindUser extends StartTemplate<AdminFindUserRequest>{
     @Override
     public Response<?> startService(String jsonString) throws ServerResponseException {
         AdminFindUserRequest request = buildRequest(jsonString, AdminFindUserRequest.class);
 
-        Layer<AdminFindUserRequest, FindUserResponse> layer = new ValidateUser<AdminFindUserRequest, FindUserResponse>()
+        Layer<AdminFindUserRequest, FindUserResponse> layer = new ValidateToken<AdminFindUserRequest, FindUserResponse>()
                 .addLayer(new ValidateAdmin<>())
                 .buildService((req) -> {
                     UserController controller = UserController.getInstance();

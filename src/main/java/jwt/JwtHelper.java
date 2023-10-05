@@ -20,4 +20,8 @@ public class JwtHelper {
         JWTVerifier verifier = JWT.require(Algorithm.HMAC256("hiuhi")).build();
         return verifier.verify(token);
     }
+
+    public static DecodedJWT decode(String token) {
+        return JWT.decode(token);
+    }
 }

@@ -8,7 +8,7 @@ import server.dto.UserDTO;
 import server.exceptions.ServerResponseException;
 import server.layer.interfaces.Layer;
 import server.layer.middleware.ValidateAdmin;
-import server.layer.middleware.ValidateUser;
+import server.layer.middleware.ValidateToken;
 
 import java.util.List;
 
@@ -17,7 +17,7 @@ public class StartAdminFindUsers extends StartTemplate<AdminFindUsersRequest> {
     public Response<?> startService(String jsonString) throws ServerResponseException {
         AdminFindUsersRequest request = buildRequest(jsonString, AdminFindUsersRequest.class);
 
-        Layer<AdminFindUsersRequest, FindUsersResponse> validateUser = new ValidateUser<AdminFindUsersRequest, FindUsersResponse>()
+        Layer<AdminFindUsersRequest, FindUsersResponse> validateUser = new ValidateToken<AdminFindUsersRequest, FindUsersResponse>()
                 .addLayer(new ValidateAdmin<>())
                 .buildService(req -> {
                     var userController = UserController.getInstance();
