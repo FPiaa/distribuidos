@@ -2,8 +2,8 @@ package protocol.request;
 
 import protocol.request.header.Header;
 
-public class FindUsersRequest extends Request<EmptyPayload> {
-    public FindUsersRequest(final String token) {
+public class AdminFindUsersRequest extends Request<EmptyPayload> {
+    public AdminFindUsersRequest(final String token) {
         super(new Header(RequisitionOperations.ADMIN_BUSCAR_USUARIOS, token));
     }
 }

@@ -7,15 +7,17 @@ import lombok.Getter;
 import protocol.request.header.Header;
 
 @Getter
-public class FindUserRequest extends Request<FindUserRequest.Payload> {
+public class AdminFindUserRequest extends Request<AdminFindUserRequest.Payload> {
 
-    @NotNull @Valid private final Payload payload;
+    @NotNull(message = "payload não pode ser nulo")
+    @Valid
+    private final Payload payload;
 
-    public FindUserRequest(String token, Integer registro) {
+    public AdminFindUserRequest(String token, Integer registro) {
         super(new Header(RequisitionOperations.ADMIN_BUSCAR_USUARIO, token));
         payload = new Payload(registro);
     }
 
-    public record Payload(@Positive int registro) {
+    public record Payload(@Positive(message = "registro deve ser maior que zero") int registro) {
     }
 }

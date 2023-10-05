@@ -100,9 +100,9 @@ public class Client {
                 case RequisitionOperations.LOGOUT:
                     return makeRequest(stdin, token, LogoutRequest.class);
                 case RequisitionOperations.ADMIN_BUSCAR_USUARIOS:
-                    return makeRequest(stdin, token, FindUsersRequest.class);
+                    return makeRequest(stdin, token, AdminFindUsersRequest.class);
                 case RequisitionOperations.ADMIN_BUSCAR_USUARIO:
-                    return makeRequest(stdin, token, FindUserRequest.class);
+                    return makeRequest(stdin, token, AdminFindUserRequest.class);
 
             }
         }
@@ -118,10 +118,10 @@ public class Client {
             if (clazz == LogoutRequest.class) {
                 response = JsonHelper.fromJson(json, LogoutResponse.class);
             }
-            if (clazz == FindUsersRequest.class) {
+            if (clazz == AdminFindUsersRequest.class) {
                 response = JsonHelper.fromJson(json, FindUsersResponse.class);
             }
-            if (clazz == FindUserRequest.class) {
+            if (clazz == AdminFindUserRequest.class) {
                 response = JsonHelper.fromJson(json, FindUserResponse.class);
             }
 

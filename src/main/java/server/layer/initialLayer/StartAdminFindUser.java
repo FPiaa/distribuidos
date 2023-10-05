@@ -1,6 +1,6 @@
 package server.layer.initialLayer;
 
-import protocol.request.FindUserRequest;
+import protocol.request.AdminFindUserRequest;
 import protocol.response.FindUserResponse;
 import protocol.response.Response;
 import server.controller.UserController;
@@ -10,12 +10,12 @@ import server.layer.interfaces.Layer;
 import server.layer.middleware.ValidateAdmin;
 import server.layer.middleware.ValidateUser;
 
-public class StartAdminFindUser extends StartTemplate<FindUserRequest>{
+public class StartAdminFindUser extends StartTemplate<AdminFindUserRequest>{
     @Override
     public Response<?> startService(String jsonString) throws ServerResponseException {
-        FindUserRequest request = buildRequest(jsonString, FindUserRequest.class);
+        AdminFindUserRequest request = buildRequest(jsonString, AdminFindUserRequest.class);
 
-        Layer<FindUserRequest, FindUserResponse> layer = new ValidateUser<FindUserRequest, FindUserResponse>()
+        Layer<AdminFindUserRequest, FindUserResponse> layer = new ValidateUser<AdminFindUserRequest, FindUserResponse>()
                 .addLayer(new ValidateAdmin<>())
                 .buildService((req) -> {
                     UserController controller = UserController.getInstance();

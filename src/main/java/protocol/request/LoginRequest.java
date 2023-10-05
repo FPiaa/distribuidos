@@ -10,14 +10,19 @@ import protocol.request.header.Header;
 @Getter
 public class LoginRequest extends Request<LoginRequest.Payload> {
 
-    @NotNull @Valid private final Payload payload;
+    @NotNull(message = "payload não pode ser nulo")
+    @Valid private final Payload payload;
 
     public LoginRequest(final String email, final String password) {
         super(new Header(RequisitionOperations.LOGIN, null));
         payload = new Payload(email, password);
     }
 
-    public record Payload(@NotBlank @Email String email, @NotBlank String password) {
+    public record Payload(
+            @NotBlank(message = "email não pode estar vazio")
+            @Email(message = "email deve conter um email válido")
+            String email,
+            @NotBlank(message = "password não pode estar vazio") String password) {
     }
 }
 
