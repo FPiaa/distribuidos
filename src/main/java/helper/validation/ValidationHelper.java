@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 public class ValidationHelper {
     private static final Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
 
-    public static <T> void validate(T object) throws ConstraintViolated{
+    public static <T> void validate(T object) throws ConstraintViolated {
         var violations = validator.validate(object);
         if (!violations.isEmpty()) {
             String fields = violations.stream().map(ConstraintViolation::getMessage)

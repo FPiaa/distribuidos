@@ -11,11 +11,11 @@ import server.layer.interfaces.InitialLayer;
 public abstract class StartTemplate implements InitialLayer {
 
     @Override
-    public <T>  T buildRequest(String jsonString, Class<T> clazz) throws ServerResponseException {
+    public <T> T buildRequest(String jsonString, Class<T> clazz) throws ServerResponseException {
         try {
-             var request = JsonHelper.fromJson(jsonString, clazz);
-             ValidationHelper.validate(request);
-             return request;
+            var request = JsonHelper.fromJson(jsonString, clazz);
+            ValidationHelper.validate(request);
+            return request;
         } catch (JsonSyntaxException e) {
             throw new BadRequestException("");
         } catch (ConstraintViolated e) {

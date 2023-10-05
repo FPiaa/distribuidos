@@ -1,7 +1,10 @@
 package protocol.request;
 
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import protocol.request.header.Header;
 
@@ -23,7 +26,7 @@ public class AdminCreateUserRequest extends Request<AdminCreateUserRequest.Paylo
             @Size(min = 3, max = 255, message = "nome deve conter entre 3 e 255 caracteres")
             String nome,
             @NotBlank(message = "email não pode estar vazio")
-                    @Email
+            @Email
             String email,
             @NotBlank(message = "senha não pode estar vazio")
             String senha,

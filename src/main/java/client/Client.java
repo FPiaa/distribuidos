@@ -63,7 +63,7 @@ public class Client {
                 Response<?> response = handleResponse(jsonResponse, request);
                 System.out.println("Objeto criado: " + response);
 
-                if(response == null) {
+                if (response == null) {
                     continue;
                 }
 
@@ -130,7 +130,7 @@ public class Client {
             if (clazz == AdminCreateUserRequest.class) {
                 response = JsonHelper.fromJson(json, AdminCreateUserResponse.class);
             }
-            if(clazz == AdminUpdateUserRequest.class) {
+            if (clazz == AdminUpdateUserRequest.class) {
                 response = JsonHelper.fromJson(json, AdminUpdateUserResponse.class);
             }
 
@@ -155,11 +155,11 @@ public class Client {
             Parameter[] parameters = constructor.getParameters();
             boolean shouldSkip = false;
 
-            for (Parameter parameter: parameters) {
-               if (parameter.getType() == Header.class) {
-                   shouldSkip = true;
-                   break;
-               }
+            for (Parameter parameter : parameters) {
+                if (parameter.getType() == Header.class) {
+                    shouldSkip = true;
+                    break;
+                }
             }
             if (shouldSkip) {
                 // it is the default constructos
@@ -178,16 +178,14 @@ public class Client {
                 }
                 System.out.print(": ");
                 String line = stdin.readLine();
-                if(line.isBlank() || line.isEmpty()){
+                if (line.isBlank() || line.isEmpty()) {
                     constructorArguments[i] = null;
-                }
-                else if (parameters[i].getType() == Integer.class) {
+                } else if (parameters[i].getType() == Integer.class) {
                     constructorArguments[i] = Integer.parseInt(line);
-                }else if(parameters[i].getType() == Boolean.class) {
+                } else if (parameters[i].getType() == Boolean.class) {
 
                     constructorArguments[i] = Boolean.parseBoolean(line);
-                }
-                else {
+                } else {
                     constructorArguments[i] = line;
                 }
             }

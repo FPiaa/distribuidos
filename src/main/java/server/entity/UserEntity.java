@@ -18,8 +18,8 @@ public record UserEntity(
         @Positive
         int id
 ) {
-        public static UserEntity of(AdminCreateUserRequest.Payload user) {
-                return new UserEntity(user.nome(), user.email(), user.senha(), user.tipo(), 1);
-        }
+    public static UserEntity of(AdminCreateUserRequest.Payload user) {
+        return new UserEntity(user.nome(), user.email(), user.senha(), user.tipo(), 1);
+    }
 
 }

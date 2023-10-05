@@ -11,7 +11,7 @@ public abstract class LayerTemplate<Req extends Request<?>, Res extends Response
     private FinishLayer<Req, Res> finish = null;
 
     @Override
-    public Res next(Req request) throws ServerResponseException{
+    public Res next(Req request) throws ServerResponseException {
         check(request);
         if (finish != null) {
             return finish.finish(request);
@@ -24,8 +24,7 @@ public abstract class LayerTemplate<Req extends Request<?>, Res extends Response
         if (next == null) {
             next = newLayer;
             return this;
-        }
-        else {
+        } else {
             next.addLayer(newLayer);
         }
         return this;
@@ -33,10 +32,9 @@ public abstract class LayerTemplate<Req extends Request<?>, Res extends Response
 
     @Override
     public Layer<Req, Res> buildService(FinishLayer<Req, Res> consumer) {
-        if(next != null) {
+        if (next != null) {
             next.buildService(consumer);
-        }
-        else {
+        } else {
             finish = consumer;
         }
         return this;

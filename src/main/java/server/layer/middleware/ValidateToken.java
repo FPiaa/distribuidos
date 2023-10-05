@@ -30,7 +30,7 @@ public class ValidateToken<Req extends Request<?>, Res extends Response<?>> exte
         // checando se o token possui os campos obrigatórios
         Claim userId = jwt.getClaim("userId");
         Claim isAdmin = jwt.getClaim("isAdmin");
-        if (userId.isMissing() || userId.isNull() ||isAdmin.isMissing() || isAdmin.isNull()){
+        if (userId.isMissing() || userId.isNull() || isAdmin.isMissing() || isAdmin.isNull()) {
             throw new UnauthorizedAccessException();
         }
     }

@@ -13,14 +13,14 @@ import java.util.stream.Stream;
 public class UserController {
     private static UserController instance = null;
 
+    private UserController() {
+    }
+
     public static UserController getInstance() {
         if (instance == null) {
             instance = new UserController();
         }
         return instance;
-    }
-
-    private UserController() {
     }
 
     public String login(LoginRequest.Payload ignoredUserToLogin) throws ResourceNotFoundException {

@@ -1,6 +1,8 @@
 package protocol.request;
 
-import jakarta.validation.constraints.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import protocol.Optional;
 import protocol.request.header.Header;

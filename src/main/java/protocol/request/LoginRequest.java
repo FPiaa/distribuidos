@@ -11,7 +11,8 @@ import protocol.request.header.Header;
 public class LoginRequest extends Request<LoginRequest.Payload> {
 
     @NotNull(message = "payload não pode ser nulo")
-    @Valid private final Payload payload;
+    @Valid
+    private final Payload payload;
 
     public LoginRequest(final String email, final String password) {
         super(new Header(RequisitionOperations.LOGIN, null));
@@ -20,7 +21,7 @@ public class LoginRequest extends Request<LoginRequest.Payload> {
 
     public record Payload(
             @NotBlank(message = "email não pode estar vazio")
-                    @Email
+            @Email
             String email,
             @NotBlank(message = "password não pode estar vazio") String password) {
     }

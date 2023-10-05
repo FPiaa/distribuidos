@@ -22,8 +22,7 @@ public class ValidateAdmin<Req extends Request<?>, Res extends Response<?>> exte
                 }
                 throw new ForbiddenAccessException();
             }
-        }
-        catch (JWTVerificationException e) {
+        } catch (JWTVerificationException e) {
             throw new ForbiddenAccessException();
         }
     }
