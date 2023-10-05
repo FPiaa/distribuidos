@@ -33,6 +33,7 @@ public class JwtHelper {
         Claim id = jwt.getClaim("isAdmin");
         return id.asBoolean();
     }
+
     public static DecodedJWT decode(String token) {
         return JWT.decode(token);
     }

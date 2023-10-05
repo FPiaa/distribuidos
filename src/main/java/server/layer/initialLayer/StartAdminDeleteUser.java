@@ -10,7 +10,7 @@ import server.exceptions.ServerResponseException;
 import server.layer.middleware.ValidateAdmin;
 import server.layer.middleware.ValidateToken;
 
-public class StartAdminDeleteUser extends StartTemplate{
+public class StartAdminDeleteUser extends StartTemplate {
     @Override
     public Response<?> startService(String jsonString) throws ServerResponseException {
         var request = buildRequest(jsonString, AdminDeleteUserRequest.class);
