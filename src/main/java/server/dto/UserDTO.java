@@ -17,6 +17,9 @@ public record UserDTO(
         int id
 ) {
     public static UserDTO of(UserEntity userEntity) {
+        if(userEntity ==null) {
+            return null;
+        }
         return new UserDTO(userEntity.nome(), userEntity.email(), userEntity.isAdmin(), userEntity.id());
     }
 }

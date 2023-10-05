@@ -105,6 +105,8 @@ public class Client {
                     return makeRequest(stdin, token, AdminFindUserRequest.class);
                 case RequisitionOperations.ADMIN_CADASTRAR_USUARIO:
                     return makeRequest(stdin, token, AdminCreateUserRequest.class);
+                case RequisitionOperations.ADMIN_ATUALIZAR_USUARIO:
+                    return makeRequest(stdin, token, AdminUpdateUserRequest.class);
             }
         }
     }
@@ -127,6 +129,9 @@ public class Client {
             }
             if (clazz == AdminCreateUserRequest.class) {
                 response = JsonHelper.fromJson(json, AdminCreateUserResponse.class);
+            }
+            if(clazz == AdminUpdateUserRequest.class) {
+                response = JsonHelper.fromJson(json, AdminUpdateUserResponse.class);
             }
 
             if (response == null || response.payload() == null) {
@@ -173,9 +178,13 @@ public class Client {
                 }
                 System.out.print(": ");
                 String line = stdin.readLine();
-                if (parameters[i].getType() == Integer.class) {
+                if(line.isBlank() || line.isEmpty()){
+                    constructorArguments[i] = null;
+                }
+                else if (parameters[i].getType() == Integer.class) {
                     constructorArguments[i] = Integer.parseInt(line);
                 }else if(parameters[i].getType() == Boolean.class) {
+
                     constructorArguments[i] = Boolean.parseBoolean(line);
                 }
                 else {

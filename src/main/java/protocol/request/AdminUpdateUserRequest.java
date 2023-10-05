@@ -9,7 +9,7 @@ import protocol.request.header.Header;
 public class AdminUpdateUserRequest extends Request<AdminUpdateUserRequest.Payload> {
     private final Payload payload;
 
-    public AdminUpdateUserRequest(String token, int registro, @Optional String email,
+    public AdminUpdateUserRequest(String token, Integer registro, @Optional String email,
                                   @Optional String nome, @Optional String senha,
                                   @Optional Boolean tipo) {
         super(new Header(RequisitionOperations.ADMIN_ATUALIZAR_USUARIO, token));
@@ -18,7 +18,7 @@ public class AdminUpdateUserRequest extends Request<AdminUpdateUserRequest.Paylo
 
     public record Payload(
             @Positive
-            int registro,
+            Integer registro,
             @Email
             String email,
             @Size(min = 3, max = 255)
