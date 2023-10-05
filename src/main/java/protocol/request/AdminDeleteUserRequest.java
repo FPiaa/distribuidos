@@ -3,6 +3,7 @@ package protocol.request;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
+import lombok.Getter;
 import protocol.request.header.Header;
 
 @Getter

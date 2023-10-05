@@ -1,4 +1,4 @@
-package protocol.request;
+package protocol.commons;
 
 public record EmptyPayload() {
 }
