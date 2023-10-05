@@ -2,6 +2,7 @@ package protocol.request;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 import lombok.Getter;
 import protocol.request.header.Header;
 
@@ -17,6 +18,6 @@ public class AdminFindUserRequest extends Request<AdminFindUserRequest.Payload> 
         payload = new Payload(registro);
     }
 
-    public record Payload(int registro) {
+    public record Payload(@Positive int registro) {
     }
 }

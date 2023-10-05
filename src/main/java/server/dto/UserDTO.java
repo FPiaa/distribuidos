@@ -6,6 +6,7 @@ import server.entity.UserEntity;
 public record UserDTO(
         @NotBlank
         @Size(min = 3, max = 255)
+        @Pattern(regexp = "[^\"{}<>()-+/*]")
         String nome,
         @NotBlank
         @Email
