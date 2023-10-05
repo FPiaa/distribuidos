@@ -2,7 +2,7 @@ package protocol.response;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
-import server.entity.User;
+import server.dto.UserDTO;
 
-public record AdminCreateUserResponse(@NotNull @Valid User payload) implements Response<User> {
+public record AdminCreateUserResponse(@NotNull @Valid UserDTO payload) implements Response<UserDTO> {
 }

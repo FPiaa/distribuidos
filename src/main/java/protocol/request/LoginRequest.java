@@ -1,7 +1,6 @@
 package protocol.request;
 
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
@@ -20,7 +19,6 @@ public class LoginRequest extends Request<LoginRequest.Payload> {
 
     public record Payload(
             @NotBlank(message = "email não pode estar vazio")
-            @Email(message = "email deve conter um email válido")
             String email,
             @NotBlank(message = "password não pode estar vazio") String password) {
     }

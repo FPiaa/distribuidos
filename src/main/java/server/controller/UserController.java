@@ -2,11 +2,11 @@ package server.controller;
 
 import jwt.JwtHelper;
 import protocol.request.LoginRequest;
-import server.entity.User;
+import server.entity.UserEntity;
 import server.exceptions.ResourceNotFoundException;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.stream.Stream;
 
 public class UserController {
     private static UserController instance = null;
@@ -25,14 +25,14 @@ public class UserController {
         return JwtHelper.createJWT(true, 1);
     }
 
-    public List<User> findUsers() {
-        var users = new ArrayList<User>();
-        users.add(new User("joao", "joao@gamil.com", false, 1));
-        return users;
+    public Stream<UserEntity> findUsers() {
+        var users = new ArrayList<UserEntity>();
+        users.add(new UserEntity("joao", "joao@gamil.com", "asd", false, 1));
+        return users.stream();
     }
 
-    public User findUser(int id) {
-        return new User("joao", "joao@gamil.com", false, 1);
+    public UserEntity findUser(int id) {
+        return new UserEntity("joao", "joao@gamil.com", "asd", false, 1);
     }
 
 }
