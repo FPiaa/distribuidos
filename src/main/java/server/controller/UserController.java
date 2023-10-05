@@ -3,6 +3,7 @@ package server.controller;
 import jwt.JwtHelper;
 import protocol.request.LoginRequest;
 import server.dto.CreateUser;
+import server.dto.DeleteUser;
 import server.dto.UpdateUser;
 import server.entity.UserEntity;
 import server.exceptions.ResourceNotFoundException;
@@ -45,4 +46,7 @@ public class UserController {
         return null;
     }
 
+    public void deleteUser(DeleteUser user) {
+
+    }
 }
