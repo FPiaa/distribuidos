@@ -21,7 +21,6 @@ public class AdminCreateUserRequest extends Request<AdminCreateUserRequest.Paylo
     public record Payload(
             @NotBlank(message = "nome não pode estar vazio")
             @Size(min = 3, max = 255, message = "nome deve conter entre 3 e 255 caracteres")
-            @Pattern(regexp = "[^\"{}<>()-+/*]")
             String nome,
             @NotBlank(message = "email não pode estar vazio")
                     @Email

@@ -125,6 +125,9 @@ public class Client {
             if (clazz == AdminFindUserRequest.class) {
                 response = JsonHelper.fromJson(json, FindUserResponse.class);
             }
+            if (clazz == AdminCreateUserRequest.class) {
+                response = JsonHelper.fromJson(json, AdminCreateUserResponse.class);
+            }
 
             if (response == null || response.payload() == null) {
                 response = JsonHelper.fromJson(json, ErrorResponse.class);

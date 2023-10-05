@@ -5,10 +5,7 @@ import protocol.request.RequisitionOperations;
 import protocol.response.LogoutResponse;
 import protocol.response.Response;
 import server.exceptions.ServerResponseException;
-import server.layer.initialLayer.StartAdminFindUser;
-import server.layer.initialLayer.StartAdminFindUsers;
-import server.layer.initialLayer.StartLogin;
-import server.layer.initialLayer.StartLogout;
+import server.layer.initialLayer.*;
 import server.router.Router;
 
 import java.io.BufferedReader;
@@ -30,6 +27,7 @@ public class Server extends Thread {
                     .addRoute(RequisitionOperations.LOGOUT, new StartLogout())
                     .addRoute(RequisitionOperations.ADMIN_BUSCAR_USUARIOS, new StartAdminFindUsers())
                     .addRoute(RequisitionOperations.ADMIN_BUSCAR_USUARIO, new StartAdminFindUser())
+                    .addRoute(RequisitionOperations.ADMIN_CADASTRAR_USUARIO, new StartAdminCreateUser())
                     .build();
         }
         start();

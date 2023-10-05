@@ -35,4 +35,8 @@ public class UserController {
         return new UserEntity("joao", "joao@gamil.com", "asd", false, 1);
     }
 
+    public UserEntity createUser(UserEntity user) {
+        return user;
+    }
+
 }
