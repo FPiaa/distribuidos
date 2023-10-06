@@ -20,6 +20,6 @@ public record UserDTO(
         if (userEntity == null) {
             return null;
         }
-        return new UserDTO(userEntity.nome(), userEntity.email(), userEntity.isAdmin(), userEntity.id());
+        return new UserDTO(userEntity.getNome(), userEntity.getEmail(), userEntity.getIsAdmin(), userEntity.getId());
     }
 }

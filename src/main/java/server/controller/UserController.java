@@ -5,7 +5,7 @@ import protocol.request.LoginRequest;
 import server.dto.CreateUser;
 import server.dto.DeleteUser;
 import server.dto.UpdateUser;
-import server.entity.UserEntity;
+import server.dto.UserDTO;
 import server.exceptions.ResourceNotFoundException;
 
 import java.util.ArrayList;
@@ -28,21 +28,21 @@ public class UserController {
         return JwtHelper.createJWT(true, 1);
     }
 
-    public Stream<UserEntity> findUsers() {
-        var users = new ArrayList<UserEntity>();
-        users.add(new UserEntity("joao", "joao@gamil.com", "asd", false, 1));
+    public Stream<UserDTO> findUsers() {
+        var users = new ArrayList<UserDTO>();
+        users.add(new UserDTO("joao", "joao@gamil.com", false, 1));
         return users.stream();
     }
 
-    public UserEntity findUser(int id) {
-        return new UserEntity("joao", "joao@gamil.com", "asd", false, 1);
+    public UserDTO findUser(int id) {
+        return new UserDTO("joao", "joao@gamil.com", false, 1);
     }
 
-    public UserEntity createUser(CreateUser user) {
+    public UserDTO createUser(CreateUser user) {
         return null;
     }
 
-    public UserEntity updateUser(UpdateUser user) {
+    public UserDTO updateUser(UpdateUser user) {
         return null;
     }
 
