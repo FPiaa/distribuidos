@@ -24,7 +24,7 @@ public class StartAdminCreateUser extends StartTemplate {
                             .email(payload.email())
                             .build();
                     var createdUser = UserController.getInstance().createUser(user);
-                    return AdminCreateUserResponse.of(createdUser);
+                    return new AdminCreateUserResponse(createdUser);
                 });
         return layer.next(request);
     }

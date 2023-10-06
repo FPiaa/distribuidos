@@ -22,7 +22,6 @@ public class StartAdminFindUsers extends StartTemplate {
                 .buildService(req -> {
                     var userController = UserController.getInstance();
                     List<UserDTO> users = userController.findUsers()
-                            .map(UserDTO::of)
                             .toList();
                     return new FindUsersResponse(users);
                 });

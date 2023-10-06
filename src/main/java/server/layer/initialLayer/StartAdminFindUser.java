@@ -5,7 +5,6 @@ import protocol.response.FindUserResponse;
 import protocol.response.Response;
 import server.controller.UserController;
 import server.dto.UserDTO;
-import server.entity.UserEntity;
 import server.exceptions.ServerResponseException;
 import server.layer.interfaces.Layer;
 import server.layer.middleware.ValidateAdmin;
@@ -20,8 +19,8 @@ public class StartAdminFindUser extends StartTemplate {
                 .addLayer(new ValidateAdmin<>())
                 .buildService((req) -> {
                     UserController controller = UserController.getInstance();
-                    UserEntity user = controller.findUser(req.getPayload().registro());
-                    return new FindUserResponse(UserDTO.of(user));
+                    UserDTO user = controller.findUser(req.getPayload().registro());
+                    return new FindUserResponse(user);
                 });
 
         return layer.next(request);

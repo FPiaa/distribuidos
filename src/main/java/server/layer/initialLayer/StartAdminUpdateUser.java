@@ -6,7 +6,6 @@ import protocol.response.Response;
 import server.controller.UserController;
 import server.dto.UpdateUser;
 import server.dto.UserDTO;
-import server.entity.UserEntity;
 import server.exceptions.ServerResponseException;
 import server.layer.middleware.ValidateAdmin;
 import server.layer.middleware.ValidateToken;
@@ -29,8 +28,8 @@ public class StartAdminUpdateUser extends StartTemplate {
                             .registro(payload.registro())
                             .build();
 
-                    UserEntity updatedUser = controller.updateUser(user);
-                    return new AdminUpdateUserResponse(UserDTO.of(updatedUser));
+                    UserDTO updatedUser = controller.updateUser(user);
+                    return new AdminUpdateUserResponse(updatedUser);
                 });
 
         return layer.next(request);
