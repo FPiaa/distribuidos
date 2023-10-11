@@ -12,5 +12,5 @@ public interface Repository<T, Id> {
     void create(T newInstance) throws ServerResponseException;
     void delete(T instance);
     void deleteById(Id id) throws ResourceNotFoundException;
-    void update (Id id, T instance) throws ServerResponseException;
+    T update (Id id, T instance) throws ServerResponseException;
 }

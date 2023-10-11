@@ -59,8 +59,7 @@ public class UserController {
     }
 
     public UserDTO updateUser(UpdateUser user) throws ServerResponseException {
-        var entity = User.of(user);
-        repository.update(user.registro(), entity);
+        var entity = repository.update(user.registro(), User.of(user));
         return UserDTO.of(entity);
     }
 

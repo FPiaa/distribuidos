@@ -94,7 +94,7 @@ public class UserRepository implements Repository<User, Long> {
     }
 
     @Override
-    public void update(Long id, User instance) throws ServerResponseException {
+    public User update(Long id, User instance) throws ServerResponseException {
         try (Session session = sessionFactory.openSession()) {
 
             User user = session.byId(User.class)
@@ -114,7 +114,7 @@ public class UserRepository implements Repository<User, Long> {
             Transaction tx = null;
             try {
                 tx = session.beginTransaction();
-                user = User.clone(user, instance);
+                user.update(instance);
                 session.merge(user);
                 tx.commit();
             } catch (RollbackException ignored) {
@@ -123,6 +123,7 @@ public class UserRepository implements Repository<User, Long> {
                 }
                 throw new BadRequestException("usuario com email " + user.getEmail() + " ja existe");
             }
+            return user;
         }
     }
 }

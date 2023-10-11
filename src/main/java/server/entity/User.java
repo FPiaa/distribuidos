@@ -32,7 +32,7 @@ public class User {
     private String nome;
     @NotNull
     @Email
-    @NaturalId
+    @NaturalId(mutable = true)
     private String email;
 
     @NotNull
@@ -62,32 +62,22 @@ public class User {
         return entity;
     }
 
-    public static User clone(User old, User info) {
-        var user = new User();
+    public void update(User info) {
         if(info.getEmail() != null) {
-            user.setEmail(info.getEmail());
-        } else {
-            user.setEmail(old.getEmail());
+            setEmail(info.getEmail());
         }
 
         if (info.getSenha() != null) {
-            user.setSenha(info.getSenha());
-        }else {
-            user.setSenha(old.getSenha());
+            setSenha(info.getSenha());
         }
 
         if (info.getIsAdmin() != null) {
-            user.setIsAdmin(info.getIsAdmin());
-        } else {
-            user.setIsAdmin(old.getIsAdmin());
+            setIsAdmin(info.getIsAdmin());
         }
 
         if (info.getNome() != null) {
-            user.setNome(info.getNome());
-        } else {
-            user.setNome(old.getNome());
+            setNome(info.getNome());
         }
-        return user;
     }
 
 }
