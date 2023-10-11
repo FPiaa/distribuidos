@@ -81,7 +81,7 @@ public class UserRepository implements Repository<User, Long> {
 
     public boolean tryDelete(Long id) {
         try (var session = sessionFactory.openSession()) {
-            long numberOfAdmins = session.createSelectionQuery("select count(*) from User user where user.isAdmin = :admin",Long.class)
+            long numberOfAdmins = session.createSelectionQuery("select count(*) from User user where user.isAdmin = :admin", Long.class)
                     .setParameter("admin", true)
                     .uniqueResult();
             if (numberOfAdmins < 2) {
@@ -100,7 +100,6 @@ public class UserRepository implements Repository<User, Long> {
             User user = session.byId(User.class)
                     .loadOptional(id)
                     .orElseThrow(() -> new ResourceNotFoundException("Usuario com id: " + id + " não existe"));
-
 
 
             var userWithEmail = session.bySimpleNaturalId(User.class)

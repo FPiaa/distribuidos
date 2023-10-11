@@ -32,7 +32,7 @@ public class UserController {
     public String login(LoginRequest.Payload login) throws UnauthorizedAccessException {
         var user = repository.login(login.email()).orElseThrow(UnauthorizedAccessException::new);
 
-        if(!user.getSenha().equals(login.password())) {
+        if (!user.getSenha().equals(login.password())) {
             throw new UnauthorizedAccessException();
         }
 
@@ -69,7 +69,7 @@ public class UserController {
             if (!repository.tryDelete(userToDelete.registroToDelete())) {
                 throw new BadRequestException("ASDFASDFASD");
             }
-        }else {
+        } else {
             repository.deleteById(userToDelete.registroToDelete());
         }
 

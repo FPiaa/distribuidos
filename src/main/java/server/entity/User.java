@@ -63,7 +63,7 @@ public class User {
     }
 
     public void update(User info) {
-        if(info.getEmail() != null) {
+        if (info.getEmail() != null) {
             setEmail(info.getEmail());
         }
 

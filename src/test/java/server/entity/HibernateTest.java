@@ -12,11 +12,13 @@ import static java.time.LocalDateTime.now;
 
 public class HibernateTest {
     private static EntityManagerFactory entityManagerFactory;
+
     @BeforeAll
-    protected static void setUp(){
+    protected static void setUp() {
         entityManagerFactory = Persistence.createEntityManagerFactory("server.entity");
 
     }
+
     @Test
     public void test1() {
         SessionFactory sessionFactory = (SessionFactory) entityManagerFactory;
@@ -31,11 +33,11 @@ public class HibernateTest {
 
     @Test
     public void test2() {
-        SessionFactory sessionFactory = (SessionFactory)  entityManagerFactory;
+        SessionFactory sessionFactory = (SessionFactory) entityManagerFactory;
         sessionFactory.inTransaction(session -> {
             session.createSelectionQuery("from Event", Event.class)
                     .getResultList()
-                    .forEach(event ->  out.println(event.toString()));
+                    .forEach(event -> out.println(event.toString()));
         });
     }
 
