@@ -4,7 +4,7 @@ import lombok.Builder;
 import lombok.NonNull;
 
 @Builder
-public record DeleteUser(@NonNull Integer registroSender, @NonNull Boolean isSenderAdmin,
-                         @NonNull Integer registroToDelete,
+public record DeleteUser(@NonNull Long registroSender, @NonNull Boolean isSenderAdmin,
+                         @NonNull Long registroToDelete,
                          String email, String senha) {
 }

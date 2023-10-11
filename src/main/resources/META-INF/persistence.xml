@@ -8,7 +8,7 @@
             Persistence unit for the Jakarta Persistence tutorial of the Hibernate Getting Started Guide
         </description>
 
-        <class>server.entity.Event</class>
+        <class>server.entity.User</class>
 
         <properties>
             <!-- Database connection settings -->
@@ -18,7 +18,7 @@
             <property name="jakarta.persistence.jdbc.password" value="password" />
 
             <!-- Automatically export the schema -->
-            <property name="jakarta.persistence.schema-generation.database.action" value="update" />
+            <property name="jakarta.persistence.schema-generation.database.action" value="drop-and-create" />
 
             <!-- Echo all executed SQL to console -->
             <property name="hibernate.show_sql" value="true" />

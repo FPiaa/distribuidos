@@ -21,8 +21,7 @@ public class StartAdminFindUsers extends StartTemplate {
                 .addLayer(new ValidateAdmin<>())
                 .buildService(req -> {
                     var userController = UserController.getInstance();
-                    List<UserDTO> users = userController.findUsers()
-                            .toList();
+                    List<UserDTO> users = userController.findUsers();
                     return new FindUsersResponse(users);
                 });
         return validateUser.next(request);

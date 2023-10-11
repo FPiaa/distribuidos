@@ -107,6 +107,8 @@ public class Client {
                     return makeRequest(stdin, token, AdminCreateUserRequest.class);
                 case RequisitionOperations.ADMIN_ATUALIZAR_USUARIO:
                     return makeRequest(stdin, token, AdminUpdateUserRequest.class);
+                case RequisitionOperations.ADMIN_DELETAR_USUARIO:
+                    return makeRequest(stdin, token, AdminDeleteUserRequest.class);
             }
         }
     }
@@ -132,6 +134,9 @@ public class Client {
             }
             if (clazz == AdminUpdateUserRequest.class) {
                 response = JsonHelper.fromJson(json, AdminUpdateUserResponse.class);
+            }
+            if (clazz == AdminDeleteUserRequest.class) {
+                response = JsonHelper.fromJson(json, AdminDeleteUserResponse.class);
             }
 
             if (response == null || response.payload() == null) {
@@ -180,10 +185,11 @@ public class Client {
                 String line = stdin.readLine();
                 if (line.isBlank() || line.isEmpty()) {
                     constructorArguments[i] = null;
+                } else if (parameters[i].getType() == Long.class) {
+                    constructorArguments[i] = Long.parseLong(line);
                 } else if (parameters[i].getType() == Integer.class) {
                     constructorArguments[i] = Integer.parseInt(line);
                 } else if (parameters[i].getType() == Boolean.class) {
-
                     constructorArguments[i] = Boolean.parseBoolean(line);
                 } else {
                     constructorArguments[i] = line;

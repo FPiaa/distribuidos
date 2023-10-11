@@ -1,7 +1,7 @@
 package server.dto;
 
 import jakarta.validation.constraints.*;
-import server.entity.UserEntity;
+import server.entity.User;
 
 public record UserDTO(
         @NotBlank
@@ -14,9 +14,9 @@ public record UserDTO(
         @NotNull
         Boolean isAdmin,
         @Positive
-        int id
+        Long id
 ) {
-    public static UserDTO of(UserEntity userEntity) {
+    public static UserDTO of(User userEntity) {
         if (userEntity == null) {
             return null;
         }

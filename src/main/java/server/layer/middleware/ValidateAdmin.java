@@ -18,7 +18,7 @@ public class ValidateAdmin<Req extends Request<?>, Res extends Response<?>> exte
             Claim userId = jwt.getClaim("userId");
             if (!isAdmin.asBoolean()) {
                 if (!userId.isMissing()) {
-                    throw new ForbiddenAccessException(userId.asString());
+                    throw new ForbiddenAccessException(userId.asLong());
                 }
                 throw new ForbiddenAccessException();
             }

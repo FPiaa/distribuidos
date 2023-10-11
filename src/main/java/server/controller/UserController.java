@@ -6,13 +6,17 @@ import server.dto.CreateUser;
 import server.dto.DeleteUser;
 import server.dto.UpdateUser;
 import server.dto.UserDTO;
+import server.entity.User;
 import server.exceptions.ResourceNotFoundException;
+import server.exceptions.ServerResponseException;
+import server.exceptions.UnauthorizedAccessException;
+import server.repository.UserRepository;
 
-import java.util.ArrayList;
-import java.util.stream.Stream;
+import java.util.List;
 
 public class UserController {
     private static UserController instance = null;
+    private final UserRepository repository = new UserRepository();
 
     private UserController() {
     }
@@ -24,29 +28,43 @@ public class UserController {
         return instance;
     }
 
-    public String login(LoginRequest.Payload ignoredUserToLogin) throws ResourceNotFoundException {
-        return JwtHelper.createJWT(true, 1);
+    public String login(LoginRequest.Payload login) throws UnauthorizedAccessException {
+        var user = repository.login(login.email()).orElseThrow(UnauthorizedAccessException::new);
+
+        if(!user.getSenha().equals(login.password())) {
+            throw new UnauthorizedAccessException();
+        }
+
+        return JwtHelper.createJWT(user.getIsAdmin(), user.getId());
     }
 
-    public Stream<UserDTO> findUsers() {
-        var users = new ArrayList<UserDTO>();
-        users.add(new UserDTO("joao", "joao@gamil.com", false, 1));
-        return users.stream();
+    public List<UserDTO> findUsers() {
+        return repository.findAll()
+                .stream()
+                .map(UserDTO::of)
+                .toList();
     }
 
-    public UserDTO findUser(int id) {
-        return new UserDTO("joao", "joao@gamil.com", false, 1);
+    public UserDTO findUser(long id) throws ResourceNotFoundException {
+        var entity = repository.find(id)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+
+        return UserDTO.of(entity);
     }
 
-    public UserDTO createUser(CreateUser user) {
-        return null;
+    public UserDTO createUser(CreateUser user) throws ServerResponseException {
+        var entity = User.of(user);
+        repository.create(entity);
+        return UserDTO.of(entity);
     }
 
-    public UserDTO updateUser(UpdateUser user) {
-        return null;
+    public UserDTO updateUser(UpdateUser user) throws ServerResponseException {
+        var entity = User.of(user);
+        repository.update(user.registro(), entity);
+        return UserDTO.of(entity);
     }
 
-    public void deleteUser(DeleteUser user) {
-
+    public void deleteUser(DeleteUser userToDelete) {
+        repository.deleteById(userToDelete.registroToDelete());
     }
 }

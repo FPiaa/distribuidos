@@ -13,11 +13,11 @@ public class AdminFindUserRequest extends Request<AdminFindUserRequest.Payload> 
     @Valid
     private final Payload payload;
 
-    public AdminFindUserRequest(String token, Integer registro) {
+    public AdminFindUserRequest(String token, Long registro) {
         super(new Header(RequisitionOperations.ADMIN_BUSCAR_USUARIO, token));
         payload = new Payload(registro);
     }
 
-    public record Payload(@Positive int registro) {
+    public record Payload(@Positive long registro) {
     }
 }

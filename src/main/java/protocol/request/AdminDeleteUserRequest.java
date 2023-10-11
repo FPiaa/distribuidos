@@ -19,7 +19,7 @@ public class AdminDeleteUserRequest extends Request<AdminDeleteUserRequest.Paylo
 
     public record Payload(
             @Positive
-            int registro
+            long registro
     ) {
     }
 }

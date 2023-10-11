@@ -4,6 +4,8 @@ import helper.json.JsonHelper;
 import protocol.request.RequisitionOperations;
 import protocol.response.LogoutResponse;
 import protocol.response.Response;
+import server.controller.UserController;
+import server.dto.CreateUser;
 import server.exceptions.ServerResponseException;
 import server.layer.initialLayer.*;
 import server.router.Router;
@@ -35,7 +37,13 @@ public class Server extends Thread {
         start();
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ServerResponseException {
+        UserController.getInstance()
+                .createUser(new CreateUser("email@email.com", "123456", "Igor", true));
+
+        UserController.getInstance()
+                .createUser(new CreateUser("foo@foo.com", "123456", "Igor", false));
+
         try (ServerSocket serverSocket = new ServerSocket(24800)) {
             System.out.println("Connection Socket Created");
             while (true) {

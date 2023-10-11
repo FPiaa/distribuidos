@@ -8,7 +8,7 @@ import com.auth0.jwt.interfaces.Claim;
 import com.auth0.jwt.interfaces.DecodedJWT;
 
 public class JwtHelper {
-    public static String createJWT(boolean isAdmin, int userId) {
+    public static String createJWT(boolean isAdmin, long userId) {
         Algorithm alg = Algorithm.HMAC256("hiuhi");
         return JWT.create()
                 .withIssuer("me")

@@ -18,7 +18,7 @@ public class StartAdminDeleteUser extends StartTemplate {
                 .addLayer(new ValidateAdmin<>())
                 .buildService(req -> {
                     var payload = req.getPayload();
-                    int idSender = JwtHelper.getId(req.getHeader().token());
+                    long idSender = JwtHelper.getId(req.getHeader().token());
                     boolean isAdmin = JwtHelper.getAdminStatus(req.getHeader().token());
                     var user = DeleteUser.builder()
                             .registroSender(idSender)
