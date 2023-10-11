@@ -81,7 +81,7 @@ public class UserRepository implements Repository<User, Long> {
 
     public boolean tryDelete(Long id) {
         try (var session = sessionFactory.openSession()) {
-            int numberOfAdmins = session.createSelectionQuery("select count(*) from User where User.isAdmin = :admin", Integer.class)
+            long numberOfAdmins = session.createSelectionQuery("select count(*) from User user where user.isAdmin = :admin",Long.class)
                     .setParameter("admin", true)
                     .uniqueResult();
             if (numberOfAdmins < 2) {

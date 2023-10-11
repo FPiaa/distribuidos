@@ -7,6 +7,7 @@ import server.dto.DeleteUser;
 import server.dto.UpdateUser;
 import server.dto.UserDTO;
 import server.entity.User;
+import server.exceptions.BadRequestException;
 import server.exceptions.ResourceNotFoundException;
 import server.exceptions.ServerResponseException;
 import server.exceptions.UnauthorizedAccessException;
@@ -63,7 +64,14 @@ public class UserController {
         return UserDTO.of(entity);
     }
 
-    public void deleteUser(DeleteUser userToDelete) {
-        repository.deleteById(userToDelete.registroToDelete());
+    public void deleteUser(DeleteUser userToDelete) throws ServerResponseException {
+        if (userToDelete.isSenderAdmin() && userToDelete.registroSender().equals(userToDelete.registroToDelete())) {
+            if (!repository.tryDelete(userToDelete.registroToDelete())) {
+                throw new BadRequestException("ASDFASDFASD");
+            }
+        }else {
+            repository.deleteById(userToDelete.registroToDelete());
+        }
+
     }
 }
