@@ -10,6 +10,6 @@ public record LoginResponse(@NotNull @Valid Payload payload) implements Response
         this(new Payload(token));
     }
 
-    public record Payload(@NotBlank String token) {
+    public record Payload(@NotBlank(message = "token não pode estar vazio") String token) {
     }
 }

@@ -5,17 +5,17 @@ import jakarta.validation.constraints.*;
 import server.entity.User;
 
 public record UserDTO(
-        @NotBlank
+        @NotBlank(message = "nome não pode ser nulo")
         @Size(min = 3, max = 255)
         String nome,
         @NotBlank
-        @Email
+        @Email(message = "email não pode ser nulo")
         String email,
 
-        @NotNull
+        @NotNull(message = "tipo não pode ser nulo")
         @SerializedName(value = "tipo")
         Boolean isAdmin,
-        @Positive
+        @Positive(message = "id deve ser positivo")
         @SerializedName(value = "registro")
         Long id
 ) {
