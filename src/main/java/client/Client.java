@@ -18,12 +18,16 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Parameter;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.Scanner;
 
 
 public class Client {
     public static void main(String[] args) {
-        String serverHost = "localhost";
-        int port = 24800;
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Insira o ip: ");
+        String serverHost = scanner.next();
+        System.out.print("Insira a porta: ");
+        int port = scanner.nextInt();
 
         try (Socket echoSocket = new Socket(serverHost, port);
              PrintWriter out = new PrintWriter(echoSocket.getOutputStream(), true);
@@ -109,6 +113,8 @@ public class Client {
                     return makeRequest(stdin, token, AdminUpdateUserRequest.class);
                 case RequisitionOperations.ADMIN_DELETAR_USUARIO:
                     return makeRequest(stdin, token, AdminDeleteUserRequest.class);
+                case RequisitionOperations.CADASTRAR_USUARIO:
+                    return makeRequest(stdin, token, CreateUserRequest.class);
             }
         }
     }
@@ -138,6 +144,11 @@ public class Client {
             if (clazz == AdminDeleteUserRequest.class) {
                 response = JsonHelper.fromJson(json, AdminDeleteUserResponse.class);
             }
+
+            if (clazz == CreateUserRequest.class) {
+                response = JsonHelper.fromJson(json, CreateUserResponse.class);
+            }
+
 
             if (response == null || response.payload() == null) {
                 response = JsonHelper.fromJson(json, ErrorResponse.class);
@@ -189,6 +200,7 @@ public class Client {
                     constructorArguments[i] = Long.parseLong(line);
                 } else if (parameters[i].getType() == Integer.class) {
                     constructorArguments[i] = Integer.parseInt(line);
+
                 } else if (parameters[i].getType() == Boolean.class) {
                     constructorArguments[i] = Boolean.parseBoolean(line);
                 } else {

@@ -1,5 +1,6 @@
 package server.dto;
 
+import com.google.gson.annotations.SerializedName;
 import jakarta.validation.constraints.*;
 import server.entity.User;
 
@@ -12,8 +13,10 @@ public record UserDTO(
         String email,
 
         @NotNull
+        @SerializedName(value = "tipo")
         Boolean isAdmin,
         @Positive
+        @SerializedName(value = "registro")
         Long id
 ) {
     public static UserDTO of(User userEntity) {

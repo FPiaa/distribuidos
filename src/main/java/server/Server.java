@@ -32,6 +32,7 @@ public class Server extends Thread {
                     .addRoute(RequisitionOperations.ADMIN_CADASTRAR_USUARIO, new StartAdminCreateUser())
                     .addRoute(RequisitionOperations.ADMIN_ATUALIZAR_USUARIO, new StartAdminUpdateUser())
                     .addRoute(RequisitionOperations.ADMIN_DELETAR_USUARIO, new StartAdminDeleteUser())
+                    .addRoute(RequisitionOperations.CADASTRAR_USUARIO, new StartCreateUser())
                     .build();
         }
         start();
@@ -68,10 +69,9 @@ public class Server extends Thread {
              PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
              BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
         ) {
-
             String inputLine;
             while ((inputLine = in.readLine()) != null) {
-                System.out.println("Recebido: " + inputLine);
+                System.out.println("Ip: " + clientSocket.getInetAddress() + "Recebido: " + inputLine);
                 Response<?> response;
 
                 try {
@@ -81,17 +81,25 @@ public class Server extends Thread {
                 }
 
                 String jsonResponse = JsonHelper.toJson(response);
-                System.out.println("Enviado: " + jsonResponse);
+
+                if(clientSocket.isClosed() || !clientSocket.isConnected())  {
+                    System.out.println("Client closed connection");
+                   break;
+                }
                 out.println(jsonResponse);
+
+                System.out.println("Ip: " + clientSocket.getInetAddress() + "Enviado: " + jsonResponse);
 
                 if (response instanceof LogoutResponse)
                     break;
             }
+            if(clientSocket.isClosed() || !clientSocket.isConnected())  {
+                System.out.println("Client closed connection");
+            }
         } catch (IOException e) {
             System.err.println("Problem with Communication Server");
-            System.exit(1);
         }
-
-        assert (clientSocket.isClosed());
+        System.out.println("connection closed");
+        assert (clientSocket.isClosed() && !clientSocket.isConnected());
     }
 }

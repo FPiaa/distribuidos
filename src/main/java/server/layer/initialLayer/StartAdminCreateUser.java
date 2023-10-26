@@ -18,7 +18,7 @@ public class StartAdminCreateUser extends StartTemplate {
                 .buildService(req -> {
                     var payload = req.getPayload();
                     var user = CreateUser.builder()
-                            .tipo(payload.tipo())
+                            .tipo(true)
                             .nome(payload.nome())
                             .senha(payload.senha())
                             .email(payload.email())

@@ -1,5 +1,6 @@
 package protocol.request;
 
+import com.google.gson.annotations.SerializedName;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -23,7 +24,9 @@ public class LoginRequest extends Request<LoginRequest.Payload> {
             @NotBlank(message = "email não pode estar vazio")
             @Email
             String email,
-            @NotBlank(message = "password não pode estar vazio") String password) {
+            @NotBlank(message = "password não pode estar vazio")
+            @SerializedName(value = "senha")
+            String password) {
     }
 }
 
