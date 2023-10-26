@@ -4,6 +4,7 @@ import com.google.gson.JsonSyntaxException;
 import helper.json.JsonHelper;
 import helper.validation.ConstraintViolated;
 import helper.validation.ValidationHelper;
+import jwt.JwtHelper;
 import protocol.Optional;
 import protocol.request.*;
 import protocol.request.header.Header;
@@ -74,6 +75,9 @@ public class Client {
                 if (response instanceof LoginResponse) {
                     token = ((LoginResponse) response).payload().token();
                     System.out.println("token was set");
+                    var t = JwtHelper.decode(token);
+                    System.out.println("ID: " + t.getClaim("userId").asLong());
+                    System.out.println("Tipo: " + t.getClaim("isAdmin").asBoolean());
                 }
 
                 if (response instanceof LogoutResponse) {
