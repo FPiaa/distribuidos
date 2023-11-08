@@ -64,18 +64,16 @@ public class UserRepository implements Repository<User, Long> {
 
     @Override
     public void delete(User instance) {
-        sessionFactory.inTransaction(session -> {
-            session.remove(instance);
-        });
+        sessionFactory.inTransaction(session -> session.remove(instance));
     }
 
     @Override
     public void deleteById(Long id) {
-        sessionFactory.inTransaction(session -> {
+        sessionFactory.inTransaction(session ->
             session.createMutationQuery("delete from User where id = :id")
                     .setParameter("id", id)
-                    .executeUpdate();
-        });
+                    .executeUpdate()
+        );
     }
 
     public boolean tryDelete(Long id) {
