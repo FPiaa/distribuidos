@@ -136,13 +136,13 @@ public class Client {
                 response = JsonHelper.fromJson(json, FindUserResponse.class);
             }
             if (clazz == AdminCreateUserRequest.class) {
-                response = JsonHelper.fromJson(json, AdminCreateUserResponse.class);
+                response = JsonHelper.fromJson(json, CreateUserResponse.class);
             }
             if (clazz == AdminUpdateUserRequest.class) {
-                response = JsonHelper.fromJson(json, AdminUpdateUserResponse.class);
+                response = JsonHelper.fromJson(json, UpdateUserResponse.class);
             }
             if (clazz == AdminDeleteUserRequest.class) {
-                response = JsonHelper.fromJson(json, AdminDeleteUserResponse.class);
+                response = JsonHelper.fromJson(json, DeleteUserResponse.class);
             }
 
             if (clazz == CreateUserRequest.class) {
