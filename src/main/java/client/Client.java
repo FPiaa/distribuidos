@@ -115,6 +115,12 @@ public class Client {
                     return makeRequest(stdin, token, AdminDeleteUserRequest.class);
                 case RequisitionOperations.CADASTRAR_USUARIO:
                     return makeRequest(stdin, token, CreateUserRequest.class);
+                case RequisitionOperations.ATUALIZAR_USUARIO:
+                    return makeRequest(stdin, token, UpdateUserRequest.class);
+                case RequisitionOperations.DELETAR_USUARIO:
+                    return makeRequest(stdin, token, DeleteUserRequest.class);
+                case RequisitionOperations.BUSCAR_USUARIO:
+                    return makeRequest(stdin, token, FindUserRequest.class);
             }
         }
     }
@@ -144,15 +150,24 @@ public class Client {
             if (clazz == AdminDeleteUserRequest.class) {
                 response = JsonHelper.fromJson(json, DeleteUserResponse.class);
             }
-
             if (clazz == CreateUserRequest.class) {
                 response = JsonHelper.fromJson(json, CreateUserResponse.class);
+            }
+            if (clazz == UpdateUserRequest.class) {
+                response = JsonHelper.fromJson(json, UpdateUserResponse.class);
+            }
+            if (clazz == DeleteUserRequest.class) {
+                response = JsonHelper.fromJson(json, DeleteUserResponse.class);
+            }
+            if (clazz == FindUserRequest.class) {
+                response = JsonHelper.fromJson(json, FindUserResponse.class);
             }
 
 
             if (response == null || response.payload() == null) {
                 response = JsonHelper.fromJson(json, ErrorResponse.class);
             }
+
             ValidationHelper.validate(response);
             return response;
         } catch (ConstraintViolated e) {
