@@ -1,11 +1,13 @@
 package server.layer.initialLayer;
 
+import jwt.JwtHelper;
 import protocol.request.UpdateUserRequest;
 import protocol.response.Response;
 import protocol.response.UpdateUserResponse;
 import server.controller.UserController;
 import server.dto.UpdateUser;
 import server.dto.UserDTO;
+import server.exceptions.ForbiddenAccessException;
 import server.exceptions.ServerResponseException;
 import server.layer.middleware.ValidateToken;
 
@@ -18,6 +20,11 @@ public class StartUpdateUser extends StartTemplate {
         var layer = new ValidateToken<UpdateUserRequest, UpdateUserResponse>()
                 .buildService(req -> {
                     var payload = req.getPayload();
+                    long id = JwtHelper.getId(req.getHeader().token());
+                    if(id != payload.registro()) {
+                        throw new ForbiddenAccessException();
+                    }
+
                     var user = UpdateUser.builder()
                             .senha(payload.senha())
                             .email(payload.email())
