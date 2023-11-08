@@ -29,6 +29,7 @@ public class CreateUserRequest extends Request<CreateUserRequest.Payload>{
             @NotBlank(message = "senha não pode estar vazio")
             String senha,
             @NotNull(message = "tipo não pode ser nulo")
+            @AssertFalse(message = "tipo deve ser falso")
             Boolean tipo
     ) {
     }
