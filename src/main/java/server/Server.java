@@ -33,6 +33,9 @@ public class Server extends Thread {
                     .addRoute(RequisitionOperations.ADMIN_ATUALIZAR_USUARIO, new StartAdminUpdateUser())
                     .addRoute(RequisitionOperations.ADMIN_DELETAR_USUARIO, new StartAdminDeleteUser())
                     .addRoute(RequisitionOperations.CADASTRAR_USUARIO, new StartCreateUser())
+                    .addRoute(RequisitionOperations.ATUALIZAR_USUARIO, new StartUpdateUser())
+                    .addRoute(RequisitionOperations.BUSCAR_USUARIO, new StartFindUser())
+                    .addRoute(RequisitionOperations.DELETAR_USUARIO, new StartDeleteUser())
                     .build();
         }
         start();
