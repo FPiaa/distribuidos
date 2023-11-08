@@ -72,9 +72,8 @@ public class UserRepository implements Repository<User, Long> {
     @Override
     public void deleteById(Long id) {
         sessionFactory.inTransaction(session -> {
-            User user = session.find(User.class, id);
             session.createMutationQuery("delete from User where id = :id")
-                    .setParameter("id", user.getId())
+                    .setParameter("id", id)
                     .executeUpdate();
         });
     }
