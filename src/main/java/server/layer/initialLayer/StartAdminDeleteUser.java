@@ -2,7 +2,7 @@ package server.layer.initialLayer;
 
 import jwt.JwtHelper;
 import protocol.request.AdminDeleteUserRequest;
-import protocol.response.AdminDeleteUserResponse;
+import protocol.response.DeleteUserResponse;
 import protocol.response.Response;
 import server.controller.UserController;
 import server.dto.DeleteUser;
@@ -14,7 +14,7 @@ public class StartAdminDeleteUser extends StartTemplate {
     @Override
     public Response<?> startService(String jsonString) throws ServerResponseException {
         var request = buildRequest(jsonString, AdminDeleteUserRequest.class);
-        var layer = new ValidateToken<AdminDeleteUserRequest, AdminDeleteUserResponse>()
+        var layer = new ValidateToken<AdminDeleteUserRequest, DeleteUserResponse>()
                 .addLayer(new ValidateAdmin<>())
                 .buildService(req -> {
                     var payload = req.getPayload();
@@ -26,7 +26,7 @@ public class StartAdminDeleteUser extends StartTemplate {
                             .isSenderAdmin(isAdmin)
                             .build();
                     UserController.getInstance().deleteUser(user);
-                    return new AdminDeleteUserResponse();
+                    return new DeleteUserResponse();
                 });
         return layer.next(request);
     }

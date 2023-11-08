@@ -1,7 +1,7 @@
 package server.layer.initialLayer;
 
 import protocol.request.AdminUpdateUserRequest;
-import protocol.response.AdminUpdateUserResponse;
+import protocol.response.UpdateUserResponse;
 import protocol.response.Response;
 import server.controller.UserController;
 import server.dto.UpdateUser;
@@ -15,7 +15,7 @@ public class StartAdminUpdateUser extends StartTemplate {
     public Response<?> startService(String jsonString) throws ServerResponseException {
         var request = buildRequest(jsonString, AdminUpdateUserRequest.class);
 
-        var layer = new ValidateToken<AdminUpdateUserRequest, AdminUpdateUserResponse>()
+        var layer = new ValidateToken<AdminUpdateUserRequest, UpdateUserResponse>()
                 .addLayer(new ValidateAdmin<>())
                 .buildService((req) -> {
                     UserController controller = UserController.getInstance();
@@ -29,7 +29,7 @@ public class StartAdminUpdateUser extends StartTemplate {
                             .build();
 
                     UserDTO updatedUser = controller.updateUser(user);
-                    return new AdminUpdateUserResponse(updatedUser);
+                    return new UpdateUserResponse(updatedUser);
                 });
 
         return layer.next(request);
