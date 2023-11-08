@@ -22,10 +22,10 @@ public class JwtHelper {
         return verifier.verify(token);
     }
 
-    public static int getId(String token) throws JWTVerificationException {
+    public static long getId(String token) throws JWTVerificationException {
         DecodedJWT jwt = JWT.decode(token);
         Claim id = jwt.getClaim("userId");
-        return id.asInt();
+        return id.asLong();
     }
 
     public static boolean getAdminStatus(String token) {
