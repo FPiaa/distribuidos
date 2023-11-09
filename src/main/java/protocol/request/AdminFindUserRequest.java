@@ -18,6 +18,6 @@ public class AdminFindUserRequest extends Request<AdminFindUserRequest.Payload> 
         payload = new Payload(registro);
     }
 
-    public record Payload(@Positive long registro) {
+    public record Payload(@Positive @NotNull Long registro) {
     }
 }

@@ -1,8 +1,9 @@
 package server.layer.initialLayer;
 
+import jwt.JwtHelper;
 import protocol.request.AdminUpdateUserRequest;
-import protocol.response.UpdateUserResponse;
 import protocol.response.Response;
+import protocol.response.UpdateUserResponse;
 import server.controller.UserController;
 import server.dto.UpdateUser;
 import server.dto.UserDTO;
@@ -25,7 +26,9 @@ public class StartAdminUpdateUser extends StartTemplate {
                             .email(payload.email())
                             .nome(payload.nome())
                             .tipo(payload.tipo())
+                            .senderTipo(JwtHelper.getAdminStatus(req.getHeader().token()))
                             .registro(payload.registro())
+                            .registroSender(JwtHelper.getId(req.getHeader().token()))
                             .build();
 
                     UserDTO updatedUser = controller.updateUser(user);

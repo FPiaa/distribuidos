@@ -24,6 +24,7 @@ public class AdminUpdateUserRequest extends Request<AdminUpdateUserRequest.Paylo
 
     public record Payload(
             @Positive(message = "registro deve ser positivo")
+            @NotNull
             Long registro,
             @Email(message = "email deve ser um email válido")
             String email,

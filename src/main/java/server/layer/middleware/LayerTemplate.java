@@ -7,7 +7,7 @@ import server.layer.interfaces.FinishLayer;
 import server.layer.interfaces.Layer;
 
 public abstract class LayerTemplate<Req extends Request<?>, Res extends Response<?>> implements Layer<Req, Res> {
-    private Layer<Req, Res> next;
+    protected Layer<Req, Res> next = null;
     private FinishLayer<Req, Res> finish = null;
 
     @Override

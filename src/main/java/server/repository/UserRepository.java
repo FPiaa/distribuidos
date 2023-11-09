@@ -76,17 +76,12 @@ public class UserRepository implements Repository<User, Long> {
         );
     }
 
-    public boolean tryDelete(Long id) {
+
+    public long countAdmins() {
         try (var session = sessionFactory.openSession()) {
-            long numberOfAdmins = session.createSelectionQuery("select count(*) from User user where user.isAdmin = :admin", Long.class)
+            return session.createSelectionQuery("select count(*) from User user where user.isAdmin = :admin", Long.class)
                     .setParameter("admin", true)
                     .uniqueResult();
-            if (numberOfAdmins < 2) {
-                return false;
-            }
-
-            deleteById(id);
-            return true;
         }
     }
 

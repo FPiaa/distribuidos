@@ -12,14 +12,15 @@ public class AdminDeleteUserRequest extends Request<AdminDeleteUserRequest.Paylo
     @Valid
     private final Payload payload;
 
-    public AdminDeleteUserRequest(String token, Integer registro) {
+    public AdminDeleteUserRequest(String token, Long registro) {
         super(new Header(RequisitionOperations.ADMIN_DELETAR_USUARIO, token));
         payload = new Payload(registro);
     }
 
     public record Payload(
             @Positive
-            long registro
+            @NotNull
+            Long registro
     ) {
     }
 }

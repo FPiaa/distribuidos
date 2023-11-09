@@ -1,9 +1,9 @@
 package protocol.response;
 
-import protocol.commons.EmptyPayload;
-
-public record DeleteUserResponse(EmptyPayload payload) implements Response<EmptyPayload> {
+public record DeleteUserResponse(Payload payload) implements Response<DeleteUserResponse.Payload> {
     public DeleteUserResponse() {
-        this(new EmptyPayload());
+        this(new Payload("Usuario deletado"));
     }
+
+    public record Payload(String mensagem){}
 }

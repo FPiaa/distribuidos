@@ -1,5 +1,6 @@
 package protocol.request;
 
+import com.google.gson.annotations.SerializedName;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -23,6 +24,7 @@ public class DeleteUserRequest extends Request<DeleteUserRequest.Payload> {
             @Email(message = "o campo email deve ser um email válido")
             String email,
             @NotBlank(message = "O campo password não pode estar vazio")
+                    @SerializedName(value = "senha")
             String password
 
     ) {

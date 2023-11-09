@@ -6,7 +6,6 @@ import protocol.response.FindUserResponse;
 import protocol.response.Response;
 import server.controller.UserController;
 import server.exceptions.ServerResponseException;
-import server.layer.interfaces.Layer;
 import server.layer.middleware.ValidateToken;
 
 public class StartFindUser extends StartTemplate {
@@ -14,7 +13,7 @@ public class StartFindUser extends StartTemplate {
     public Response<?> startService(String jsonString) throws ServerResponseException {
         var request = buildRequest(jsonString, FindUserRequest.class);
 
-        Layer<FindUserRequest, FindUserResponse> initial = new ValidateToken<FindUserRequest, FindUserResponse>()
+        var initial = new ValidateToken<FindUserRequest, FindUserResponse>()
                 .buildService(req -> {
                     long userId = JwtHelper.getId(req.getHeader().token());
                     var user = UserController.getInstance().findUser(userId);

@@ -60,14 +60,20 @@ public class UserController {
     }
 
     public UserDTO updateUser(UpdateUser user) throws ServerResponseException {
+        if(user.tipo() != null && user.senderTipo() && !user.tipo() && user.registroSender() == user.registro()) {
+            if(repository.countAdmins() < 2) {
+                throw new BadRequestException("Vai dar ruim se atualizar");
+            }
+        }
+
         var entity = repository.update(user.registro(), User.of(user));
         return UserDTO.of(entity);
     }
 
     public void deleteUser(DeleteUser userToDelete) throws ServerResponseException {
         if (userToDelete.isSenderAdmin() && userToDelete.registroSender().equals(userToDelete.registroToDelete())) {
-            if (!repository.tryDelete(userToDelete.registroToDelete())) {
-                throw new BadRequestException("ASDFASDFASD");
+            if (repository.countAdmins() < 2) {
+                throw new BadRequestException("Vai dar ruim se deletar");
             }
         } else {
             repository.deleteById(userToDelete.registroToDelete());

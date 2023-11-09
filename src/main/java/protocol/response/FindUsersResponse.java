@@ -1,5 +1,6 @@
 package protocol.response;
 
+import com.google.gson.annotations.SerializedName;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import server.dto.UserDTO;
@@ -12,6 +13,6 @@ public record FindUsersResponse(@NotNull @Valid Payload payload) implements Resp
         this(new Payload(users));
     }
 
-    public record Payload(List<@NotNull @Valid UserDTO> users) {
+    public record Payload(@SerializedName(value = "usuarios") List<@NotNull @Valid UserDTO> users) {
     }
 }

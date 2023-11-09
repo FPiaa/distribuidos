@@ -43,10 +43,10 @@ public class Server extends Thread {
 
     public static void main(String[] args) throws ServerResponseException {
         UserController.getInstance()
-                .createUser(new CreateUser("email@email.com", "123456", "Igor", true));
+                .createUser(new CreateUser("admin@admin.com", "123456", "Igor", true));
 
         UserController.getInstance()
-                .createUser(new CreateUser("foo@foo.com", "123456", "Igor", false));
+                .createUser(new CreateUser("usuario@usuario.com", "123456", "Igor", false));
 
         try (ServerSocket serverSocket = new ServerSocket(24800)) {
             System.out.println("Connection Socket Created");

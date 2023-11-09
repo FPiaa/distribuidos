@@ -3,6 +3,6 @@ package server.exceptions;
 
 public class ResourceNotFoundException extends ServerResponseException {
     public ResourceNotFoundException(final String message) {
-        super(404, "Unable to find '%s'.".formatted(message));
+        super(404, "Não foi possível encontrar '%s'.".formatted(message));
     }
 }
