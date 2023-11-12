@@ -16,6 +16,7 @@ public record UserDTO(
         @SerializedName(value = "tipo")
         Boolean isAdmin,
         @Positive
+        @NotNull
         @SerializedName(value = "registro")
         Long id
 ) {

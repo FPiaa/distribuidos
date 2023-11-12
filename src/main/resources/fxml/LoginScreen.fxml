@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Text?>
+<BorderPane xmlns="http://javafx.com/javafx"
+          xmlns:fx="http://javafx.com/fxml"
+          fx:controller="client.controllers.LoginScreen"
+>
+    <top>
+        <MenuBar>
+            <Menu text="Configurações">
+                <MenuItem text="Host" onAction="#showHostDialog"/>
+            </Menu>
+        </MenuBar>
+    </top>
+
+    <center>
+        <DialogPane fx:id="hostConfig" visible="false">
+
+        </DialogPane>
+            <GridPane alignment="CENTER" hgap="20" vgap="20">
+                <Text text="Welcome"
+                      GridPane.columnIndex="0" GridPane.rowIndex="0"
+                      GridPane.columnSpan="2" />
+
+                <Label text="Email:" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+
+                <TextField GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+
+                <Label text="Senha:" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+
+                <PasswordField fx:id="password" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+
+                <Text fx:id="actionTarget"/>
+                <HBox alignment="CENTER" GridPane.rowIndex="3" GridPane.columnSpan="2">
+                   <Button text="Cadastro" style="-fx-padding: 8 8 8 8"  onAction="#cadastrar"/>
+                    <Region HBox.hgrow="ALWAYS"/>
+                   <Button text="Login"    style="-fx-padding: 8 8 8 8"  onAction="#login"/>
+                </HBox>
+            </GridPane>
+
+    </center>
+
+</BorderPane>

@@ -13,6 +13,6 @@ public record FindUsersResponse(@NotNull @Valid Payload payload) implements Resp
         this(new Payload(users));
     }
 
-    public record Payload(@SerializedName(value = "usuarios") List<@NotNull @Valid UserDTO> users) {
+    public record Payload(@SerializedName(value = "usuarios") @NotNull List<@NotNull @Valid UserDTO> users) {
     }
 }

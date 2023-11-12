@@ -12,9 +12,9 @@ public class CreateUserRequest extends Request<CreateUserRequest.Payload>{
     private final CreateUserRequest.Payload payload;
 
     public CreateUserRequest(final String nome, final String email,
-                             final String senha, final Boolean tipo) {
+                             final String senha) {
         super(new Header(RequisitionOperations.CADASTRAR_USUARIO, null));
-        payload = new CreateUserRequest.Payload(nome, email, senha, tipo);
+        payload = new CreateUserRequest.Payload(nome, email, senha, false);
     }
 
 

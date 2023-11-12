@@ -9,6 +9,6 @@ public record LogoutResponse(@NotNull @Valid Payload payload) implements Respons
         this(new Payload("desconectado"));
     }
 
-    public record Payload(String mensagem) {
+    public record Payload(@NotNull String mensagem) {
     }
 }
