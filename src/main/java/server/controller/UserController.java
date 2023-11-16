@@ -62,7 +62,8 @@ public class UserController {
     public UserDTO updateUser(UpdateUser user) throws ServerResponseException {
         if(user.tipo() != null && user.senderTipo() && !user.tipo() && user.registroSender() == user.registro()) {
             if(repository.countAdmins() < 2) {
-                throw new BadRequestException("Vai dar ruim se atualizar");
+                throw new BadRequestException("Não é possível atualizar o usuário, pois não " +
+                        "haverá mais administradores no sistema");
             }
         }
 
@@ -73,7 +74,8 @@ public class UserController {
     public void deleteUser(DeleteUser userToDelete) throws ServerResponseException {
         if (userToDelete.isSenderAdmin() && userToDelete.registroSender().equals(userToDelete.registroToDelete())) {
             if (repository.countAdmins() < 2) {
-                throw new BadRequestException("Vai dar ruim se deletar");
+                throw new BadRequestException("Não é possível atualizar o usuário, pois não " +
+                        "haverá mais administradores no sistema");
             }
         } else {
             repository.deleteById(userToDelete.registroToDelete());

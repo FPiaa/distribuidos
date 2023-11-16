@@ -1,11 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
+<?import io.github.palexdev.materialfx.controls.MFXButton?>
+<?import io.github.palexdev.materialfx.controls.MFXPasswordField?>
+<?import io.github.palexdev.materialfx.controls.MFXTextField?>
+<?import javafx.scene.control.DialogPane?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Text?>
+<?import javafx.scene.control.Label?>
+<?import javafx.geometry.Insets?>
 <BorderPane xmlns="http://javafx.com/javafx"
-          xmlns:fx="http://javafx.com/fxml"
-          fx:controller="client.controllers.LoginScreen"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="client.controllers.LoginScreen"
+            stylesheets="@../css/login.css"
+            maxHeight="Infinity"
+            maxWidth="Infinity"
 >
     <top>
         <MenuBar>
@@ -19,26 +30,34 @@
         <DialogPane fx:id="hostConfig" visible="false">
 
         </DialogPane>
-            <GridPane alignment="CENTER" hgap="20" vgap="20">
-                <Text text="Welcome"
-                      GridPane.columnIndex="0" GridPane.rowIndex="0"
-                      GridPane.columnSpan="2" />
+        <GridPane alignment="CENTER" vgap="32">
+            <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="200" prefWidth="400" maxWidth="600"/>
+            </columnConstraints>
 
-                <Label text="Email:" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+            <VBox spacing="2" GridPane.rowIndex="0" GridPane.hgrow="ALWAYS" >
 
-                <TextField GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+                <padding>
+                    <Insets topRightBottomLeft="16"/>
+                </padding>
+                <MFXTextField fx:id="emailField" floatingText="E-mail" floatMode="BORDER" minWidth="500" />
 
-                <Label text="Senha:" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+                <Label id="validated" fx:id="validateEmail" maxWidth="Infinity"
+                       textFill="#ef6e6b" visible="false" wrapText="true"/>
+            </VBox>
 
-                <PasswordField fx:id="password" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+            <VBox GridPane.rowIndex="1" GridPane.hgrow="ALWAYS">
+                <MFXPasswordField fx:id="passwordField" floatingText="Senha" floatMode="BORDER" minWidth="500" />
+                <Label id="validated" fx:id="validatePassword"
+                       textFill="#ef6e6b" visible="false" wrapText="true"/>
+            </VBox>
 
-                <Text fx:id="actionTarget"/>
-                <HBox alignment="CENTER" GridPane.rowIndex="3" GridPane.columnSpan="2">
-                   <Button text="Cadastro" style="-fx-padding: 8 8 8 8"  onAction="#cadastrar"/>
-                    <Region HBox.hgrow="ALWAYS"/>
-                   <Button text="Login"    style="-fx-padding: 8 8 8 8"  onAction="#login"/>
-                </HBox>
-            </GridPane>
+            <HBox alignment="CENTER" GridPane.rowIndex="2"  >
+               <MFXButton buttonType="RAISED" minWidth="70.0" text="Cadastro" style="-fx-padding: 8 8 8 8"  onAction="#cadastrar"/>
+                <Region HBox.hgrow="ALWAYS"/>
+               <MFXButton buttonType="RAISED" minWidth="70.0" text="Login"    style="-fx-padding: 8 8 8 8"  onAction="#login"/>
+            </HBox>
+        </GridPane>
 
     </center>
 
