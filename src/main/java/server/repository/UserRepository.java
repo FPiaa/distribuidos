@@ -68,7 +68,9 @@ public class UserRepository implements Repository<User, Long> {
     }
 
     @Override
-    public void deleteById(Long id) {
+    public void deleteById(Long id) throws ResourceNotFoundException {
+       find(id).orElseThrow(() -> new ResourceNotFoundException("Usuário com id " + id +
+               "."));
         sessionFactory.inTransaction(session ->
             session.createMutationQuery("delete from User where id = :id")
                     .setParameter("id", id)

@@ -1,6 +1,7 @@
 package protocol.response;
 
 
+import com.google.gson.annotations.SerializedName;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -17,7 +18,7 @@ public record ErrorResponse(@NotNull @Valid Payload error) implements Response<E
     }
 
 
-    public record Payload(@Positive int code, @NotBlank String message) {
+    public record Payload(@Positive int code, @NotBlank @SerializedName(value = "mensagem") String message) {
     }
 }
 
