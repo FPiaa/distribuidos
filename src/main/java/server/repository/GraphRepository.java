@@ -7,6 +7,7 @@ import org.apache.age.jdbc.base.AgtypeUtil;
 import org.apache.age.jdbc.base.type.AgtypeMap;
 import org.hibernate.SessionFactory;
 import server.dto.PoiDTO;
+import server.dto.SegmentDTO;
 import server.exceptions.ResourceNotFoundException;
 
 import java.util.HashMap;
@@ -49,7 +50,7 @@ public class GraphRepository {
                 session.createNativeQuery("""
                     prepare create_poi(agtype) as
                     select * from cypher(%s, $$
-                        CREATE (a\\:POI {id\\: \\$id, nome\\: \\$nome, posicao \\: \\$posicao, aviso \\: \\$aviso, acessivel \\: \\$acessivel })
+                        CREATE (a\\:poi {id\\: \\$id, nome\\: \\$nome, posicao \\: \\$posicao, aviso \\: \\$aviso, acessivel \\: \\$acessivel })
                         return a $$, \\$1
                     )
                     as (a agtype);
@@ -57,11 +58,19 @@ public class GraphRepository {
                                 , Agtype.class)
                         .executeUpdate();
 
+                session.createNativeQuery("""
+                        prepare find_pois(agtype) as
+                        select * from cypher(%s, $$
+                            match(n\\:poi)
+                            return n
+                        $$) as (pois agtype);
+                        """.formatted(graphName), Agtype.class).executeUpdate();
+
                 // find_poi
                 session.createNativeQuery("""
                     prepare find_poi(agtype) as
                     select * from cypher(%s, $$
-                        MATCH (a\\:POI {id \\: \\$id})
+                        MATCH (a\\:poi {id \\: \\$id})
                         RETURN a $$, \\$1
                     )
                     as (a agtype);
@@ -73,7 +82,7 @@ public class GraphRepository {
                 session.createNativeQuery("""
                     prepare update_poi(agtype) as
                     select * from cypher(%s, $$
-                        MATCH (a\\:POI {id \\: \\$id})
+                        MATCH (a\\:poi {id \\: \\$id})
                         SET a.nome = \\$nome, a.posicao = \\$posicao, a.aviso = \\$aviso, a.acessivel = \\$acessivel
                         RETURN a $$, \\$1
                     )
@@ -87,7 +96,7 @@ public class GraphRepository {
                 session.createNativeQuery("""
                     prepare delete_poi(agtype) as
                     select * from cypher(%s, $$
-                        MATCH (a\\:POI {id \\: \\$id})
+                        MATCH (a\\:poi {id \\: \\$id})
                         DETACH DELETE a
                         RETURN a $$, \\$1
                     )
@@ -102,7 +111,7 @@ public class GraphRepository {
                 session.createNativeQuery("""
                         prepare create_segment(agtype) as
                         select * from cypher(%s, $$
-                        	match (a\\: Poi {id\\: \\$pdi_inicial}), (b\\: Poi {id\\: \\$pdi_final})
+                        	match (a\\: poi {id\\: \\$pdi_inicial}), (b\\: poi {id\\: \\$pdi_final})
                         	create (a)-[s\\:CONNECTS {distancia\\: \\$distancia, descricao\\: \\$descricao, acessivel\\: \\$acessivel}]->(b),
                         	(b)-[r\\:CONNECTS {distancia\\: \\$distancia, descricao\\: \\$descricao, acessivel\\: \\$acessivel}]->(a)
                         	RETURN s, r
@@ -113,7 +122,7 @@ public class GraphRepository {
                 session.createNativeQuery("""
                         prepare find_segment(agtype) as
                         select * from cypher(%s, $$
-                        	match (\\:Poi {id\\: \\$pdi_inicial})-[s\\:CONNECTS]->(\\:Poi {id\\: \\$pdi_final})
+                        	match (\\:poi {id\\: \\$pdi_inicial})-[s\\:CONNECTS]->(\\:poi {id\\: \\$pdi_final})
                         	return s
                         $$, \\$1) as (segment agtype);
                         """.formatted(graphName), Agtype.class).executeUpdate();
@@ -123,7 +132,7 @@ public class GraphRepository {
                 session.createNativeQuery("""
                         prepare update_segment(agtype) as
                         select * from cypher(%s, $$
-                        	match (a\\: Poi)-[s\\:CONNECTS]->(b\\: Poi),(b\\: Poi)-[r\\:CONNECTS]->(a\\: Poi)
+                        	match (a\\: poi)-[s\\:CONNECTS]->(b\\: poi),(b\\: poi)-[r\\:CONNECTS]->(a\\: poi)
                         	where a.id = \\$pdi_inicial and b.id = \\$pdi_final
                         	set s.acessivel = \\$acessivel, s.descricao = \\$descricao, r.acessivel = \\$acessivel, r.descricao = \\$descricao
                         	return s, r
@@ -135,7 +144,7 @@ public class GraphRepository {
                 session.createNativeQuery("""
                         prepare delete_segment(agtype) as\s
                         select * from cypher(%s, $$\s
-                        	match (a\\: Poi)-[s\\:CONNECTS]->(b\\: Poi),(b\\: Poi)-[r\\:CONNECTS]->(a\\: Poi)
+                        	match (a\\: poi)-[s\\:CONNECTS]->(b\\: poi),(b\\: poi)-[r\\:CONNECTS]->(a\\: poi)
                         	where a.id = \\$pdi_inicial and b.id = \\$pdi_final
                         	delete s, r
                         	return s, r
@@ -148,7 +157,7 @@ public class GraphRepository {
                 session.createNativeQuery("""
                         prepare find_route(agtype) as
                         SELECT * FROM cypher(%s , $$
-                            MATCH paths = (a\\:Poi {id\\: \\$pdi_inicial})-[\\:CONNECTS*1.. {acessivel\\: true}]->(b\\:Poi {id\\: \\$pdi_final})
+                            MATCH paths = (a\\:poi {id\\: \\$pdi_inicial})-[\\:CONNECTS*1.. {acessivel\\: true}]->(b\\:poi {id\\: \\$pdi_final})
                             WITH paths, relationships(paths) AS rels
                             UNWIND rels AS rel
                             WITH nodes(paths) AS nodes,
@@ -163,7 +172,7 @@ public class GraphRepository {
                 session.createNativeQuery("""
                         prepare compute_distance(agtype) as
                         select * from cypher(%s, $$\s
-                        	match (a\\: Poi {id\\: \\$pdi_inicial}), (b\\: Poi {id\\: \\$pdi_final})
+                        	match (a\\: poi {id\\: \\$pdi_inicial}), (b\\: poi {id\\: \\$pdi_final})
                         	with sqrt((a.posicao.x - b.posicao.x) * (a.posicao.x - b.posicao.x) +
                         	(a.posicao.y - b.posicao.y) * (a.posicao.y - b.posicao.y) +
                         	(a.posicao.z - b.posicao.z) * (a.posicao.z - b.posicao.z)) as distance
@@ -204,8 +213,7 @@ public class GraphRepository {
 
     public List<PoiDTO> findPois() {
         try(var session = sessionFactory.openSession()) {
-            var ags = session.createNativeQuery("select * from cypher(" + graphName + ", $$ match (p\\:Poi) return p $$) as (pois agtype)"
-                    , Agtype.class).list();
+            var ags = session.createNativeQuery("execute find_pois('{}')", Agtype.class).list();
 
             return ags.stream().map(this::convertAgtypeToPoi).toList();
         }
@@ -245,6 +253,10 @@ public class GraphRepository {
             return ag.map(this::convertAgtypeToPoi).orElseThrow(() -> exception);
 
         }
+    }
+
+    public Optional<SegmentDTO> findSegment(long id1, long id2) {
+        return Optional.empty();
     }
 
 }

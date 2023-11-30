@@ -6,7 +6,6 @@ import commons.Position;
 import jakarta.persistence.Persistence;
 import org.hibernate.SessionFactory;
 import protocol.request.CreatePoiRequest;
-import protocol.request.UpdatePoiRequest;
 import server.controller.GraphController;
 import server.dto.PoiDTO;
 
@@ -25,10 +24,10 @@ public class Age {
             System.out.println(gson.toJson(p));
             p = GraphController.getInstance().findPoi(p.id());
             System.out.println(gson.toJson(p));
-            var update = new UpdatePoiRequest(null, p.id(), "ponto 2", 1, 2, 3, null, null);
-            p = GraphController.getInstance().updatePoi(update);
-            System.out.println(gson.toJson(p));
-            GraphController.getInstance().deletePoi(p.id());
+//            var update = new UpdatePoiRequest(null, 1L, "ponto 2", 1, 2, 3, null, null);
+//            var p = GraphController.getInstance().updatePoi(update);
+//            System.out.println(gson.toJson(p));
+//            GraphController.getInstance().deletePoi(1L);
             var ps = GraphController.getInstance().findPois();
             System.out.println(gson.toJson(ps));
 
