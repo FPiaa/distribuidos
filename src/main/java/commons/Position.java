@@ -1,5 +1,7 @@
 package commons;
 
-public record Position(Integer x, Integer y){
+import jakarta.validation.constraints.NotNull;
+
+public record Position(@NotNull Integer x, @NotNull Integer y, @NotNull Integer z){
 
 }
