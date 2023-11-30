@@ -36,6 +36,14 @@ public class Server extends Thread {
                     .addRoute(RequisitionOperations.ATUALIZAR_USUARIO, new StartUpdateUser())
                     .addRoute(RequisitionOperations.BUSCAR_USUARIO, new StartFindUser())
                     .addRoute(RequisitionOperations.DELETAR_USUARIO, new StartDeleteUser())
+                    .addRoute(RequisitionOperations.CADASTRAR_PDI, new StartCreatePoi())
+                    .addRoute(RequisitionOperations.ATUALIZAR_PDI, new StartUpdatePoi())
+                    .addRoute(RequisitionOperations.BUSCAR_PDIS, new StartFindPois())
+                    .addRoute(RequisitionOperations.DELETAR_PDI, new StartDeletePoi())
+                    .addRoute(RequisitionOperations.CADASTRAR_SEGMENTO, new StartCreateSegment())
+                    .addRoute(RequisitionOperations.ATUALIZAR_SEGMENTO, new StartUpdateSegment())
+                    .addRoute(RequisitionOperations.BUSCAR_SEGMENTOS, new StartFindSegments())
+                    .addRoute(RequisitionOperations.DELETAR_SEGMENTO, new StartDeleteSegment())
                     .build();
         }
         start();
