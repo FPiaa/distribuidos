@@ -6,6 +6,8 @@ import commons.Position;
 import jakarta.persistence.Persistence;
 import org.hibernate.SessionFactory;
 import protocol.request.CreatePoiRequest;
+import protocol.request.CreateSegmentRequest;
+import protocol.request.UpdateSegmentRequest;
 import server.controller.GraphController;
 import server.dto.PoiDTO;
 
@@ -19,11 +21,35 @@ public class Age {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         try {
             var a = new CreatePoiRequest(null, "ponto 1", 0, 0, 0, "aviso", true);
+            var b = new CreatePoiRequest(null, "ponto 2", 10, 10, 10, "blah", true);
             PoiDTO p = null;
+            PoiDTO p2 = null;
             p = GraphController.getInstance().createPoi(a);
-            System.out.println(gson.toJson(p));
-            p = GraphController.getInstance().findPoi(p.id());
-            System.out.println(gson.toJson(p));
+            p2 = GraphController.getInstance().createPoi(b);
+
+
+
+            var s = new CreateSegmentRequest("", p.id(), p2.id(), "fodar", true );
+            var seg = GraphController.getInstance().createSegment(s);
+            System.out.println(gson.toJson(seg));
+
+            seg = GraphController.getInstance().findSegment(p2.id(), p.id());
+            System.out.println(gson.toJson(seg));
+            var up = new UpdateSegmentRequest("", p.id(), p2.id(), "aaa", false);
+            seg = GraphController.getInstance().updateSegment(up);
+            System.out.println(gson.toJson(seg));
+            System.out.println();
+            var segs = GraphController.getInstance().findSegments();
+            System.out.println(gson.toJson(segs));
+            System.out.println();
+            seg = GraphController.getInstance().deleteSegment(p.id(), p2.id());
+            System.out.println(gson.toJson(seg));
+            System.out.println();
+            segs = GraphController.getInstance().findSegments();
+            System.out.println(gson.toJson(segs));
+
+//            p = GraphController.getInstance().findPoi(p.id());
+//            System.out.println(gson.toJson(p));
 //            var update = new UpdatePoiRequest(null, 1L, "ponto 2", 1, 2, 3, null, null);
 //            var p = GraphController.getInstance().updatePoi(update);
 //            System.out.println(gson.toJson(p));
