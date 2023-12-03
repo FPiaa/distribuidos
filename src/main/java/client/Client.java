@@ -121,6 +121,22 @@ public class Client {
                     return makeRequest(stdin, token, DeleteUserRequest.class);
                 case RequisitionOperations.BUSCAR_USUARIO:
                     return makeRequest(stdin, token, FindUserRequest.class);
+                case RequisitionOperations.CADASTRAR_PDI:
+                    return makeRequest(stdin, token, CreatePoiRequest.class);
+                case RequisitionOperations.ATUALIZAR_PDI:
+                    return makeRequest(stdin, token, UpdatePoiRequest.class);
+                case RequisitionOperations.DELETAR_PDI:
+                    return makeRequest(stdin, token, DeletePoiRequest.class);
+                case RequisitionOperations.BUSCAR_PDIS:
+                    return makeRequest(stdin, token, FindPoisRequest.class);
+                case RequisitionOperations.CADASTRAR_SEGMENTO:
+                    return makeRequest(stdin, token, CreateSegmentRequest.class);
+                case RequisitionOperations.ATUALIZAR_SEGMENTO:
+                    return makeRequest(stdin, token, UpdateSegmentRequest.class);
+                case RequisitionOperations.DELETAR_SEGMENTO:
+                    return makeRequest(stdin, token, DeleteSegmentRequest.class);
+                case RequisitionOperations.BUSCAR_SEGMENTOS:
+                    return makeRequest(stdin, token, FindSegmentsRequest.class);
             }
         }
     }
@@ -161,6 +177,30 @@ public class Client {
             }
             if (clazz == FindUserRequest.class) {
                 response = JsonHelper.fromJson(json, FindUserResponse.class);
+            }
+            if (clazz == CreatePoiRequest.class) {
+                response = JsonHelper.fromJson(json, CreatePoiResponse.class);
+            }
+            if (clazz == UpdatePoiRequest.class) {
+                response = JsonHelper.fromJson(json, UpdatePoiResponse.class);
+            }
+            if (clazz == DeletePoiRequest.class) {
+                response = JsonHelper.fromJson(json, DeletePoiResponse.class);
+            }
+            if (clazz == FindPoisRequest.class) {
+                response = JsonHelper.fromJson(json, FindPoisResponse.class);
+            }
+            if (clazz == CreateSegmentRequest.class) {
+                response = JsonHelper.fromJson(json, CreateSegmentResponse.class);
+            }
+            if (clazz == UpdateSegmentRequest.class) {
+                response = JsonHelper.fromJson(json, UpdateSegmentResponse.class);
+            }
+            if (clazz == DeleteSegmentRequest.class) {
+                response = JsonHelper.fromJson(json, DeleteSegmentResponse.class);
+            }
+            if (clazz == FindSegmentsRequest.class) {
+                response = JsonHelper.fromJson(json, FindSegmentsResponse.class);
             }
 
 
@@ -218,6 +258,8 @@ public class Client {
 
                 } else if (parameters[i].getType() == Boolean.class) {
                     constructorArguments[i] = Boolean.parseBoolean(line);
+                } else if (parameters[i].getType() == Float.class) {
+                    constructorArguments[i] = Float.parseFloat(line);
                 } else {
                     constructorArguments[i] = line;
                 }

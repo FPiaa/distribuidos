@@ -2,6 +2,6 @@ package commons;
 
 import jakarta.validation.constraints.NotNull;
 
-public record Position(@NotNull Integer x, @NotNull Integer y, @NotNull Integer z){
+public record Position(@NotNull Float x, @NotNull Float y){
 
 }
