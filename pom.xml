@@ -79,7 +79,15 @@
         <dependency>
             <groupId>io.github.palexdev</groupId>
             <artifactId>materialfx</artifactId>
-            <version>11.16.1</version>
+            <version>11.17.0</version>
+        </dependency>
+
+
+        <!-- https://mvnrepository.com/artifact/fr.brouillard.oss/cssfx -->
+        <dependency>
+            <groupId>fr.brouillard.oss</groupId>
+            <artifactId>cssfx</artifactId>
+            <version>11.5.1</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-core -->
         <dependency>
