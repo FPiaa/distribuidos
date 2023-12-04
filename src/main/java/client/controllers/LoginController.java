@@ -54,6 +54,7 @@ public class LoginController {
         String emailStr = email.getText();
         String pass = password.getText();
 
+
         Task<Response<?>> task = new Task<>() {
             @Override
             protected Response<?> call() throws Exception {
@@ -68,6 +69,8 @@ public class LoginController {
                     }
                     Scene scene = new Scene(root);
                     stage.setScene(scene);
+                }, (String s) -> {
+                    errorLabel.setText(s);
                 });
             }
         };

@@ -64,13 +64,13 @@
          <children>
             <VBox alignment="CENTER" layoutX="124.0" layoutY="57.0" prefHeight="373.0" prefWidth="640.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
+                  <Label fx:id="errorLabel" alignment="CENTER" prefHeight="24.0" prefWidth="480.0" textAlignment="CENTER" />
                   <MFXTextField fx:id="email" alignment="CENTER" floatMode="BORDER" floatingText="E-mail" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="48.0" prefWidth="480.0" />
                   <MFXPasswordField fx:id="password" alignment="CENTER" allowCopy="true" allowCut="true" allowPaste="true" floatMode="BORDER" floatingText="Senha" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="48.0" prefWidth="480.0">
                      <VBox.margin>
                         <Insets bottom="24.0" top="24.0" />
                      </VBox.margin>
                   </MFXPasswordField>
-                  <Label fx:id="errorLabel" prefWidth="0.0" />
                   <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="64.0" prefWidth="480.0">
                      <children>
                         <MFXButton fx:id="cadastrarButton" alignment="CENTER" buttonType="RAISED" maxHeight="-Infinity" maxWidth="-Infinity" onAction="#cadastrar" prefHeight="40.0" prefWidth="96.0" rippleAnimateShadow="true" style="-fx-background-color: #88a096; -fx-text-fill: #dddddd;" text="Cadastrar" />

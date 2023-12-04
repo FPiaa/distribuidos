@@ -7,10 +7,16 @@ import helper.validation.ValidationHelper;
 import protocol.request.*;
 import protocol.response.*;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.net.Socket;
+import java.net.UnknownHostException;
 import java.util.function.Consumer;
 
 public class HandleRequest {
-    private String host = "localhost";
+    private String host = "10.0.12.1231";
     private int port = 24800;
     private static HandleRequest instance = null;
 
@@ -30,30 +36,34 @@ public class HandleRequest {
         this.port = port;
     }
 
-    public <T> Response<?> makeRequest(Request<T> obj, Consumer<Void> onSuccess) {
+    public <T> Response<?> makeRequest(Request<T> obj, Consumer<Void> onSuccess, Consumer<String> onFailure) {
 
-        onSuccess.accept(null);
-        return null;
-//        try (Socket echoSocket = new Socket(host, port);
-//             PrintWriter out = new PrintWriter(echoSocket.getOutputStream(), true);
-//             BufferedReader in = new BufferedReader(new InputStreamReader(
-//                     echoSocket.getInputStream()));
-//             BufferedReader stdin = new BufferedReader(new InputStreamReader(System.in))
-//        ) {
-//            String sendJson = JsonHelper.toJson(obj);
-//            out.println(sendJson);
-//
-//            String receivedJson = in.readLine();
-//            if (receivedJson == null) {
-//                return new ErrorResponse(1, "O servidor não retornou nenhuma resposta");
-//            }
-//            return handleResponse(receivedJson, obj);
-//
-//        } catch (UnknownHostException e) {
-//            return new ErrorResponse(2, "Host %s:%d  desconhecido.".formatted(host, port));
-//        } catch (IOException e) {
-//            return new ErrorResponse(3, "Comunicação com o Host %s:%d  falhou.".formatted(host, port));
-//        }
+        try (Socket echoSocket = new Socket(host, port);
+             PrintWriter out = new PrintWriter(echoSocket.getOutputStream(), true);
+             BufferedReader in = new BufferedReader(new InputStreamReader(
+                     echoSocket.getInputStream()));
+             BufferedReader stdin = new BufferedReader(new InputStreamReader(System.in))
+        ) {
+            String sendJson = JsonHelper.toJson(obj);
+            out.println(sendJson);
+
+            String receivedJson = in.readLine();
+            if (receivedJson == null) {
+                var error = new ErrorResponse(1, "O servidor não retornou nenhuma resposta");
+                onFailure.accept(error.payload().message());
+                return error;
+            }
+            return handleResponse(receivedJson, obj);
+
+        } catch (UnknownHostException e) {
+            var error =  new ErrorResponse(2, "Host %s:%d  desconhecido.".formatted(host, port));
+            onFailure.accept(error.payload().message());
+            return error;
+        } catch (IOException e) {
+            var error =  new ErrorResponse(3, "Comunicação com o Host %s:%d  falhou.".formatted(host, port));
+            onFailure.accept(error.payload().message());
+            return error;
+        }
 
     }
 
