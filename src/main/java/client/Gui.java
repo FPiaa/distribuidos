@@ -29,7 +29,7 @@ public class Gui extends Application {
                 .setResolveAssets(true)
                 .build()
                 .setGlobal();
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/LoginScreen1.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/LoginScreen.fxml"));
         Parent root = loader.load();
         Scene scene = new Scene(root);
         scene.setFill(Color.TRANSPARENT);
@@ -40,4 +40,5 @@ public class Gui extends Application {
         stage.setFullScreen(true);
         stage.show();
     }
+
 }
