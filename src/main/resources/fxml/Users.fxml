@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import io.github.palexdev.materialfx.controls.MFXPaginatedTableView?>
+<?import io.github.palexdev.materialfx.controls.MFXTextField?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<SplitPane dividerPositions="0.1984924623115578" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" orientation="VERTICAL" prefHeight="800.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/21.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.controllers.UsersController">
+  <items>
+    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="74.0" prefWidth="598.0">
+         <children>
+            <MFXTextField fx:id="nameField" allowEdit="false" floatMode="BORDER" floatingText="Nome" layoutX="72.0" layoutY="52.0" prefHeight="51.0" prefWidth="357.0" selectable="false" />
+            <MFXTextField fx:id="emailField" allowEdit="false" floatMode="BORDER" floatingText="Email" layoutX="482.0" layoutY="52.0" prefHeight="51.0" prefWidth="357.0" selectable="false" />
+            <MFXTextField fx:id="adminField" allowEdit="false" floatMode="BORDER" floatingText="Admin" layoutX="886.0" layoutY="52.0" prefHeight="51.0" prefWidth="357.0" selectable="false" />
+         </children></AnchorPane>
+    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+         <children>
+            <MFXPaginatedTableView fx:id="tableView" layoutX="239.0" layoutY="69.0" prefHeight="500.0" prefWidth="800.0" />
+         </children></AnchorPane>
+  </items>
+</SplitPane>

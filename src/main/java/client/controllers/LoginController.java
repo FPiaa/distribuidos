@@ -4,7 +4,7 @@ import client.utils.HandleRequest;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.MFXPasswordField;
 import io.github.palexdev.materialfx.controls.MFXTextField;
-import io.github.palexdev.mfxcore.controls.Label;
+import io.github.palexdev.mfxcore.controls.Text;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
@@ -30,27 +30,41 @@ public class LoginController {
     private MFXTextField email;
 
     @FXML
-    private Label errorLabel;
+    private Text errorLabel;
 
     @FXML
     private MenuItem hostConfig;
 
     @FXML
-    private MFXButton loginButton;
+    private MFXTextField hostField;
 
     @FXML
     private MFXPasswordField password;
 
     @FXML
-    private HBox progressSpinner;
+    private MFXTextField portField;
 
     @FXML
+    private HBox progressSpinner;
+    @FXML
     void cadastrar(ActionEvent event) {
-
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/CadastroScreen.fxml"));
+        Parent root = null;
+        try {
+            root = loader.load();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
     }
 
     @FXML
     void login(ActionEvent event) {
+        String host = hostField.getText();
+        int port = Integer.parseInt(portField.getText());
+        HandleRequest.getInstance().updateEndpoit(host, port);
         String emailStr = email.getText();
         String pass = password.getText();
 
@@ -76,11 +90,6 @@ public class LoginController {
         };
 
         Platform.runLater(task);
-    }
-
-    @FXML
-    void showConfigureHostDialog(ActionEvent event) {
-
     }
 }
 

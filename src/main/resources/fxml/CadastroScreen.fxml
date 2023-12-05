@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import io.github.palexdev.materialfx.controls.MFXButton?>
+<?import io.github.palexdev.materialfx.controls.MFXCheckbox?>
+<?import io.github.palexdev.materialfx.controls.MFXPasswordField?>
+<?import io.github.palexdev.materialfx.controls.MFXTextField?>
+<?import io.github.palexdev.mfxcore.controls.Label?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+
+<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/21.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.controllers.CadastroController">
+   <children>
+      <MFXTextField fx:id="nameField" floatMode="BORDER" floatingText="Nome" prefHeight="40.0" prefWidth="480.0">
+         <VBox.margin>
+            <Insets bottom="24.0" />
+         </VBox.margin>
+      </MFXTextField>
+      <MFXTextField fx:id="emailField" floatMode="BORDER" floatingText="Email" layoutX="410.0" layoutY="390.0" prefHeight="40.0" prefWidth="480.0">
+         <VBox.margin>
+            <Insets bottom="24.0" />
+         </VBox.margin>
+      </MFXTextField>
+      <MFXPasswordField fx:id="passField" floatMode="BORDER" floatingText="Senha" prefHeight="40.0" prefWidth="480.0" />
+      <MFXPasswordField fx:id="checkPassField" floatMode="BORDER" floatingText="Repetir a senha" layoutX="410.0" layoutY="454.0" prefHeight="40.0" prefWidth="480.0">
+         <VBox.margin>
+            <Insets top="24.0" />
+         </VBox.margin>
+      </MFXPasswordField>
+      <MFXCheckbox fx:id="isAdminCheck" text="É admin?">
+         <VBox.margin>
+            <Insets top="24.0" />
+         </VBox.margin>
+      </MFXCheckbox>
+      <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="100.0" prefWidth="480.0">
+         <children>
+            <MFXButton buttonType="RAISED" onAction="#changeLoginScreen" prefHeight="48.0" prefWidth="96.0" text="Voltar" />
+            <MFXButton layoutX="202.0" layoutY="36.0" prefHeight="48.0" prefWidth="282.0" style="visibility: false;" text="Button" />
+            <MFXButton buttonType="RAISED" layoutX="250.0" layoutY="36.0" onAction="#cadastrarUsuario" prefHeight="48.0" prefWidth="96.0" text="Cadastrar" />
+         </children>
+      </HBox>
+      <Label fx:id="errorLabel" prefHeight="60.0" prefWidth="480.0" />
+   </children>
+</VBox>

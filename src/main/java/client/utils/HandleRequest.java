@@ -4,6 +4,7 @@ import com.google.gson.JsonSyntaxException;
 import helper.json.JsonHelper;
 import helper.validation.ConstraintViolated;
 import helper.validation.ValidationHelper;
+import lombok.Getter;
 import protocol.request.*;
 import protocol.response.*;
 
@@ -15,8 +16,9 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.function.Consumer;
 
+@Getter
 public class HandleRequest {
-    private String host = "10.0.12.1231";
+    private String host = "localhost";
     private int port = 24800;
     private static HandleRequest instance = null;
 
@@ -53,7 +55,13 @@ public class HandleRequest {
                 onFailure.accept(error.payload().message());
                 return error;
             }
-            return handleResponse(receivedJson, obj);
+            Response<?> res = handleResponse(receivedJson, obj);
+            if(res instanceof ErrorResponse) {
+                onFailure.accept(((ErrorResponse) res).error().message());
+                return res;
+            }
+            onSuccess.accept(null);
+            return res;
 
         } catch (UnknownHostException e) {
             var error =  new ErrorResponse(2, "Host %s:%d  desconhecido.".formatted(host, port));

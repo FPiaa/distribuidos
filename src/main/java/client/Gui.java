@@ -36,8 +36,7 @@ public class Gui extends Application {
         stage.initStyle(StageStyle.TRANSPARENT);
         stage.setScene(scene);
         stage.setTitle("Super mapa 1");
-        stage.setFullScreenExitHint("");
-        stage.setFullScreen(true);
+        stage.setMaximized(true);
         stage.show();
     }
 

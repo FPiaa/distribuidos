@@ -27,4 +27,19 @@ public class ChangeScene {
         stage.initStyle(StageStyle.TRANSPARENT);
         stage.setScene(scene);
     }
+
+    public void openDialog(Stage stage) {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/HostDialog.fxml"));
+        Parent root = null;
+        try {
+            root = loader.load();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        Scene scene = new Scene(root);
+        scene.setFill(Color.TRANSPARENT);
+        stage.initStyle(StageStyle.TRANSPARENT);
+        stage.centerOnScreen();
+        stage.show();
+    }
 }
