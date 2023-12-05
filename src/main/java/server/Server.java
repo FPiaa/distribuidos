@@ -50,6 +50,7 @@ public class Server extends Thread {
     }
 
     public static void main(String[] args) throws ServerResponseException {
+
         UserController.getInstance()
                 .createUser(new CreateUser("admin@admin.com", "123456", "Igor", true));
 

@@ -21,12 +21,14 @@ import protocol.response.Response;
 
 import java.io.IOException;
 
+
 public class LoginController {
 
     @FXML
     private MFXButton cadastrarButton;
 
     @FXML
+
     private MFXTextField email;
 
     @FXML
@@ -92,4 +94,3 @@ public class LoginController {
         Platform.runLater(task);
     }
 }
-

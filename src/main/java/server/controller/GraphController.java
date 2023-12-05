@@ -32,10 +32,10 @@ public class GraphController {
         long id = System.nanoTime();
         var dto = PoiDTO.builder()
                 .id(id)
-                .nome(poi.getPayload().name())
+                .nome(poi.getPayload().nome())
                 .acessivel(poi.getPayload().acessivel())
                 .aviso(poi.getPayload().aviso())
-                .posicao(poi.getPayload().position())
+                .posicao(poi.getPayload().posicao())
                 .build();
 
         return repository.createPoi(dto);
@@ -44,7 +44,6 @@ public class GraphController {
     public PoiDTO updatePoi(UpdatePoiRequest request) throws ResourceNotFoundException {
         var dto = PoiDTO.builder()
                 .id(request.getPayload().id())
-                .posicao(request.getPayload().posicao())
                 .aviso(request.getPayload().aviso())
                 .acessivel(request.getPayload().acessivel())
                 .nome(request.getPayload().nome())
