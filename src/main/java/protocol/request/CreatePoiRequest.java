@@ -12,7 +12,7 @@ public class CreatePoiRequest extends Request<CreatePoiRequest.Payload>{
     @Valid
     @NotNull
     private final Payload payload;
-    public CreatePoiRequest(String token, String nome, Float x, Float y, String aviso, Boolean acessivel) {
+    public CreatePoiRequest(String token, String nome, Double x, Double y, String aviso, Boolean acessivel) {
         super(new Header(RequisitionOperations.CADASTRAR_PDI, token));
         this.payload = new Payload(nome, new Position(x, y), aviso, acessivel);
     }

@@ -44,7 +44,6 @@ public class GraphController {
     public PoiDTO updatePoi(UpdatePoiRequest request) throws ResourceNotFoundException {
         var dto = PoiDTO.builder()
                 .id(request.getPayload().id())
-                .posicao(request.getPayload().posicao())
                 .aviso(request.getPayload().aviso())
                 .acessivel(request.getPayload().acessivel())
                 .nome(request.getPayload().nome())

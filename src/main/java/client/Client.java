@@ -258,8 +258,8 @@ public class Client {
 
                 } else if (parameters[i].getType() == Boolean.class) {
                     constructorArguments[i] = Boolean.parseBoolean(line);
-                } else if (parameters[i].getType() == Float.class) {
-                    constructorArguments[i] = Float.parseFloat(line);
+                } else if (parameters[i].getType() == Double.class) {
+                    constructorArguments[i] = Double.parseDouble(line);
                 } else {
                     constructorArguments[i] = line;
                 }

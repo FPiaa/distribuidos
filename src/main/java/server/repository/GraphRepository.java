@@ -45,6 +45,7 @@ public class GraphRepository {
             } catch (Exception ignored) {
                 System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAA");
             }
+        }
 
             try {
                 sessionFactory.inTransaction(session -> {
@@ -188,8 +189,7 @@ public class GraphRepository {
                             select * from cypher(%s, $$\s
                             	match (a\\:Poi {id\\: \\$pdi_inicial}), (b\\:Poi {id\\: \\$pdi_final})
                             	with sqrt((a.posicao.x - b.posicao.x) * (a.posicao.x - b.posicao.x) +
-                            	(a.posicao.y - b.posicao.y) * (a.posicao.y - b.posicao.y) +
-                            	(a.posicao.z - b.posicao.z) * (a.posicao.z - b.posicao.z)) as distance
+                            	(a.posicao.y - b.posicao.y) * (a.posicao.y - b.posicao.y)) as distance
                             	return distance
                             $$, \\$1) as (ret agtype);
                                                     """.formatted(graphName), Agtype.class).executeUpdate();
@@ -199,7 +199,7 @@ public class GraphRepository {
                 // rollback acontece, significa que a queries ja existe
                 // possivel ignorar sem probleasí
             }
-        }
+
 
     }
 
