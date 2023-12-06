@@ -83,22 +83,20 @@ public class SegmentsController implements Initializable {
     private final ObjectProperty<SegmentDTO> selectedSegment = new SimpleObjectProperty<>();
 
     @FXML
-    void cancel(ActionEvent event) {
+    void cancel(ActionEvent ignoredEvent) {
         clearForm();
     }
 
     @FXML
     void createSegment(ActionEvent event) {
-        Task<Void> task = new Task<Void>() {
+        Task<Void> task = new Task<>() {
 
             @Override
-            protected Void call() throws Exception {
+            protected Void call() {
                 Request<?> req = makeRequest();
                 HandleRequest.getInstance().makeRequest(req, (Response<?> res) -> {
                     refreshTable(null);
-                    Platform.runLater(() -> {
-                        clearForm();
-                    });
+                    Platform.runLater(() -> clearForm());
                 }, errorProperty::setValue);
                 return null;
             }
@@ -118,30 +116,23 @@ public class SegmentsController implements Initializable {
     }
 
     @FXML
-    void deleteSegment(ActionEvent event) {
-        System.out.println("Delete");
-        Task<Void> task = new Task<Void>() {
+    void deleteSegment(ActionEvent ignoredEvent) {
+        Task<Void> task = new Task<>() {
 
             @Override
-            protected Void call() throws Exception {
-                System.out.println("call");
+            protected Void call() {
                 Request<?> req = makeRequest();
-                System.out.println(req);
-                HandleRequest.getInstance().makeRequest(req, (Response<?> res) -> {
+                HandleRequest.getInstance().makeRequest(req, (Response<?> res) -> Platform.runLater(() -> {
                     refreshTable(null);
-                    Platform.runLater(() -> {
-                        clearForm();
-                    });
-                }, errorProperty::setValue);
+                    clearForm();
+                }), errorProperty::setValue);
                 return null;
             }
 
             private Request<?> makeRequest() {
-                System.out.println("makeeeeee");
                 System.out.println(originField.getValue());
                 Long id1 = originField.getValue().id();
                 Long id2 = destinyField.getValue().id();
-                System.out.println("????????????");
 
                 String token = Session.getInstance().getToken();
                 return new DeleteSegmentRequest(token, id1, id2);
@@ -152,17 +143,19 @@ public class SegmentsController implements Initializable {
     }
 
     void updateSegment(ActionEvent event) {
-        System.out.println("update");
-        Task<Void> task = new Task<Void>() {
+        Task<Void> task = new Task<>() {
 
             @Override
-            protected Void call() throws Exception {
+            protected Void call() {
                 Request<?> req = makeRequest();
                 HandleRequest.getInstance().makeRequest(req, (Response<?> res) -> {
-                    refreshTable(null);
-                    Platform.runLater(() -> {
-                        clearForm();
-                    });
+                    if (res instanceof FindSegmentsResponse) {
+                        Platform.runLater(() -> {
+                            segments.setAll(((FindSegmentsResponse) res).payload().segmentos());
+                            refreshTable(null);
+                            clearForm();
+                        });
+                    }
                 }, errorProperty::setValue);
                 return null;
             }
@@ -181,7 +174,7 @@ public class SegmentsController implements Initializable {
     }
 
     @FXML
-    void formCreatePdi(ActionEvent event) {
+    void formCreatePdi(ActionEvent ignoredEvent) {
 
         clearForm();
         Platform.runLater(() -> {
@@ -195,22 +188,28 @@ public class SegmentsController implements Initializable {
 
     @FXML
 
-    void refreshTable(ActionEvent event) {
-        System.out.println("refresh");
-        Task<Void> task = new Task<Void>() {
+    void refreshTable(ActionEvent ignoredEvent) {
+        Task<Void> task = new Task<>() {
             @Override
-            protected Void call() throws Exception {
+            protected Void call() {
                 HandleRequest.getInstance().makeRequest(new FindSegmentsRequest(Session.getInstance().getToken()),
                         (Response<?> res) -> {
-                            System.out.println(res.toString());
                             if (res instanceof FindSegmentsResponse) {
                                 Platform.runLater(() -> {
                                     segments.setAll(((FindSegmentsResponse) res).payload().segmentos());
                                     tableView.autosizeColumns();
+                                    tableView.setCurrentPage(0);
                                 });
                             }
                         }, tableErrorProperty::setValue);
-                System.out.println("Pdis set");
+                HandleRequest.getInstance().makeRequest(new FindPoisRequest(Session.getInstance().getToken()),
+                        (Response<?> res) -> {
+                            if (res instanceof FindPoisResponse) {
+                                Platform.runLater(() -> {
+                                    pdis.setAll(((FindPoisResponse) res).payload().pdis());
+                                });
+                            }
+                        }, tableErrorProperty::setValue);
                 return null;
             }
         };
@@ -249,22 +248,16 @@ public class SegmentsController implements Initializable {
         });
 
         segments.addListener((ListChangeListener<? super SegmentDTO>) change -> {
-            System.out.println(change.getList().toString());
+            System.err.println("Segments changed");
             tableView.setItems((ObservableList<SegmentDTO>) change.getList());
         });
 
         errorProperty.addListener((obs, old, new_v) -> {
             System.out.println(new_v);
-            Platform.runLater(() -> {
-                errorLabel.setText(new_v);
-            });
+            Platform.runLater(() -> errorLabel.setText(new_v));
         });
 
-        tableErrorProperty.addListener((obs, old, new_v) -> {
-            Platform.runLater(() -> {
-                tableError.setText(new_v);
-            });
-        });
+        tableErrorProperty.addListener((obs, old, new_v) -> Platform.runLater(() -> tableError.setText(new_v)));
 
         selectedSegment.addListener((obs, old, new_v) -> {
             if (Session.getInstance().getUser() == null || Session.getInstance().getUser().isAdmin())
@@ -276,37 +269,31 @@ public class SegmentsController implements Initializable {
         originField.setItems(pdis);
         originField.setConverter(converter);
 
-
         destinyField.setItems(pdis);
         destinyField.setConverter(converter);
-        Task<Void> task1 = new Task<>() {
+
+
+        Task<Void> task = new Task<>() {
             @Override
-            protected Void call() throws Exception {
-                System.out.println("find pois");
-                HandleRequest.getInstance().makeRequest(new FindPoisRequest(Session.getInstance().getToken()), (Response<?> response) -> {
-                    if (!(response instanceof FindPoisResponse)) {
-                        return;
-                    }
-                    Platform.runLater(() -> {
-                        pdis.setAll(((FindPoisResponse) response).payload().pdis());
-                    });
-                }, tableErrorProperty::setValue);
-
-                return null;
-            }
-        };
-
-        Task<Void> task2 = new Task<Void>() {
-             @Override
-            protected Void call() throws Exception {
-                 System.out.println("find segments");
+            protected Void call() {
+                Platform.runLater(() -> setupTable());
                 HandleRequest.getInstance().makeRequest(new FindSegmentsRequest(Session.getInstance().getToken()), (Response<?> response) -> {
                     if (!(response instanceof FindSegmentsResponse)) {
                         return;
                     }
                     Platform.runLater(() -> {
                         segments.setAll(((FindSegmentsResponse) response).payload().segmentos());
-                        setupTable();
+                        refreshTable(null);
+                    });
+                }, tableErrorProperty::setValue);
+
+                HandleRequest.getInstance().makeRequest(new FindPoisRequest(Session.getInstance().getToken()), (Response<?> response) -> {
+                    if (!(response instanceof FindPoisResponse)) {
+                        return;
+                    }
+                    Platform.runLater(() -> {
+                        pdis.setAll(((FindPoisResponse) response).payload().pdis());
+                        refreshTable(null);
                     });
                 }, tableErrorProperty::setValue);
 
@@ -319,8 +306,8 @@ public class SegmentsController implements Initializable {
         When.onChanged(tableView.currentPageProperty())
                 .then((oldValue, newValue) -> tableView.autosizeColumns())
                 .listen();
-        Tasks.run(task2);
-        Tasks.run(task1);
+
+        Tasks.run(task);
         form.setVisible(false);
     }
 
@@ -349,7 +336,6 @@ public class SegmentsController implements Initializable {
                 selectedSegment.setValue(change.getValueAdded());
             }
         });
-        tableView.setItems(segments);
     }
 
 }

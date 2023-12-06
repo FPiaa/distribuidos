@@ -11,5 +11,5 @@ public record FindSegmentsResponse(@NotNull @Valid Payload payload) implements R
         this(new Payload(segments));
     }
 
-    public record Payload(@NotNull List<@Valid @NotNull SegmentDTO> segmentos) {}
+    public record Payload(@NotNull List<@Valid SegmentDTO> segmentos) {}
 }

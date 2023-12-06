@@ -72,22 +72,20 @@ public class PdisController implements Initializable {
     private final ObjectProperty<PoiDTO> selectedPdi = new SimpleObjectProperty<>();
 
     @FXML
-    void cancel(ActionEvent event) {
+    void cancel(ActionEvent ignored) {
         clearForm();
     }
 
     @FXML
     void createPdi(ActionEvent event) {
-        Task<Void> task = new Task<Void>() {
+        Task<Void> task = new Task<>() {
 
             @Override
-            protected Void call() throws Exception {
+            protected Void call() {
                 Request<?> req = makeRequest();
                 HandleRequest.getInstance().makeRequest(req, (Response<?> res) -> {
                     refreshTable(null);
-                    Platform.runLater(() -> {
-                        clearForm();
-                    });
+                    Platform.runLater(() -> clearForm());
                 }, errorProperty::setValue);
                 return null;
             }
@@ -108,28 +106,20 @@ public class PdisController implements Initializable {
     }
 
     @FXML
-    void deletePdi(ActionEvent event) {
-        Task<Void> task = new Task<Void>() {
+    void deletePdi(ActionEvent ignored) {
+        Task<Void> task = new Task<>() {
 
             @Override
-            protected Void call() throws Exception {
+            protected Void call() {
                 Request<?> req = makeRequest();
                 HandleRequest.getInstance().makeRequest(req, (Response<?> res) -> {
                     refreshTable(null);
-                    Platform.runLater(() -> {
-                        clearForm();
-                    });
+                    Platform.runLater(() -> clearForm());
                 }, errorProperty::setValue);
                 return null;
             }
 
             private Request<?> makeRequest() {
-                String nome = nameField.getText();
-                Double x = Double.parseDouble(xField.getText());
-                Double y = Double.parseDouble(yField.getText());
-                String aviso = warningField.getText();
-                Boolean acessivel = isAcessibleCheck.isSelected();
-
                 String token = Session.getInstance().getToken();
                 return new DeletePoiRequest(token, Long.parseLong(idField.getText()));
             }
@@ -139,16 +129,14 @@ public class PdisController implements Initializable {
     }
 
     void updatePdi(ActionEvent event) {
-        Task<Void> task = new Task<Void>() {
+        Task<Void> task = new Task<>() {
 
             @Override
-            protected Void call() throws Exception {
+            protected Void call() {
                 Request<?> req = makeRequest();
                 HandleRequest.getInstance().makeRequest(req, (Response<?> res) -> {
                     refreshTable(null);
-                    Platform.runLater(() -> {
-                        clearForm();
-                    });
+                    Platform.runLater(() -> clearForm());
                 }, errorProperty::setValue);
                 return null;
             }
@@ -169,7 +157,7 @@ public class PdisController implements Initializable {
     }
 
     @FXML
-    void formCreatePdi(ActionEvent event) {
+    void formCreatePdi(ActionEvent ignored) {
 
         clearForm();
         Platform.runLater(() -> {
@@ -182,21 +170,20 @@ public class PdisController implements Initializable {
     }
 
     @FXML
-    void refreshTable(ActionEvent event) {
-        Task<Void> task = new Task<Void>() {
+    void refreshTable(ActionEvent ignored) {
+        Task<Void> task = new Task<>() {
             @Override
-            protected Void call() throws Exception {
+            protected Void call() {
                 HandleRequest.getInstance().makeRequest(new FindPoisRequest(Session.getInstance().getToken()),
                         (Response<?> res) -> {
-                            System.out.println(res.toString());
                             if (res instanceof FindPoisResponse) {
                                 Platform.runLater(() -> {
                                     pdis.setAll(((FindPoisResponse) res).payload().pdis());
                                     tableView.autosizeColumns();
+                                    tableView.setCurrentPage(0);
                                 });
                             }
                         }, tableErrorProperty::setValue);
-                System.out.println("Pdis set");
                 return null;
             }
         };
@@ -234,7 +221,7 @@ public class PdisController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
         pdis.addListener((ListChangeListener<? super PoiDTO>) change -> {
-            System.out.println(change.getList().toString());
+            System.err.println("Changed pdis");
             tableView.setItems((ObservableList<PoiDTO>) change.getList());
         });
 
@@ -242,18 +229,14 @@ public class PdisController implements Initializable {
 
             System.out.println("ErrorProperty");
             System.out.println(new_v);
-            Platform.runLater(() -> {
-                errorLabel.setText(new_v);
-            });
+            Platform.runLater(() -> errorLabel.setText(new_v));
         });
 
         tableErrorProperty.addListener((obs, old, new_v) -> {
 
             System.out.println("table Error:");
             System.out.println(new_v);
-            Platform.runLater(() -> {
-                tableError.setText(new_v);
-            });
+            Platform.runLater(() -> tableError.setText(new_v));
         });
 
         selectedPdi.addListener((obs, old, new_v) -> {
@@ -263,14 +246,14 @@ public class PdisController implements Initializable {
         });
         Task<Void> task = new Task<>() {
             @Override
-            protected Void call() throws Exception {
+            protected Void call() {
                 HandleRequest.getInstance().makeRequest(new FindPoisRequest(Session.getInstance().getToken()), (Response<?> response) -> {
                     if (!(response instanceof FindPoisResponse)) {
                         return;
                     }
                     Platform.runLater(() -> {
                         pdis.setAll(((FindPoisResponse) response).payload().pdis());
-                        setupTable();
+                        refreshTable(null);
                     });
                 }, tableErrorProperty::setValue);
 
@@ -284,6 +267,8 @@ public class PdisController implements Initializable {
                 .then((oldValue, newValue) -> tableView.autosizeColumns())
                 .listen();
         Tasks.run(task);
+
+        setupTable();
         form.setVisible(false);
     }
 
@@ -313,7 +298,6 @@ public class PdisController implements Initializable {
                 selectedPdi.setValue(change.getValueAdded());
             }
         });
-        tableView.setItems(pdis);
     }
 
 }

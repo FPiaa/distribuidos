@@ -45,11 +45,9 @@ public class HandleRequest {
     }
 
     public <T> void makeRequest(Request<T> obj, Consumer<Response<?>> onSuccess, Consumer<? super String> onFailure) {
-        System.out.println("make requewst");
         try {
             PrintWriter out = new PrintWriter(echoSocket.getOutputStream(), true);
             BufferedReader in = new BufferedReader(new InputStreamReader(echoSocket.getInputStream()));
-            System.out.println("conection");
             String sendJson = JsonHelper.toJson(obj);
             System.out.println("Enviado:   " + sendJson);
             out.println(sendJson);
@@ -66,7 +64,6 @@ public class HandleRequest {
                 onFailure.accept(((ErrorResponse) res).error().message());
                 return;
             }
-            System.out.println("Accept called");
             onSuccess.accept(res);
 
         } catch (UnknownHostException e) {

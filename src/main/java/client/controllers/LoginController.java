@@ -129,7 +129,7 @@ public class LoginController implements Initializable {
             if (new_v) {
                 Platform.runLater(() -> {
                     Stage stage = (Stage) progressSpinner.getScene().getWindow();
-                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Segments.fxml"));
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Demo.fxml"));
                     Parent root = null;
                     try {
                         root = loader.load();

@@ -15,24 +15,17 @@
   <items>
     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="74.0" prefWidth="1278.0">
          <children>
-            <HBox prefHeight="100.0" prefWidth="200.0" />
-            <MFXTextField fx:id="userNameField" allowEdit="false" floatMode="BORDER" floatingText="Nome" layoutX="217.0" layoutY="52.0" prefHeight="51.0" prefWidth="244.0" selectable="false" />
-            <MFXTextField fx:id="userEmailField" allowEdit="false" floatMode="BORDER" floatingText="Email" layoutX="487.0" layoutY="52.0" prefHeight="51.0" prefWidth="264.0" selectable="false" />
-            <MFXTextField fx:id="userAdminField" allowEdit="false" floatMode="BORDER" floatingText="Admin" layoutX="774.0" layoutY="52.0" prefHeight="51.0" prefWidth="217.0" selectable="false" />
-            <Label layoutX="217.0" layoutY="12.0" prefHeight="40.0" prefWidth="110.0" text="Usuario atual" />
-            <VBox alignment="CENTER" layoutX="1021.0" layoutY="14.0" prefHeight="128.0" prefWidth="179.0">
-               <children>
-                  <MFXButton buttonType="RAISED" onAction="#modifyUser" prefHeight="40.0" prefWidth="142.0" text="Modificar usuario">
-                     <VBox.margin>
-                        <Insets />
-                     </VBox.margin>
-                  </MFXButton>
-               </children></VBox>
+            <MFXTextField fx:id="userNameField" allowEdit="false" floatMode="BORDER" floatingText="Nome" layoutX="62.0" layoutY="52.0" prefHeight="51.0" prefWidth="244.0" selectable="false" />
+            <MFXTextField fx:id="userEmailField" allowEdit="false" floatMode="BORDER" floatingText="Email" layoutX="351.0" layoutY="53.0" prefHeight="51.0" prefWidth="264.0" selectable="false" />
+            <MFXTextField fx:id="userAdminField" allowEdit="false" floatMode="BORDER" floatingText="Admin" layoutX="656.0" layoutY="53.0" prefHeight="51.0" prefWidth="217.0" selectable="false" />
+            <Label layoutX="62.0" layoutY="14.0" prefHeight="40.0" prefWidth="110.0" text="Usuario atual" />
+            <VBox alignment="CENTER" layoutX="1021.0" layoutY="14.0" prefHeight="128.0" prefWidth="179.0" />
+            <MFXButton buttonType="RAISED" layoutX="910.0" layoutY="58.0" onAction="#modifyUser" prefHeight="40.0" prefWidth="142.0" text="Modificar usuario" />
          </children></AnchorPane>
     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
          <children>
-            <MFXPaginatedTableView fx:id="tableView" layoutX="142.0" layoutY="149.0" prefHeight="429.0" prefWidth="609.0" />
-            <HBox fx:id="tableButtons" alignment="CENTER_RIGHT" layoutX="142.0" layoutY="49.0" prefHeight="100.0" prefWidth="609.0">
+            <MFXPaginatedTableView fx:id="tableView" layoutX="53.0" layoutY="149.0" prefHeight="429.0" prefWidth="609.0" />
+            <HBox fx:id="tableButtons" alignment="CENTER_RIGHT" layoutX="40.0" layoutY="53.0" prefHeight="100.0" prefWidth="609.0">
                <children>
                   <HBox prefHeight="100.0" prefWidth="47.0" HBox.hgrow="NEVER" />
                   <MFXButton buttonType="RAISED" onAction="#criarUsuario" prefHeight="40.0" prefWidth="130.0" text="Novo Usuario" />
@@ -40,7 +33,7 @@
                   <MFXButton buttonType="RAISED" layoutX="489.0" layoutY="40.0" onAction="#refreshTable" prefHeight="40.0" prefWidth="130.0" text="Atualizar Tabela" />
                </children>
             </HBox>
-            <VBox fx:id="form" alignment="TOP_CENTER" layoutX="801.0" layoutY="54.0" prefHeight="526.0" prefWidth="450.0" style="visibility: true;">
+            <VBox fx:id="form" alignment="TOP_CENTER" layoutX="721.0" layoutY="53.0" prefHeight="526.0" prefWidth="450.0" style="visibility: true;">
                <children>
                   <Label fx:id="formLabel" prefHeight="32.0" prefWidth="185.0" text="Editando usuario ">
                      <VBox.margin>
