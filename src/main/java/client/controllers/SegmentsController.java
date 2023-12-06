@@ -199,6 +199,7 @@ public class SegmentsController implements Initializable {
                                     segments.setAll(((FindSegmentsResponse) res).payload().segmentos());
                                     tableView.autosizeColumns();
                                     tableView.setCurrentPage(0);
+                                    tableErrorProperty.set("");
                                 });
                             }
                         }, tableErrorProperty::setValue);

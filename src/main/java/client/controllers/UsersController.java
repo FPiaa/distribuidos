@@ -197,6 +197,8 @@ public class UsersController implements Initializable {
                                 Platform.runLater(() -> {
                                     users.setAll(((FindUsersResponse) res).payload().users());
                                     tableView.autosizeColumns();
+                                    errorProperty.setValue("");
+                                    tableErrorProperty.setValue("");
                                 });
                             }
                         }, tableErrorProperty::setValue);
@@ -237,6 +239,7 @@ public class UsersController implements Initializable {
 
     public void modifyUser(UserDTO user) {
         Platform.runLater(() -> {
+            errorProperty.setValue("");
             form.setVisible(true);
             idField.setText("" + user.id());
             nameField.setText(user.nome());
@@ -251,7 +254,6 @@ public class UsersController implements Initializable {
     }
 
     public void createUser(ActionEvent actionEvent) {
-        System.out.println("Create user");
         Task<Void> task = new Task<Void>() {
 
             @Override
@@ -289,7 +291,6 @@ public class UsersController implements Initializable {
     }
 
     public void updateUser(ActionEvent actionEvent) {
-        System.out.println("Update user");
         Task<Void> task = new Task<Void>() {
             @Override
             protected Void call() throws Exception {
@@ -316,9 +317,10 @@ public class UsersController implements Initializable {
 
             private Request<?> makeRequest() {
                 Long id = Long.parseLong(idField.getText());
-                String nome = nameField.getText();
-                String email = emailField.getText();
-                String senha = passField.getText();
+
+                String nome = nameField.getText().isBlank() ? null : nameField.getText();
+                String email = emailField.getText().isBlank() ? null : emailField.getText();
+                String senha = passField.getText().isBlank() ? null : passField.getText();
                 Boolean tipo = isAdminCheck.isSelected();
 
                 String token = Session.getInstance().getToken();
@@ -388,15 +390,17 @@ public class UsersController implements Initializable {
 
     public void clearForm() {
         Platform.runLater(() -> {
-            emailField.setText(null);
-            nameField.setText(null);
-            passField.setText(null);
+            errorProperty.setValue("");
+            emailField.setText("");
+            nameField.setText("");
+            passField.setText("");
             isAdminCheck.setSelected(false);
             form.setVisible(false);
         });
     }
     public void cancelModify(ActionEvent actionEvent) {
         Platform.runLater(() -> {
+            errorProperty.setValue("");
             form.setVisible(false);
         });
     }

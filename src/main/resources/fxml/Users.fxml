@@ -24,48 +24,45 @@
          </children></AnchorPane>
     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
          <children>
-            <MFXPaginatedTableView fx:id="tableView" layoutX="53.0" layoutY="149.0" prefHeight="429.0" prefWidth="609.0" />
-            <HBox fx:id="tableButtons" alignment="CENTER_RIGHT" layoutX="40.0" layoutY="53.0" prefHeight="100.0" prefWidth="609.0">
+            <MFXPaginatedTableView fx:id="tableView" layoutX="58.0" layoutY="128.0" prefHeight="429.0" prefWidth="609.0" rowsPerPage="8" />
+            <HBox fx:id="tableButtons" alignment="CENTER_RIGHT" layoutX="58.0" layoutY="28.0" prefHeight="100.0" prefWidth="609.0">
                <children>
+                  <Label fx:id="tableError" prefHeight="24.0" prefWidth="297.0" />
                   <HBox prefHeight="100.0" prefWidth="47.0" HBox.hgrow="NEVER" />
                   <MFXButton buttonType="RAISED" onAction="#criarUsuario" prefHeight="40.0" prefWidth="130.0" text="Novo Usuario" />
                   <HBox prefHeight="100.0" prefWidth="47.0" HBox.hgrow="NEVER" />
                   <MFXButton buttonType="RAISED" layoutX="489.0" layoutY="40.0" onAction="#refreshTable" prefHeight="40.0" prefWidth="130.0" text="Atualizar Tabela" />
                </children>
             </HBox>
-            <VBox fx:id="form" alignment="TOP_CENTER" layoutX="721.0" layoutY="53.0" prefHeight="526.0" prefWidth="450.0" style="visibility: true;">
+            <VBox fx:id="form" alignment="TOP_CENTER" layoutX="720.0" layoutY="41.0" prefHeight="526.0" prefWidth="450.0" style="visibility: true;">
                <children>
+                  <MFXTextField fx:id="idField" style="visibility: false;" />
                   <Label fx:id="formLabel" prefHeight="32.0" prefWidth="185.0" text="Editando usuario ">
                      <VBox.margin>
                         <Insets />
                      </VBox.margin>
                   </Label>
-                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" VBox.vgrow="ALWAYS">
-                     <children>
-                        <MFXTextField fx:id="idField" style="visibility: false;" />
-                        <Label fx:id="errorLabel" prefHeight="64.0" prefWidth="340.0">
-                           <VBox.margin>
-                              <Insets bottom="24.0" />
-                           </VBox.margin>
-                        </Label>
-                        <MFXTextField fx:id="nameField" floatMode="BORDER" floatingText="Nome" prefHeight="48.0" prefWidth="340.0">
-                           <VBox.margin>
-                              <Insets bottom="34.0" />
-                           </VBox.margin>
-                        </MFXTextField>
-                        <MFXTextField fx:id="emailField" floatMode="BORDER" floatingText="Email" layoutX="65.0" layoutY="233.0" prefHeight="48.0" prefWidth="340.0">
-                           <VBox.margin>
-                              <Insets bottom="24.0" />
-                           </VBox.margin>
-                        </MFXTextField>
-                        <MFXTextField fx:id="passField" floatMode="BORDER" floatingText="Senha" layoutX="65.0" layoutY="274.0" prefHeight="48.0" prefWidth="340.0">
-                           <VBox.margin>
-                              <Insets bottom="24.0" />
-                           </VBox.margin>
-                        </MFXTextField>
-                        <CheckBox fx:id="isAdminCheck" mnemonicParsing="false" text="É admin?" />
-                     </children>
-                  </VBox>
+                  <Label fx:id="errorLabel" prefHeight="32.0" prefWidth="340.0">
+                     <VBox.margin>
+                        <Insets bottom="24.0" />
+                     </VBox.margin>
+                  </Label>
+                  <MFXTextField fx:id="nameField" floatMode="BORDER" floatingText="Nome" prefHeight="48.0" prefWidth="340.0">
+                     <VBox.margin>
+                        <Insets bottom="34.0" />
+                     </VBox.margin>
+                  </MFXTextField>
+                  <MFXTextField fx:id="emailField" floatMode="BORDER" floatingText="Email" prefHeight="48.0" prefWidth="340.0">
+                     <VBox.margin>
+                        <Insets bottom="24.0" />
+                     </VBox.margin>
+                  </MFXTextField>
+                  <MFXTextField fx:id="passField" floatMode="BORDER" floatingText="Senha" prefHeight="48.0" prefWidth="340.0">
+                     <VBox.margin>
+                        <Insets bottom="24.0" />
+                     </VBox.margin>
+                  </MFXTextField>
+                  <CheckBox fx:id="isAdminCheck" mnemonicParsing="false" text="É admin?" />
                   <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="363.0">
                      <children>
                         <MFXButton fx:id="modifyButton" buttonType="RAISED" onAction="#updateUser" prefHeight="40.0" prefWidth="126.0" text="Editar Usuario" />
@@ -76,7 +73,6 @@
                      </children>
                   </HBox>
                </children></VBox>
-            <Label fx:id="tableError" layoutX="136.0" layoutY="41.0" prefHeight="24.0" prefWidth="480.0" />
          </children></AnchorPane>
   </items>
 </SplitPane>
