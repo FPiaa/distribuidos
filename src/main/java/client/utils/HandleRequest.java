@@ -110,6 +110,30 @@ public class HandleRequest {
             if (clazz == FindUserRequest.class) {
                 response = JsonHelper.fromJson(json, FindUserResponse.class);
             }
+            if (clazz == CreatePoiRequest.class) {
+                response = JsonHelper.fromJson(json, CreatePoiResponse.class);
+            }
+            if (clazz == UpdatePoiRequest.class) {
+                response = JsonHelper.fromJson(json, UpdatePoiResponse.class);
+            }
+            if (clazz == DeletePoiRequest.class) {
+                response = JsonHelper.fromJson(json, DeletePoiResponse.class);
+            }
+            if (clazz == FindPoisRequest.class) {
+                response = JsonHelper.fromJson(json, FindPoisResponse.class);
+            }
+            if (clazz == CreateSegmentRequest.class) {
+                response = JsonHelper.fromJson(json, CreateSegmentResponse.class);
+            }
+            if (clazz == UpdateSegmentRequest.class) {
+                response = JsonHelper.fromJson(json, UpdateSegmentResponse.class);
+            }
+            if (clazz == DeleteSegmentRequest.class) {
+                response = JsonHelper.fromJson(json, DeleteSegmentResponse.class);
+            }
+            if (clazz == FindSegmentsRequest.class) {
+                response = JsonHelper.fromJson(json, FindSegmentsResponse.class);
+            }
 
 
             if (response == null || response.payload() == null) {

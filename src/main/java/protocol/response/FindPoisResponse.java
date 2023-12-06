@@ -11,5 +11,5 @@ public record FindPoisResponse(@Valid @NotNull Payload payload) implements Respo
     public FindPoisResponse(List<PoiDTO> pois) {
         this(new Payload(pois));
     }
-    public record Payload(@NotNull List<@Valid @NotNull PoiDTO> pdis){}
+    public record Payload(@NotNull List<@Valid  PoiDTO> pdis){}
 }
