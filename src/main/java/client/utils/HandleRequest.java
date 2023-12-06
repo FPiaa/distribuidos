@@ -38,7 +38,7 @@ public class HandleRequest {
         this.port = port;
     }
 
-    public <T> Response<?> makeRequest(Request<T> obj, Consumer<Void> onSuccess, Consumer<String> onFailure) {
+    public <T> void makeRequest(Request<T> obj, Consumer<Response<?>> onSuccess, Consumer<? super String> onFailure) {
 
         try (Socket echoSocket = new Socket(host, port);
              PrintWriter out = new PrintWriter(echoSocket.getOutputStream(), true);
@@ -53,24 +53,21 @@ public class HandleRequest {
             if (receivedJson == null) {
                 var error = new ErrorResponse(1, "O servidor não retornou nenhuma resposta");
                 onFailure.accept(error.payload().message());
-                return error;
+                return;
             }
             Response<?> res = handleResponse(receivedJson, obj);
             if(res instanceof ErrorResponse) {
                 onFailure.accept(((ErrorResponse) res).error().message());
-                return res;
+                return;
             }
-            onSuccess.accept(null);
-            return res;
+            onSuccess.accept(res);
 
         } catch (UnknownHostException e) {
             var error =  new ErrorResponse(2, "Host %s:%d  desconhecido.".formatted(host, port));
             onFailure.accept(error.payload().message());
-            return error;
         } catch (IOException e) {
             var error =  new ErrorResponse(3, "Comunicação com o Host %s:%d  falhou.".formatted(host, port));
             onFailure.accept(error.payload().message());
-            return error;
         }
 
     }

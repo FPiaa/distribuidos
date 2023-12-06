@@ -44,10 +44,10 @@ public class CadastroController {
         String pass = passField.getText();
         String name = nameField.getText();
 
-        Task<Response<?>> task = new Task<>() {
+        Task<Void> task = new Task<>() {
             @Override
-            protected Response<?> call() throws Exception {
-                return HandleRequest.getInstance().makeRequest(new CreateUserRequest(name, email, pass), (Void) -> {
+            protected Void call() throws Exception {
+                HandleRequest.getInstance().makeRequest(new CreateUserRequest(name, email, pass), (Response<?> resp) -> {
                     Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                     FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/LoginScreen.fxml"));
                     Parent root = null;
@@ -61,6 +61,7 @@ public class CadastroController {
                 }, (String s) -> {
                     errorLabel.setText(s);
                 });
+                return null;
             }
         };
 
