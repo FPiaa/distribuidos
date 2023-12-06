@@ -45,15 +45,20 @@ public class HandleRequest {
     }
 
     public <T> void makeRequest(Request<T> obj, Consumer<Response<?>> onSuccess, Consumer<? super String> onFailure) {
+        if (echoSocket.isClosed()) {
+            updateEndpoit(host, port);
+        }
         try {
             PrintWriter out = new PrintWriter(echoSocket.getOutputStream(), true);
             BufferedReader in = new BufferedReader(new InputStreamReader(echoSocket.getInputStream()));
             String sendJson = JsonHelper.toJson(obj);
-            System.out.println("Enviado:   " + sendJson);
+            System.out.println("\n\nEnviado:   " + sendJson);
             out.println(sendJson);
 
             String receivedJson = in.readLine();
-            System.out.println("\n\nRecebido:  " + receivedJson);
+            System.out.println("Recebido:  " + receivedJson);
+            System.out.println();
+            System.out.println();
             if (receivedJson == null) {
                 var error = new ErrorResponse(1, "O servidor não retornou nenhuma resposta");
                 onFailure.accept(error.payload().message());
@@ -69,9 +74,23 @@ public class HandleRequest {
         } catch (UnknownHostException e) {
             var error = new ErrorResponse(2, "Host %s:%d  desconhecido.".formatted(host, port));
             onFailure.accept(error.payload().message());
+            if(!echoSocket.isClosed()) {
+                try {
+                    echoSocket.close();
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
+            }
         } catch (IOException e) {
             var error = new ErrorResponse(3, "Comunicação com o Host %s:%d  falhou.".formatted(host, port));
             onFailure.accept(error.payload().message());
+            if(!echoSocket.isClosed()) {
+                try {
+                    echoSocket.close();
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
+            }
         }
 
     }
