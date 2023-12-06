@@ -39,13 +39,14 @@ public class HandleRequest {
         this.port = port;
         try {
             echoSocket = new Socket(host, port);
+            System.out.println(echoSocket.getInetAddress());
         } catch (IOException ignored) {
 
         }
     }
 
     public <T> void makeRequest(Request<T> obj, Consumer<Response<?>> onSuccess, Consumer<? super String> onFailure) {
-        if (echoSocket.isClosed()) {
+        if (echoSocket != null && echoSocket.isClosed()) {
             updateEndpoit(host, port);
         }
         try {
@@ -69,12 +70,15 @@ public class HandleRequest {
                 onFailure.accept(((ErrorResponse) res).error().message());
                 return;
             }
+            if (res instanceof LogoutRequest) {
+                echoSocket.close();
+            }
             onSuccess.accept(res);
 
         } catch (UnknownHostException e) {
             var error = new ErrorResponse(2, "Host %s:%d  desconhecido.".formatted(host, port));
             onFailure.accept(error.payload().message());
-            if(!echoSocket.isClosed()) {
+            if (!echoSocket.isClosed()) {
                 try {
                     echoSocket.close();
                 } catch (IOException ex) {
@@ -84,7 +88,7 @@ public class HandleRequest {
         } catch (IOException e) {
             var error = new ErrorResponse(3, "Comunicação com o Host %s:%d  falhou.".formatted(host, port));
             onFailure.accept(error.payload().message());
-            if(!echoSocket.isClosed()) {
+            if (!echoSocket.isClosed()) {
                 try {
                     echoSocket.close();
                 } catch (IOException ex) {

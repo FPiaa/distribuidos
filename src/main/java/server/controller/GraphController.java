@@ -29,7 +29,7 @@ public class GraphController {
     }
 
     public PoiDTO createPoi(CreatePoiRequest poi) {
-        long id = System.nanoTime();
+        long id = System.currentTimeMillis();
         var dto = PoiDTO.builder()
                 .id(id)
                 .nome(poi.getPayload().nome())
