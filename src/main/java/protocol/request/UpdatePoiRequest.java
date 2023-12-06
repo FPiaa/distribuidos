@@ -12,7 +12,7 @@ public class UpdatePoiRequest extends Request<UpdatePoiRequest.Payload> {
     @NotNull
     private final Payload payload;
 
-    public UpdatePoiRequest(String token, Long id, @Optional String name, @Optional Double x, @Optional Double y, @Optional String aviso, @Optional Boolean acessivel) {
+    public UpdatePoiRequest(String token, Long id, @Optional String name, @Optional String aviso, @Optional Boolean acessivel) {
         super(new Header(RequisitionOperations.ATUALIZAR_PDI, token));
             this.payload = new Payload(id, name, aviso, acessivel);
     }

@@ -143,13 +143,11 @@ public class PdisController implements Initializable {
 
             private Request<?> makeRequest() {
                 String nome = nameField.getText();
-                Double x = Double.parseDouble(xField.getText());
-                Double y = Double.parseDouble(yField.getText());
                 String aviso = warningField.getText();
                 Boolean acessivel = isAcessibleCheck.isSelected();
                 Long id = Long.parseLong(idField.getText());
                 String token = Session.getInstance().getToken();
-                return new UpdatePoiRequest(token, id, nome, x, y, aviso, acessivel);
+                return new UpdatePoiRequest(token, id, nome, aviso, acessivel);
             }
         };
 
