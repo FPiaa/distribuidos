@@ -21,6 +21,7 @@ public class HandleRequest {
     private String host = "localhost";
     private int port = 24800;
     private static HandleRequest instance = null;
+    private Socket echoSocket;
 
     private HandleRequest() {
     }
@@ -36,27 +37,32 @@ public class HandleRequest {
     public void updateEndpoit(String host, int port) {
         this.host = host;
         this.port = port;
+        try {
+            echoSocket = new Socket(host, port);
+        } catch (IOException ignored) {
+
+        }
     }
 
     public <T> void makeRequest(Request<T> obj, Consumer<Response<?>> onSuccess, Consumer<? super String> onFailure) {
-
-        try (Socket echoSocket = new Socket(host, port);
-             PrintWriter out = new PrintWriter(echoSocket.getOutputStream(), true);
-             BufferedReader in = new BufferedReader(new InputStreamReader(
-                     echoSocket.getInputStream()));
-             BufferedReader stdin = new BufferedReader(new InputStreamReader(System.in))
-        ) {
+        System.out.println("make requewst");
+        try {
+            PrintWriter out = new PrintWriter(echoSocket.getOutputStream(), true);
+            BufferedReader in = new BufferedReader(new InputStreamReader(echoSocket.getInputStream()));
+            System.out.println("conection");
             String sendJson = JsonHelper.toJson(obj);
+            System.out.println("Enviado:   " + sendJson);
             out.println(sendJson);
 
             String receivedJson = in.readLine();
+            System.out.println("\n\nRecebido:  " + receivedJson);
             if (receivedJson == null) {
                 var error = new ErrorResponse(1, "O servidor não retornou nenhuma resposta");
                 onFailure.accept(error.payload().message());
                 return;
             }
             Response<?> res = handleResponse(receivedJson, obj);
-            if(res instanceof ErrorResponse) {
+            if (res instanceof ErrorResponse) {
                 onFailure.accept(((ErrorResponse) res).error().message());
                 return;
             }
@@ -64,10 +70,10 @@ public class HandleRequest {
             onSuccess.accept(res);
 
         } catch (UnknownHostException e) {
-            var error =  new ErrorResponse(2, "Host %s:%d  desconhecido.".formatted(host, port));
+            var error = new ErrorResponse(2, "Host %s:%d  desconhecido.".formatted(host, port));
             onFailure.accept(error.payload().message());
         } catch (IOException e) {
-            var error =  new ErrorResponse(3, "Comunicação com o Host %s:%d  falhou.".formatted(host, port));
+            var error = new ErrorResponse(3, "Comunicação com o Host %s:%d  falhou.".formatted(host, port));
             onFailure.accept(error.payload().message());
         }
 

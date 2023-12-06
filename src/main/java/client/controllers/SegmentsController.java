@@ -6,8 +6,9 @@ import client.utils.Tasks;
 import io.github.palexdev.materialfx.controls.*;
 import io.github.palexdev.materialfx.controls.cell.MFXTableRowCell;
 import io.github.palexdev.materialfx.filter.BooleanFilter;
-import io.github.palexdev.materialfx.filter.LongFilter;
+import io.github.palexdev.materialfx.filter.DoubleFilter;
 import io.github.palexdev.materialfx.filter.StringFilter;
+import io.github.palexdev.materialfx.utils.others.FunctionalStringConverter;
 import io.github.palexdev.materialfx.utils.others.observables.When;
 import io.github.palexdev.mfxcore.controls.Label;
 import javafx.application.Platform;
@@ -24,25 +25,33 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.layout.VBox;
+import javafx.util.StringConverter;
 import protocol.request.*;
 import protocol.response.FindPoisResponse;
+import protocol.response.FindSegmentsResponse;
 import protocol.response.Response;
 import server.dto.PoiDTO;
+import server.dto.SegmentDTO;
 
 import java.net.URL;
 import java.util.Comparator;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
-public class PdisController implements Initializable {
+public class SegmentsController implements Initializable {
 
-    public MFXPaginatedTableView<PoiDTO> tableView;
-    public Label tableError;
-    public VBox form;
-    public MFXTextField idField;
-    @FXML
-    private Label errorLabel;
     @FXML
     private MFXButton deleteButton;
+
+    @FXML
+    private MFXComboBox<PoiDTO> destinyField;
+
+    @FXML
+    private Label errorLabel;
+
+    @FXML
+    private VBox form;
+
 
     @FXML
     private MFXCheckbox isAcessibleCheck;
@@ -51,25 +60,27 @@ public class PdisController implements Initializable {
     private MFXButton modifyButton;
 
     @FXML
-    private MFXTextField nameField;
+    private MFXButton novoPdi;
 
     @FXML
-    private MFXButton novoPdi;
+    private MFXComboBox<PoiDTO> originField;
+
+    @FXML
+    private Label tableError;
+
+    @FXML
+    private MFXPaginatedTableView<SegmentDTO> tableView;
 
     @FXML
     private MFXTextField warningField;
 
-    @FXML
-    private MFXTextField xField;
-
-    @FXML
-    private MFXTextField yField;
 
     private final ObservableList<PoiDTO> pdis = FXCollections.observableArrayList();
+    private final ObservableList<SegmentDTO> segments = FXCollections.observableArrayList();
     private final StringProperty errorProperty = new SimpleStringProperty();
     private final StringProperty tableErrorProperty = new SimpleStringProperty();
 
-    private final ObjectProperty<PoiDTO> selectedPdi = new SimpleObjectProperty<>();
+    private final ObjectProperty<SegmentDTO> selectedSegment = new SimpleObjectProperty<>();
 
     @FXML
     void cancel(ActionEvent event) {
@@ -77,7 +88,7 @@ public class PdisController implements Initializable {
     }
 
     @FXML
-    void createPdi(ActionEvent event) {
+    void createSegment(ActionEvent event) {
         Task<Void> task = new Task<Void>() {
 
             @Override
@@ -93,14 +104,13 @@ public class PdisController implements Initializable {
             }
 
             private Request<?> makeRequest() {
-                String nome = nameField.getText();
-                Double x = Double.parseDouble(xField.getText());
-                Double y = Double.parseDouble(yField.getText());
+                Long id1 = originField.getValue().id();
+                Long id2 = destinyField.getValue().id();
                 String aviso = warningField.getText();
                 Boolean acessivel = isAcessibleCheck.isSelected();
 
                 String token = Session.getInstance().getToken();
-                return new CreatePoiRequest(token, nome, x, y, aviso, acessivel);
+                return new CreateSegmentRequest(token, id1, id2, aviso, acessivel);
             }
         };
 
@@ -108,12 +118,15 @@ public class PdisController implements Initializable {
     }
 
     @FXML
-    void deletePdi(ActionEvent event) {
+    void deleteSegment(ActionEvent event) {
+        System.out.println("Delete");
         Task<Void> task = new Task<Void>() {
 
             @Override
             protected Void call() throws Exception {
+                System.out.println("call");
                 Request<?> req = makeRequest();
+                System.out.println(req);
                 HandleRequest.getInstance().makeRequest(req, (Response<?> res) -> {
                     refreshTable(null);
                     Platform.runLater(() -> {
@@ -124,21 +137,22 @@ public class PdisController implements Initializable {
             }
 
             private Request<?> makeRequest() {
-                String nome = nameField.getText();
-                Double x = Double.parseDouble(xField.getText());
-                Double y = Double.parseDouble(yField.getText());
-                String aviso = warningField.getText();
-                Boolean acessivel = isAcessibleCheck.isSelected();
+                System.out.println("makeeeeee");
+                System.out.println(originField.getValue());
+                Long id1 = originField.getValue().id();
+                Long id2 = destinyField.getValue().id();
+                System.out.println("????????????");
 
                 String token = Session.getInstance().getToken();
-                return new DeletePoiRequest(token, Long.parseLong(idField.getText()));
+                return new DeleteSegmentRequest(token, id1, id2);
             }
         };
 
         Tasks.run(task);
     }
 
-    void updatePdi(ActionEvent event) {
+    void updateSegment(ActionEvent event) {
+        System.out.println("update");
         Task<Void> task = new Task<Void>() {
 
             @Override
@@ -154,14 +168,12 @@ public class PdisController implements Initializable {
             }
 
             private Request<?> makeRequest() {
-                String nome = nameField.getText();
-                Double x = Double.parseDouble(xField.getText());
-                Double y = Double.parseDouble(yField.getText());
+                Long id1 = originField.getValue().id();
+                Long id2 = destinyField.getValue().id();
                 String aviso = warningField.getText();
                 Boolean acessivel = isAcessibleCheck.isSelected();
-                Long id = Long.parseLong(idField.getText());
                 String token = Session.getInstance().getToken();
-                return new UpdatePoiRequest(token, id, nome, x, y, aviso, acessivel);
+                return new UpdateSegmentRequest(token, id1, id2, aviso, acessivel);
             }
         };
 
@@ -177,21 +189,23 @@ public class PdisController implements Initializable {
             deleteButton.setVisible(false);
             modifyButton.setVisible(true);
             modifyButton.setText("Cadastrar PDI");
-            modifyButton.setOnAction(this::createPdi);
+            modifyButton.setOnAction(this::createSegment);
         });
     }
 
     @FXML
+
     void refreshTable(ActionEvent event) {
+        System.out.println("refresh");
         Task<Void> task = new Task<Void>() {
             @Override
             protected Void call() throws Exception {
-                HandleRequest.getInstance().makeRequest(new FindPoisRequest(Session.getInstance().getToken()),
+                HandleRequest.getInstance().makeRequest(new FindSegmentsRequest(Session.getInstance().getToken()),
                         (Response<?> res) -> {
                             System.out.println(res.toString());
-                            if (res instanceof FindPoisResponse) {
+                            if (res instanceof FindSegmentsResponse) {
                                 Platform.runLater(() -> {
-                                    pdis.setAll(((FindPoisResponse) res).payload().pdis());
+                                    segments.setAll(((FindSegmentsResponse) res).payload().segmentos());
                                     tableView.autosizeColumns();
                                 });
                             }
@@ -206,25 +220,22 @@ public class PdisController implements Initializable {
 
     void clearForm() {
         Platform.runLater(() -> {
-            nameField.setText("");
-            xField.setText("");
-            yField.setText("");
-            isAcessibleCheck.setSelected(false);
-            warningField.setText("");
-            form.setVisible(false);
+           originField.clearSelection();
+           destinyField.clearSelection();
+           isAcessibleCheck.setSelected(false);
+           warningField.setText("");
+           form.setVisible(false);
         });
     }
 
-    void modifyPdi(PoiDTO poi) {
+    void modifySegment(SegmentDTO segment) {
         Platform.runLater(() -> {
-            idField.setText("" + poi.id());
-            nameField.setText(poi.nome());
-            xField.setText("" + poi.posicao().x());
-            yField.setText("" + poi.posicao().y());
-            isAcessibleCheck.setSelected(poi.acessivel());
-            warningField.setText(poi.aviso());
+            originField.setValue(pdis.stream().filter((v) -> Objects.equals(v.id(), segment.pdi_inicial())).findFirst().orElse(null));
+            destinyField.setValue(pdis.stream().filter((v) -> Objects.equals(v.id(), segment.pdi_final())).findFirst().orElse(null));
+            isAcessibleCheck.setSelected(segment.acessivel());
+            warningField.setText(segment.aviso());
             form.setVisible(true);
-            modifyButton.setOnAction(this::updatePdi);
+            modifyButton.setOnAction(this::updateSegment);
             modifyButton.setText("Atualizar");
             deleteButton.setVisible(true);
         });
@@ -232,15 +243,17 @@ public class PdisController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
         pdis.addListener((ListChangeListener<? super PoiDTO>) change -> {
+            originField.setItems((ObservableList<PoiDTO>) change.getList());
+            destinyField.setItems((ObservableList<PoiDTO>) change.getList());
+        });
+
+        segments.addListener((ListChangeListener<? super SegmentDTO>) change -> {
             System.out.println(change.getList().toString());
-            tableView.setItems((ObservableList<PoiDTO>) change.getList());
+            tableView.setItems((ObservableList<SegmentDTO>) change.getList());
         });
 
         errorProperty.addListener((obs, old, new_v) -> {
-
-            System.out.println("ErrorProperty");
             System.out.println(new_v);
             Platform.runLater(() -> {
                 errorLabel.setText(new_v);
@@ -248,28 +261,51 @@ public class PdisController implements Initializable {
         });
 
         tableErrorProperty.addListener((obs, old, new_v) -> {
-
-            System.out.println("table Error:");
-            System.out.println(new_v);
             Platform.runLater(() -> {
                 tableError.setText(new_v);
             });
         });
 
-        selectedPdi.addListener((obs, old, new_v) -> {
+        selectedSegment.addListener((obs, old, new_v) -> {
             if (Session.getInstance().getUser() == null || Session.getInstance().getUser().isAdmin())
                 if(new_v != null)
-                    modifyPdi(new_v);
+                    modifySegment(new_v);
         });
-        Task<Void> task = new Task<>() {
+
+        StringConverter<PoiDTO> converter = FunctionalStringConverter.to(poi -> poi == null ? "": poi.nome());
+        originField.setItems(pdis);
+        originField.setConverter(converter);
+
+
+        destinyField.setItems(pdis);
+        destinyField.setConverter(converter);
+        Task<Void> task1 = new Task<>() {
             @Override
             protected Void call() throws Exception {
+                System.out.println("find pois");
                 HandleRequest.getInstance().makeRequest(new FindPoisRequest(Session.getInstance().getToken()), (Response<?> response) -> {
                     if (!(response instanceof FindPoisResponse)) {
                         return;
                     }
                     Platform.runLater(() -> {
                         pdis.setAll(((FindPoisResponse) response).payload().pdis());
+                    });
+                }, tableErrorProperty::setValue);
+
+                return null;
+            }
+        };
+
+        Task<Void> task2 = new Task<Void>() {
+             @Override
+            protected Void call() throws Exception {
+                 System.out.println("find segments");
+                HandleRequest.getInstance().makeRequest(new FindSegmentsRequest(Session.getInstance().getToken()), (Response<?> response) -> {
+                    if (!(response instanceof FindSegmentsResponse)) {
+                        return;
+                    }
+                    Platform.runLater(() -> {
+                        segments.setAll(((FindSegmentsResponse) response).payload().segmentos());
                         setupTable();
                     });
                 }, tableErrorProperty::setValue);
@@ -283,37 +319,37 @@ public class PdisController implements Initializable {
         When.onChanged(tableView.currentPageProperty())
                 .then((oldValue, newValue) -> tableView.autosizeColumns())
                 .listen();
-        Tasks.run(task);
+        Tasks.run(task2);
+        Tasks.run(task1);
         form.setVisible(false);
     }
 
     private void setupTable() {
-        MFXTableColumn<PoiDTO> idColumn = new MFXTableColumn<>("ID", true, Comparator.comparing(PoiDTO::id));
-        MFXTableColumn<PoiDTO> nameColumn = new MFXTableColumn<>("Nome", true, Comparator.comparing(PoiDTO::nome));
-        MFXTableColumn<PoiDTO> positionColumn = new MFXTableColumn<>("Posição", true);
-        MFXTableColumn<PoiDTO> warningColumn = new MFXTableColumn<>("Aviso", true, Comparator.comparing(PoiDTO::aviso));
-        MFXTableColumn<PoiDTO> acessibleColumn = new MFXTableColumn<>("Acessível", true, Comparator.comparing(PoiDTO::acessivel));
+        MFXTableColumn<SegmentDTO> pdi_inicial = new MFXTableColumn<>("ID Inicial", true, Comparator.comparing(SegmentDTO::pdi_inicial));
+        MFXTableColumn<SegmentDTO> pdi_final = new MFXTableColumn<>("Id Final", true, Comparator.comparing(SegmentDTO::pdi_final));
+        MFXTableColumn<SegmentDTO> distancia = new MFXTableColumn<>("Distancia", true);
+        MFXTableColumn<SegmentDTO> warningColumn = new MFXTableColumn<>("Aviso", true, Comparator.comparing(SegmentDTO::aviso));
+        MFXTableColumn<SegmentDTO> acessibleColumn = new MFXTableColumn<>("Acessível", true, Comparator.comparing(SegmentDTO::acessivel));
 
 
-        idColumn.setRowCellFactory(userDTO -> new MFXTableRowCell<>(PoiDTO::id));
-        nameColumn.setRowCellFactory(userDTO -> new MFXTableRowCell<>(PoiDTO::nome));
-        positionColumn.setRowCellFactory(userDTO -> new MFXTableRowCell<>(PoiDTO::posicao));
-        warningColumn.setRowCellFactory(device -> new MFXTableRowCell<>(PoiDTO::aviso));
-        acessibleColumn.setRowCellFactory(device -> new MFXTableRowCell<>(PoiDTO::acessivel));
+        pdi_inicial.setRowCellFactory(userDTO -> new MFXTableRowCell<>(SegmentDTO::pdi_inicial));
+        pdi_final.setRowCellFactory(userDTO -> new MFXTableRowCell<>(SegmentDTO::pdi_final));
+        distancia.setRowCellFactory(userDTO -> new MFXTableRowCell<>(SegmentDTO::distancia));
+        warningColumn.setRowCellFactory(device -> new MFXTableRowCell<>(SegmentDTO::aviso));
+        acessibleColumn.setRowCellFactory(device -> new MFXTableRowCell<>(SegmentDTO::acessivel));
 
-        tableView.getTableColumns().addAll(idColumn, nameColumn, positionColumn, warningColumn, acessibleColumn);
+        tableView.getTableColumns().addAll(pdi_inicial, pdi_final, distancia, warningColumn, acessibleColumn);
         tableView.getFilters().addAll(
-                new LongFilter<>("ID", PoiDTO::id),
-                new StringFilter<>("Nome", PoiDTO::nome),
-                new StringFilter<>("Aviso", PoiDTO::aviso),
-                new BooleanFilter<>("Acessível", PoiDTO::acessivel)
+                new DoubleFilter<>("Distância", SegmentDTO::distancia),
+                new StringFilter<>("Aviso", SegmentDTO::aviso),
+                new BooleanFilter<>("Acessível", SegmentDTO::acessivel)
         );
-        tableView.getSelectionModel().selectionProperty().addListener((MapChangeListener<? super Integer, ? super PoiDTO>) change -> {
+        tableView.getSelectionModel().selectionProperty().addListener((MapChangeListener<? super Integer, ? super SegmentDTO>) change -> {
             if (change.wasAdded()) {
-                selectedPdi.setValue(change.getValueAdded());
+                selectedSegment.setValue(change.getValueAdded());
             }
         });
-        tableView.setItems(pdis);
+        tableView.setItems(segments);
     }
 
 }
