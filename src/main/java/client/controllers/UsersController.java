@@ -30,6 +30,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.CheckBox;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import protocol.request.*;
@@ -46,6 +47,7 @@ import java.util.ResourceBundle;
 
 public class UsersController implements Initializable {
 
+    public HBox tableButtons;
     @FXML
     private Label formLabel;
     @FXML
@@ -108,12 +110,7 @@ public class UsersController implements Initializable {
         });
 
         selectedUser.addListener((obs, old, new_v) -> {
-            if (old != null) {
-                System.out.println("Old: " + old);
-            }
-            if (new_v != null) {
-                System.out.println("New: " + new_v);
-            }
+            modifyUser(new_v);
         });
         Task<Void> task = new Task<>() {
             @Override
@@ -143,6 +140,12 @@ public class UsersController implements Initializable {
                     System.out.println("Users set");
                 }
 
+                Platform.runLater(() -> {
+                    if(!Session.getInstance().getUser().isAdmin()) {
+                        tableButtons.setVisible(false);
+                        tableView.setVisible(false);
+                    }
+                });
                 return null;
             }
         };
@@ -152,9 +155,8 @@ public class UsersController implements Initializable {
         When.onChanged(tableView.currentPageProperty())
                 .then((oldValue, newValue) -> tableView.autosizeColumns())
                 .listen();
-        Thread th = new Thread(task);
-        th.setDaemon(true);
-        th.start();
+        Tasks.run(task);
+        form.setVisible(false);
     }
 
     private void setupTable() {
@@ -194,6 +196,7 @@ public class UsersController implements Initializable {
                             if (res instanceof FindUsersResponse) {
                                 Platform.runLater(() -> {
                                     users.setAll(((FindUsersResponse) res).payload().users());
+                                    tableView.autosizeColumns();
                                 });
                             }
                         }, tableErrorProperty::setValue);
@@ -206,12 +209,13 @@ public class UsersController implements Initializable {
     }
 
     public void criarUsuario(ActionEvent actionEvent) {
+        clearForm();
         Platform.runLater(() -> {
             form.setVisible(true);
             deleteButton.setVisible(false);
             modifyButton.setText("Cadastrar");
             modifyButton.setOnAction(this::createUser);
-            isAdminCheck.setVisible(false);
+            isAdminCheck.setVisible(true);
         });
     }
 
@@ -223,6 +227,21 @@ public class UsersController implements Initializable {
             nameField.setText(user.nome());
             emailField.setText(user.email());
             isAdminCheck.setVisible(user.isAdmin());
+            isAdminCheck.setSelected(user.isAdmin());
+            modifyButton.setText("Editar Usuário");
+            modifyButton.setOnAction(this::updateUser);
+            deleteButton.setVisible(true);
+            deleteButton.setText("Deletar Usuário");
+        });
+    }
+
+    public void modifyUser(UserDTO user) {
+        Platform.runLater(() -> {
+            form.setVisible(true);
+            idField.setText("" + user.id());
+            nameField.setText(user.nome());
+            emailField.setText(user.email());
+            isAdminCheck.setVisible(Session.getInstance().getUser().isAdmin());
             isAdminCheck.setSelected(user.isAdmin());
             modifyButton.setText("Editar Usuário");
             modifyButton.setOnAction(this::updateUser);
@@ -243,7 +262,7 @@ public class UsersController implements Initializable {
                         refreshTable(null);
                     }
                     Platform.runLater(() -> {
-                        form.setVisible(false);
+                        clearForm();
                     });
                 }, errorProperty::setValue);
                 return null;
@@ -289,7 +308,7 @@ public class UsersController implements Initializable {
                             userEmailField.setText(response.payload().email());
                             userAdminField.setText(response.payload().isAdmin() ? "Administrador" : "Usuário comum");
                         }
-                        form.setVisible(false);
+                        clearForm();
                     });
                 }, errorProperty::setValue);
                 return null;
@@ -341,7 +360,7 @@ public class UsersController implements Initializable {
                             Scene scene = new Scene(root);
                             stage.setScene(scene);
                         } else {
-                            form.setVisible(false);
+                            clearForm();
                         }
                     });
                 }, errorProperty::setValue);
@@ -367,6 +386,15 @@ public class UsersController implements Initializable {
         Tasks.run(task);
     }
 
+    public void clearForm() {
+        Platform.runLater(() -> {
+            emailField.setText(null);
+            nameField.setText(null);
+            passField.setText(null);
+            isAdminCheck.setSelected(false);
+            form.setVisible(false);
+        });
+    }
     public void cancelModify(ActionEvent actionEvent) {
         Platform.runLater(() -> {
             form.setVisible(false);

@@ -60,6 +60,7 @@ public class HandleRequest {
                 onFailure.accept(((ErrorResponse) res).error().message());
                 return;
             }
+            System.out.println("Accept called");
             onSuccess.accept(res);
 
         } catch (UnknownHostException e) {
