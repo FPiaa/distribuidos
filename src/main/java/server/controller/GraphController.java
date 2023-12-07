@@ -1,6 +1,5 @@
 package server.controller;
 
-import com.google.gson.GsonBuilder;
 import protocol.commons.Command;
 import protocol.commons.dto.PoiDTO;
 import protocol.commons.dto.SegmentDTO;
@@ -11,10 +10,12 @@ import protocol.request.UpdateSegmentRequest;
 import server.exceptions.ResourceNotFoundException;
 import server.exceptions.ServerResponseException;
 import server.graph.Graph;
+import server.graph.Node;
 import server.repository.GraphRepository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class GraphController {
     private static final GraphRepository repository = GraphRepository.getInstance();
@@ -113,17 +114,28 @@ public class GraphController {
         var pdis = findPois();
         var segments = findSegments();
         var graph = new Graph(pdis, segments);
-        var gson = new GsonBuilder().setPrettyPrinting().create();
-
         graph.getNode(id1).orElseThrow(() -> new ResourceNotFoundException("Não foi possível encontrar o pdi com id '%d'".formatted(id1)));
         graph.getNode(id2).orElseThrow(() -> new ResourceNotFoundException("Não foi possível encontrar o pdi com id '%d'".formatted(id2)));
 
-        System.out.println("find shortest");
         var path = graph.findShortestPath(id1, id2);
-        System.out.println("found");
 
-        var pretty = gson.toJson(path);
-        System.out.println(pretty);
-        return new ArrayList<>();
+        return makeCommands(graph, path);
+    }
+
+
+    private List<Command> makeCommands(Graph graph, List<Node> path) {
+        List<Command> commands = new ArrayList<>();
+        for (int i = 0; i < path.size() - 2; i++) {
+            var node1 = path.get(i);
+            var node2 = path.get(i + 1);
+            var vizinhos = graph.getNode(node1.getId()).get().getVizinhos();
+            var segment = vizinhos.stream()
+                    .filter((el) -> Objects.equals(el.pdi_final(), node2.getId()))
+                    .findFirst().get();
+
+            var command = new Command(node1.getNome(), node2.getNome(), segment.distancia(), segment.aviso(), "");
+            commands.add(command);
+        }
+        return commands;
     }
 }

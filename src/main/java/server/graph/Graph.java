@@ -40,7 +40,6 @@ public class Graph {
 
         for (Long node : graph.keySet()) {
             tentativeDistance.put(node, new PathComponent(null, graph.get(node), Double.MAX_VALUE));
-            System.out.println(graph.get(node).getNome());
         }
 
         tentativeDistance.put(start, new PathComponent(null, graph.get(start), 0));

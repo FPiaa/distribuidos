@@ -1,6 +1,5 @@
 package server.layer.initialLayer;
 
-import protocol.commons.Command;
 import protocol.request.FindRouteRequest;
 import protocol.response.FindRouteResponse;
 import protocol.response.Response;
@@ -15,7 +14,6 @@ public class StartFindRoute extends StartTemplate{
         var layer = new ValidateToken<FindRouteRequest, FindRouteResponse>()
                 .buildService((req) -> {
                     var commands = GraphController.getInstance().findRoute(req.getPayload().pdi_inicial(), req.getPayload().pdi_final());
-                    commands.add(new Command("nome 1", "nome 2", 12.0, "", "Frente"));
                     return new FindRouteResponse(commands);
                 });
 
