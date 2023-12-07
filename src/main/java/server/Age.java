@@ -1,7 +1,15 @@
 package server;
 
+import server.controller.GraphController;
+import server.exceptions.ResourceNotFoundException;
+
 public class Age {
     public static void main(String[] args) {
+        try {
+            GraphController.getInstance().findRoute(1701912157956L, 1701918400362L);
+        } catch (ResourceNotFoundException e) {
+            throw new RuntimeException(e);
+        }
 
 //        SessionFactory sessionFactory = (SessionFactory) Persistence.createEntityManagerFactory("server.entity");
 ////        PoiDTO poi = new PoiDTO(1L, "ponto 1", new Position(0 ,0, 0), "", true);

@@ -205,7 +205,7 @@ public class GraphRepository {
 
     private GraphRepository() {
         sessionFactory = (SessionFactory) Persistence.createEntityManagerFactory("server.graph");
-        prepare_graph(true);
+        prepare_graph(false);
     }
 
     public static GraphRepository getInstance() {

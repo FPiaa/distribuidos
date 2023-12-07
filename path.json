@@ -1,0 +1,110 @@
+[
+  {
+    "node": {
+      "id": 1701918323007,
+      "nome": "e4 cima",
+      "aviso": "Parte de cima da escada",
+      "posicao": {
+        "x": 20.0,
+        "y": 140.0
+      },
+      "acessivel": true,
+      "vizinhos": [
+        {
+          "pdi_inicial": 1701918323007,
+          "pdi_final": 1701918287088,
+          "distancia": 2.0,
+          "aviso": "",
+          "acessivel": true
+        },
+        {
+          "pdi_inicial": 1701918323007,
+          "pdi_final": 1701918400362,
+          "distancia": 0.0,
+          "aviso": "",
+          "acessivel": true
+        },
+        {
+          "pdi_inicial": 1701918323007,
+          "pdi_final": 1701918444073,
+          "distancia": 40.0,
+          "aviso": "",
+          "acessivel": true
+        }
+      ]
+    },
+    "distancia": 1.7976931348623157E308
+  },
+  {
+    "parent": {
+      "node": {
+        "id": 1701918323007,
+        "nome": "e4 cima",
+        "aviso": "Parte de cima da escada",
+        "posicao": {
+          "x": 20.0,
+          "y": 140.0
+        },
+        "acessivel": true,
+        "vizinhos": [
+          {
+            "pdi_inicial": 1701918323007,
+            "pdi_final": 1701918287088,
+            "distancia": 2.0,
+            "aviso": "",
+            "acessivel": true
+          },
+          {
+            "pdi_inicial": 1701918323007,
+            "pdi_final": 1701918400362,
+            "distancia": 0.0,
+            "aviso": "",
+            "acessivel": true
+          },
+          {
+            "pdi_inicial": 1701918323007,
+            "pdi_final": 1701918444073,
+            "distancia": 40.0,
+            "aviso": "",
+            "acessivel": true
+          }
+        ]
+      },
+      "distancia": 1.7976931348623157E308
+    },
+    "node": {
+      "id": 1701918323007,
+      "nome": "e4 cima",
+      "aviso": "Parte de cima da escada",
+      "posicao": {
+        "x": 20.0,
+        "y": 140.0
+      },
+      "acessivel": true,
+      "vizinhos": [
+        {
+          "pdi_inicial": 1701918323007,
+          "pdi_final": 1701918287088,
+          "distancia": 2.0,
+          "aviso": "",
+          "acessivel": true
+        },
+        {
+          "pdi_inicial": 1701918323007,
+          "pdi_final": 1701918400362,
+          "distancia": 0.0,
+          "aviso": "",
+          "acessivel": true
+        },
+        {
+          "pdi_inicial": 1701918323007,
+          "pdi_final": 1701918444073,
+          "distancia": 40.0,
+          "aviso": "",
+          "acessivel": true
+        }
+      ]
+    },
+    "distancia": 200.0
+  }
+]

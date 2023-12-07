@@ -13,8 +13,6 @@ import server.exceptions.ServerResponseException;
 import server.graph.Graph;
 import server.repository.GraphRepository;
 
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -116,19 +114,16 @@ public class GraphController {
         var segments = findSegments();
         var graph = new Graph(pdis, segments);
         var gson = new GsonBuilder().setPrettyPrinting().create();
-        var pretty = gson.toJson(graph);
-        System.out.println("\n\n\nGRAFOOOOOOOO\n\n\n");
-        System.out.println(pretty);
-        try {
-            var file = new FileWriter("teste.json");
-            file.write(pretty);
-            file.close();
 
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        graph.getNode(id1).orElseThrow(() -> new ResourceNotFoundException("Não foi possível encontrar o pdi com id '%d'".formatted(id1)));
+        graph.getNode(id2).orElseThrow(() -> new ResourceNotFoundException("Não foi possível encontrar o pdi com id '%d'".formatted(id2)));
+
+        System.out.println("find shortest");
+        var path = graph.findShortestPath(id1, id2);
+        System.out.println("found");
+
+        var pretty = gson.toJson(path);
         System.out.println(pretty);
-        // TODO: build graph and find shortest path
         return new ArrayList<>();
     }
 }

@@ -5,7 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import protocol.commons.dto.SegmentDTO;
 
-import java.util.HashMap;
+import java.util.List;
 
 @Data
 @Builder
@@ -15,5 +15,10 @@ public class Node {
     String aviso;
     Position posicao;
     Boolean acessivel;
-    HashMap<Long, SegmentDTO> vizinhos;
+    List<SegmentDTO> vizinhos;
+
+    public void addVizinho(SegmentDTO segmentDTO) {
+        vizinhos.add(segmentDTO);
+    }
+
 }
