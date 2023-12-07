@@ -59,7 +59,7 @@ public class Graph {
             for(var segment: pathComponent.getNode().vizinhos) {
                 var neighbor = segment.pdi_final();
 
-                if (visitedNodes.contains(neighbor)) {
+                if (visitedNodes.contains(neighbor) || !segment.acessivel()) {
                     continue;
                 }
 
