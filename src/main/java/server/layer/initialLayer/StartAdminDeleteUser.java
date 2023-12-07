@@ -5,7 +5,7 @@ import protocol.request.AdminDeleteUserRequest;
 import protocol.response.DeleteUserResponse;
 import protocol.response.Response;
 import server.controller.UserController;
-import server.dto.DeleteUser;
+import protocol.commons.dto.DeleteUser;
 import server.exceptions.ServerResponseException;
 import server.layer.middleware.ValidateAdmin;
 import server.layer.middleware.ValidateToken;

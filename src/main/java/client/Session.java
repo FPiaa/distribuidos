@@ -2,7 +2,7 @@ package client;
 
 import lombok.Getter;
 import lombok.Setter;
-import server.dto.UserDTO;
+import protocol.commons.dto.UserDTO;
 
 
 @Getter

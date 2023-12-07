@@ -2,7 +2,7 @@ package protocol.response;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
-import server.dto.SegmentDTO;
+import protocol.commons.dto.SegmentDTO;
 
 import java.util.List;
 

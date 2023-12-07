@@ -4,7 +4,7 @@ import protocol.request.AdminCreateUserRequest;
 import protocol.response.CreateUserResponse;
 import protocol.response.Response;
 import server.controller.UserController;
-import server.dto.CreateUser;
+import protocol.commons.dto.CreateUser;
 import server.exceptions.ServerResponseException;
 import server.layer.middleware.ValidateAdmin;
 import server.layer.middleware.ValidateToken;

@@ -1,4 +1,4 @@
-package server.dto;
+package protocol.commons.dto;
 
 import commons.Position;
 import jakarta.validation.Valid;

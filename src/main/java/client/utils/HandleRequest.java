@@ -50,6 +50,7 @@ public class HandleRequest {
             updateEndpoit(host, port);
         }
         try {
+            assert echoSocket != null;
             PrintWriter out = new PrintWriter(echoSocket.getOutputStream(), true);
             BufferedReader in = new BufferedReader(new InputStreamReader(echoSocket.getInputStream()));
             String sendJson = JsonHelper.toJson(obj);

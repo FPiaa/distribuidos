@@ -38,7 +38,7 @@ import protocol.response.FindUserResponse;
 import protocol.response.FindUsersResponse;
 import protocol.response.Response;
 import protocol.response.UpdateUserResponse;
-import server.dto.UserDTO;
+import protocol.commons.dto.UserDTO;
 
 import java.io.IOException;
 import java.net.URL;

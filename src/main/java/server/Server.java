@@ -5,7 +5,7 @@ import protocol.request.RequisitionOperations;
 import protocol.response.LogoutResponse;
 import protocol.response.Response;
 import server.controller.UserController;
-import server.dto.CreateUser;
+import protocol.commons.dto.CreateUser;
 import server.exceptions.ServerResponseException;
 import server.layer.initialLayer.*;
 import server.router.Router;
@@ -44,6 +44,7 @@ public class Server extends Thread {
                     .addRoute(RequisitionOperations.ATUALIZAR_SEGMENTO, new StartUpdateSegment())
                     .addRoute(RequisitionOperations.BUSCAR_SEGMENTOS, new StartFindSegments())
                     .addRoute(RequisitionOperations.DELETAR_SEGMENTO, new StartDeleteSegment())
+                    .addRoute(RequisitionOperations.BUSCAR_ROTA, new StartFindRoute())
                     .build();
         }
         start();

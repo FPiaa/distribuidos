@@ -1,4 +1,4 @@
-package server.dto;
+package protocol.commons.dto;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;

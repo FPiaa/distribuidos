@@ -3,7 +3,7 @@ package protocol.response;
 import com.google.gson.annotations.SerializedName;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
-import server.dto.UserDTO;
+import protocol.commons.dto.UserDTO;
 
 import java.util.List;
 

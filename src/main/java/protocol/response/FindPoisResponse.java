@@ -2,7 +2,7 @@ package protocol.response;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
-import server.dto.PoiDTO;
+import protocol.commons.dto.PoiDTO;
 
 import java.util.List;
 

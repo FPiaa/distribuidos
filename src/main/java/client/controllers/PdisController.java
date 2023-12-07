@@ -27,7 +27,7 @@ import javafx.scene.layout.VBox;
 import protocol.request.*;
 import protocol.response.FindPoisResponse;
 import protocol.response.Response;
-import server.dto.PoiDTO;
+import protocol.commons.dto.PoiDTO;
 
 import java.net.URL;
 import java.util.Comparator;

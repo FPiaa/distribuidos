@@ -2,10 +2,10 @@ package server.controller;
 
 import jwt.JwtHelper;
 import protocol.request.LoginRequest;
-import server.dto.CreateUser;
-import server.dto.DeleteUser;
-import server.dto.UpdateUser;
-import server.dto.UserDTO;
+import protocol.commons.dto.CreateUser;
+import protocol.commons.dto.DeleteUser;
+import protocol.commons.dto.UpdateUser;
+import protocol.commons.dto.UserDTO;
 import server.entity.User;
 import server.exceptions.BadRequestException;
 import server.exceptions.ResourceNotFoundException;

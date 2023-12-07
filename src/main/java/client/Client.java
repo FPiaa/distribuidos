@@ -137,6 +137,8 @@ public class Client {
                     return makeRequest(stdin, token, DeleteSegmentRequest.class);
                 case RequisitionOperations.BUSCAR_SEGMENTOS:
                     return makeRequest(stdin, token, FindSegmentsRequest.class);
+                case RequisitionOperations.BUSCAR_ROTA:
+                    return makeRequest(stdin, token, FindRouteRequest.class);
             }
         }
     }
@@ -201,6 +203,9 @@ public class Client {
             }
             if (clazz == FindSegmentsRequest.class) {
                 response = JsonHelper.fromJson(json, FindSegmentsResponse.class);
+            }
+            if (clazz == FindRouteRequest.class) {
+                response = JsonHelper.fromJson(json, FindRouteResponse.class);
             }
 
 

@@ -1,5 +1,6 @@
 package server.layer.initialLayer;
 
+import protocol.commons.dto.CreateUser;
 import protocol.request.CreateUserRequest;
 import protocol.response.CreateUserResponse;
 import protocol.response.Response;
@@ -12,7 +13,7 @@ public class StartCreateUser extends StartTemplate {
         var request = buildRequest(jsonString, CreateUserRequest.class);
 
         var payload = request.getPayload();
-        var user = server.dto.CreateUser.builder()
+        var user = CreateUser.builder()
                 .tipo(false)
                 .nome(payload.nome())
                 .senha(payload.senha())

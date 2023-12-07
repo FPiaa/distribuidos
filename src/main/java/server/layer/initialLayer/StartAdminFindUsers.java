@@ -4,7 +4,7 @@ import protocol.request.AdminFindUsersRequest;
 import protocol.response.FindUsersResponse;
 import protocol.response.Response;
 import server.controller.UserController;
-import server.dto.UserDTO;
+import protocol.commons.dto.UserDTO;
 import server.exceptions.ServerResponseException;
 import server.layer.middleware.ValidateAdmin;
 import server.layer.middleware.ValidateToken;

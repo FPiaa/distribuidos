@@ -1,4 +1,4 @@
-package server.dto;
+package protocol.commons.dto;
 
 import com.google.gson.annotations.SerializedName;
 import jakarta.validation.constraints.*;

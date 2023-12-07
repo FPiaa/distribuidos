@@ -1,15 +1,17 @@
 package server.controller;
 
+import protocol.commons.Command;
 import protocol.request.CreatePoiRequest;
 import protocol.request.CreateSegmentRequest;
 import protocol.request.UpdatePoiRequest;
 import protocol.request.UpdateSegmentRequest;
-import server.dto.PoiDTO;
-import server.dto.SegmentDTO;
+import protocol.commons.dto.PoiDTO;
+import protocol.commons.dto.SegmentDTO;
 import server.exceptions.ResourceNotFoundException;
 import server.exceptions.ServerResponseException;
 import server.repository.GraphRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class GraphController {
@@ -102,5 +104,13 @@ public class GraphController {
 
     public SegmentDTO deleteSegment(long id1, long id2) throws ResourceNotFoundException {
         return repository.deleteSegment(id1, id2);
+    }
+
+
+    public List<Command> findRoute(long id1, long id2) throws ResourceNotFoundException {
+        var pdis = findPois();
+        var segments = findSegments();
+        // TODO: build graph and find shortest path
+        return new ArrayList<>();
     }
 }

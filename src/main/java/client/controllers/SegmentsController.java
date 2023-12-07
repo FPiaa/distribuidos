@@ -30,8 +30,8 @@ import protocol.request.*;
 import protocol.response.FindPoisResponse;
 import protocol.response.FindSegmentsResponse;
 import protocol.response.Response;
-import server.dto.PoiDTO;
-import server.dto.SegmentDTO;
+import protocol.commons.dto.PoiDTO;
+import protocol.commons.dto.SegmentDTO;
 
 import java.net.URL;
 import java.util.Comparator;

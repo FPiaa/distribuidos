@@ -12,8 +12,8 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.annotations.NaturalId;
-import server.dto.CreateUser;
-import server.dto.UpdateUser;
+import protocol.commons.dto.CreateUser;
+import protocol.commons.dto.UpdateUser;
 
 @Entity
 @Table(name = "Users")
