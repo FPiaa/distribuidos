@@ -161,6 +161,9 @@ public class HandleRequest {
             if (clazz == FindSegmentsRequest.class) {
                 response = JsonHelper.fromJson(json, FindSegmentsResponse.class);
             }
+            if (clazz == FindRouteRequest.class) {
+                response = JsonHelper.fromJson(json, FindRouteResponse.class);
+            }
 
 
             if (response == null || response.payload() == null) {

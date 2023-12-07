@@ -127,6 +127,7 @@ public class DemoController implements Initializable {
         loader.addView(MFXLoaderBean.of("Users", loadURL("/fxml/Users.fxml")).setBeanToNodeMapper(() -> createToggle("fas-circle-dot", "Usuários")).setDefaultRoot(true).get());
         loader.addView(MFXLoaderBean.of("Pois", loadURL("/fxml/Pdis.fxml")).setBeanToNodeMapper(() -> createToggle("fas-toggle-on", "Pontos de Interesse")).get());
         loader.addView(MFXLoaderBean.of("Segments", loadURL("/fxml/Segments.fxml")).setBeanToNodeMapper(() -> createToggle("fas-square-caret-down", "Segmentos")).get());
+        loader.addView(MFXLoaderBean.of("Paths", loadURL("/fxml/Paths.fxml")).setBeanToNodeMapper(() -> createToggle("fas-square-caret-down", "Rotas")).get());
         loader.setOnLoadedAction(beans -> {
             List<ToggleButton> nodes = beans.stream()
                     .map(bean -> {

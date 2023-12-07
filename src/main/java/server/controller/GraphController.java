@@ -125,7 +125,7 @@ public class GraphController {
 
     private List<Command> makeCommands(Graph graph, List<Node> path) {
         List<Command> commands = new ArrayList<>();
-        for (int i = 0; i < path.size() - 2; i++) {
+        for (int i = 0; i < path.size() - 1; i++) {
             var node1 = path.get(i);
             var node2 = path.get(i + 1);
             var vizinhos = graph.getNode(node1.getId()).get().getVizinhos();
@@ -136,6 +136,10 @@ public class GraphController {
             var command = new Command(node1.getNome(), node2.getNome(), segment.distancia(), segment.aviso(), "");
             commands.add(command);
         }
+
+        var node = path.get(path.size() - 1);
+        var command = new Command(node.getNome(), node.getNome(), 0.0, "", "DESTINO");
+        commands.add(command);
         return commands;
     }
 }
