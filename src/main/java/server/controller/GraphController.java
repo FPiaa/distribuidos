@@ -1,16 +1,20 @@
 package server.controller;
 
+import com.google.gson.GsonBuilder;
 import protocol.commons.Command;
+import protocol.commons.dto.PoiDTO;
+import protocol.commons.dto.SegmentDTO;
 import protocol.request.CreatePoiRequest;
 import protocol.request.CreateSegmentRequest;
 import protocol.request.UpdatePoiRequest;
 import protocol.request.UpdateSegmentRequest;
-import protocol.commons.dto.PoiDTO;
-import protocol.commons.dto.SegmentDTO;
 import server.exceptions.ResourceNotFoundException;
 import server.exceptions.ServerResponseException;
+import server.graph.Graph;
 import server.repository.GraphRepository;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -110,6 +114,20 @@ public class GraphController {
     public List<Command> findRoute(long id1, long id2) throws ResourceNotFoundException {
         var pdis = findPois();
         var segments = findSegments();
+        var graph = new Graph(pdis, segments);
+        var gson = new GsonBuilder().setPrettyPrinting().create();
+        var pretty = gson.toJson(graph);
+        System.out.println("\n\n\nGRAFOOOOOOOO\n\n\n");
+        System.out.println(pretty);
+        try {
+            var file = new FileWriter("teste.json");
+            file.write(pretty);
+            file.close();
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        System.out.println(pretty);
         // TODO: build graph and find shortest path
         return new ArrayList<>();
     }

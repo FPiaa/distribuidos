@@ -1,0 +1,68 @@
+{
+  "graph": {
+    "1701912164983": {
+      "id": 1701912164983,
+      "nome": "escada b",
+      "aviso": "",
+      "posicao": {
+        "x": 1.0,
+        "y": 1.0
+      },
+      "acessivel": true,
+      "vizinhos": {
+        "1701912172360": {
+          "pdi_inicial": 1701912164983,
+          "pdi_final": 1701912172360,
+          "distancia": 1.414213562373095,
+          "aviso": "",
+          "acessivel": true
+        },
+        "1701912157956": {
+          "pdi_inicial": 1701912164983,
+          "pdi_final": 1701912157956,
+          "distancia": 1.414213562373095,
+          "aviso": "",
+          "acessivel": true
+        }
+      }
+    },
+    "1701912157956": {
+      "id": 1701912157956,
+      "nome": "port",
+      "aviso": "",
+      "posicao": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "acessivel": true,
+      "vizinhos": {
+        "1701912164983": {
+          "pdi_inicial": 1701912157956,
+          "pdi_final": 1701912164983,
+          "distancia": 1.414213562373095,
+          "aviso": "",
+          "acessivel": true
+        }
+      }
+    },
+    "1701912172360": {
+      "id": 1701912172360,
+      "nome": "escada c",
+      "aviso": "",
+      "posicao": {
+        "x": 2.0,
+        "y": 2.0
+      },
+      "acessivel": true,
+      "vizinhos": {
+        "1701912164983": {
+          "pdi_inicial": 1701912172360,
+          "pdi_final": 1701912164983,
+          "distancia": 1.414213562373095,
+          "aviso": "",
+          "acessivel": true
+        }
+      }
+    }
+  }
+}
