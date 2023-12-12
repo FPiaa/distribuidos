@@ -1,4 +1,18 @@
 package protocol.commons;
 
-public record Command(String nome_inicio, String nome_final, Double distancia, String aviso, String direcao) {
+import lombok.Data;
+import lombok.NonNull;
+
+@Data
+public class Command {
+    @NonNull
+    String nome_inicio;
+    @NonNull
+    String nome_final;
+    @NonNull
+    Double distancia;
+    @NonNull
+    String aviso;
+    @NonNull
+    String direcao;
 }

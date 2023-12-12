@@ -124,11 +124,11 @@ public class PathsController implements Initializable {
         MFXTableColumn<Command> comando = new MFXTableColumn<>("Direcao", true);
 
 
-        nome_inicio.setRowCellFactory(userDTO -> new MFXTableRowCell<>(Command::nome_inicio));
-        nome_final.setRowCellFactory(userDTO -> new MFXTableRowCell<>(Command::nome_final));
-        distancia.setRowCellFactory(userDTO -> new MFXTableRowCell<>(Command::distancia));
-        avisos.setRowCellFactory(device -> new MFXTableRowCell<>(Command::aviso));
-        comando.setRowCellFactory(device -> new MFXTableRowCell<>(Command::direcao));
+        nome_inicio.setRowCellFactory(userDTO -> new MFXTableRowCell<>(Command::getNome_inicio));
+        nome_final.setRowCellFactory(userDTO -> new MFXTableRowCell<>(Command::getNome_final));
+        distancia.setRowCellFactory(userDTO -> new MFXTableRowCell<>(Command::getDistancia));
+        avisos.setRowCellFactory(device -> new MFXTableRowCell<>(Command::getAviso));
+        comando.setRowCellFactory(device -> new MFXTableRowCell<>(Command::getDirecao));
         tableView.getTableColumns().addAll(nome_inicio, nome_final, distancia, avisos, comando);
 
 

@@ -9,6 +9,7 @@ import protocol.request.UpdatePoiRequest;
 import protocol.request.UpdateSegmentRequest;
 import server.exceptions.ResourceNotFoundException;
 import server.exceptions.ServerResponseException;
+import server.graph.Direction;
 import server.graph.Graph;
 import server.graph.Node;
 import server.repository.GraphRepository;
@@ -125,21 +126,33 @@ public class GraphController {
 
     private List<Command> makeCommands(Graph graph, List<Node> path) {
         List<Command> commands = new ArrayList<>();
-        for (int i = 0; i < path.size() - 1; i++) {
-            var node1 = path.get(i);
-            var node2 = path.get(i + 1);
-            var vizinhos = graph.getNode(node1.getId()).get().getVizinhos();
-            var segment = vizinhos.stream()
-                    .filter((el) -> Objects.equals(el.pdi_final(), node2.getId()))
-                    .findFirst().get();
+        if(path.size() >= 2) {
+            var direcaoAtual = Direction.Frente;
+            var oldAngle = path.get(0).getPosicao().angle(path.get(1).getPosicao());
 
-            var command = new Command(node1.getNome(), node2.getNome(), segment.distancia(), segment.aviso(), "");
-            commands.add(command);
+            for (int i = 0; i < path.size() - 1; i++) {
+                var node1 = path.get(i);
+                var node2 = path.get(i + 1);
+
+                var newAngle = node1.getPosicao().angle(node2.getPosicao());
+                direcaoAtual = direcaoAtual.fromAngle(direcaoAtual, oldAngle, newAngle);
+                oldAngle = newAngle;
+
+                var vizinhos = graph.getNode(node1.getId()).get().getVizinhos();
+                var segment = vizinhos.stream()
+                        .filter((el) -> Objects.equals(el.pdi_final(), node2.getId()))
+                        .findFirst().get();
+
+                var command = new Command(node1.getNome(), node2.getNome(), segment.distancia(), segment.aviso(), direcaoAtual.toString());
+                commands.add(command);
+            }
         }
+
 
         var node = path.get(path.size() - 1);
         var command = new Command(node.getNome(), node.getNome(), 0.0, "", "DESTINO");
         commands.add(command);
         return commands;
     }
+
 }
