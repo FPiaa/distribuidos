@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import io.github.palexdev.materialfx.controls.MFXButton?>
+<?import io.github.palexdev.materialfx.controls.MFXCheckbox?>
+<?import io.github.palexdev.materialfx.controls.MFXComboBox?>
+<?import io.github.palexdev.materialfx.controls.MFXPaginatedTableView?>
+<?import io.github.palexdev.materialfx.controls.MFXTextField?>
+<?import io.github.palexdev.mfxcore.controls.Label?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<SplitPane dividerPositions="0.55" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/21.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.controllers.SegmentsController">
+  <items>
+    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+         <children>
+            <VBox layoutX="31.0" layoutY="66.0" prefHeight="591.0" prefWidth="638.0">
+               <children>
+                  <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <Label fx:id="tableError" prefHeight="32.0" prefWidth="253.0">
+                           <HBox.margin>
+                              <Insets right="24.0" />
+                           </HBox.margin>
+                        </Label>
+                        <MFXButton fx:id="novoPdi" alignment="CENTER" buttonType="RAISED" onAction="#formCreatePdi" prefHeight="40.0" prefWidth="125.0" text="Novo Segmento" />
+                        <MFXButton buttonType="RAISED" layoutX="10.0" layoutY="10.0" onAction="#refreshTable" prefHeight="40.0" prefWidth="96.0" text="Atualizar">
+                           <HBox.margin>
+                              <Insets left="24.0" />
+                           </HBox.margin>
+                        </MFXButton>
+                     </children>
+                  </HBox>
+                  <MFXPaginatedTableView fx:id="tableView" prefHeight="486.0" prefWidth="637.0" />
+               </children>
+            </VBox>
+         </children></AnchorPane>
+    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+         <children>
+            <VBox fx:id="form" alignment="CENTER" layoutX="45.0" layoutY="70.0" prefHeight="550.0" prefWidth="401.0">
+               <children>
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="403.0">
+                     <children>
+                        <MFXComboBox fx:id="originField" floatingText="Origem" prefHeight="51.0" prefWidth="146.0">
+                           <HBox.margin>
+                              <Insets right="24.0" />
+                           </HBox.margin>
+                        </MFXComboBox>
+                        <MFXComboBox fx:id="destinyField" floatMode="BORDER" floatingText="Destino" layoutX="149.0" layoutY="39.0" prefHeight="51.0" prefWidth="149.0">
+                           <HBox.margin>
+                              <Insets left="24.0" />
+                           </HBox.margin>
+                        </MFXComboBox>
+                     </children>
+                  </HBox>
+                  <MFXTextField fx:id="warningField" floatMode="BORDER" floatingText="Aviso" layoutX="38.0" layoutY="140.0" prefHeight="51.0" prefWidth="346.0" />
+                  <MFXCheckbox fx:id="isAcessibleCheck" text="Acessivel?" />
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <MFXButton fx:id="modifyButton" alignment="CENTER" buttonType="RAISED" onAction="#createSegment" prefHeight="40.0" prefWidth="96.0" text="Modificar">
+                           <HBox.margin>
+                              <Insets right="24.0" />
+                           </HBox.margin>
+                        </MFXButton>
+                        <MFXButton fx:id="deleteButton" alignment="CENTER" buttonType="RAISED" layoutX="10.0" layoutY="10.0" onAction="#deleteSegment" prefHeight="40.0" prefWidth="96.0" text="Deletar" />
+                        <MFXButton alignment="CENTER" buttonType="RAISED" layoutX="106.0" layoutY="10.0" onAction="#cancel" prefHeight="40.0" prefWidth="96.0" text="Cancelar">
+                           <HBox.margin>
+                              <Insets left="24.0" />
+                           </HBox.margin>
+                        </MFXButton>
+                     </children>
+                  </HBox>
+                  <Label fx:id="errorLabel" prefHeight="40.0" prefWidth="300.0" />
+               </children>
+            </VBox>
+         </children></AnchorPane>
+  </items>
+</SplitPane>

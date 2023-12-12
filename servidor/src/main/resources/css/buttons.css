@@ -1,0 +1,15 @@
+@import 'colors.css';
+
+.mfx-button {
+    -fx-text-fill: -primary;
+}
+
+.mfx-button .mfx-ripple-generator {
+	-mfx-ripple-radius: 40;
+	-mfx-auto-clip: true;
+}
+
+.mfx-button .text {
+    -fx-text-fill: -white;
+    -fx-font-smoothing-type: gray;
+}

@@ -1,0 +1,353 @@
+{
+  "graph": {
+    "1701918287088": {
+      "id": 1701918287088,
+      "nome": "e4 baixo",
+      "aviso": "Parte de baixo da escada",
+      "posicao": {
+        "x": 22.0,
+        "y": 140.0
+      },
+      "acessivel": true,
+      "vizinhos": {
+        "1701918323007": {
+          "pdi_inicial": 1701918287088,
+          "pdi_final": 1701918323007,
+          "distancia": 2.0,
+          "aviso": "",
+          "acessivel": true
+        },
+        "1701918257890": {
+          "pdi_inicial": 1701918287088,
+          "pdi_final": 1701918257890,
+          "distancia": 5.0,
+          "aviso": "",
+          "acessivel": true
+        }
+      }
+    },
+    "1701918041941": {
+      "id": 1701918041941,
+      "nome": "Capela",
+      "aviso": "",
+      "posicao": {
+        "x": 0.0,
+        "y": 105.0
+      },
+      "acessivel": true,
+      "vizinhos": {
+        "1701918001559": {
+          "pdi_inicial": 1701918041941,
+          "pdi_final": 1701918001559,
+          "distancia": 2.0,
+          "aviso": "",
+          "acessivel": true
+        },
+        "1701918182567": {
+          "pdi_inicial": 1701918041941,
+          "pdi_final": 1701918182567,
+          "distancia": 20.0,
+          "aviso": "",
+          "acessivel": true
+        },
+        "1701918063759": {
+          "pdi_inicial": 1701918041941,
+          "pdi_final": 1701918063759,
+          "distancia": 20.0,
+          "aviso": "",
+          "acessivel": true
+        }
+      }
+    },
+    "1701918503921": {
+      "id": 1701918503921,
+      "nome": "e3 baixo",
+      "aviso": "Parte da baixo da escada",
+      "posicao": {
+        "x": -20.0,
+        "y": 103.0
+      },
+      "acessivel": true,
+      "vizinhos": {}
+    },
+    "1701917969951": {
+      "id": 1701917969951,
+      "nome": "Escada Bloco C Baixo",
+      "aviso": "Parte de baixo da escada",
+      "posicao": {
+        "x": 0.0,
+        "y": 100.0
+      },
+      "acessivel": true,
+      "vizinhos": {
+        "1701918001559": {
+          "pdi_inicial": 1701917969951,
+          "pdi_final": 1701918001559,
+          "distancia": 3.0,
+          "aviso": "",
+          "acessivel": true
+        },
+        "1701912157956": {
+          "pdi_inicial": 1701917969951,
+          "pdi_final": 1701912157956,
+          "distancia": 100.0,
+          "aviso": "",
+          "acessivel": true
+        }
+      }
+    },
+    "1701918233887": {
+      "id": 1701918233887,
+      "nome": "Laboratório 7",
+      "aviso": "Laboratório",
+      "posicao": {
+        "x": 22.0,
+        "y": 125.0
+      },
+      "acessivel": true,
+      "vizinhos": {
+        "1701918257890": {
+          "pdi_inicial": 1701918233887,
+          "pdi_final": 1701918257890,
+          "distancia": 10.0,
+          "aviso": "",
+          "acessivel": true
+        },
+        "1701918212777": {
+          "pdi_inicial": 1701918233887,
+          "pdi_final": 1701918212777,
+          "distancia": 20.0,
+          "aviso": "",
+          "acessivel": true
+        }
+      }
+    },
+    "1701918001559": {
+      "id": 1701918001559,
+      "nome": "Escada Bloco C cima",
+      "aviso": "Parte De cima da Escadaria",
+      "posicao": {
+        "x": 0.0,
+        "y": 103.0
+      },
+      "acessivel": true,
+      "vizinhos": {
+        "1701918041941": {
+          "pdi_inicial": 1701918001559,
+          "pdi_final": 1701918041941,
+          "distancia": 2.0,
+          "aviso": "",
+          "acessivel": true
+        },
+        "1701917969951": {
+          "pdi_inicial": 1701918001559,
+          "pdi_final": 1701917969951,
+          "distancia": 3.0,
+          "aviso": "",
+          "acessivel": true
+        }
+      }
+    },
+    "1701918323007": {
+      "id": 1701918323007,
+      "nome": "e4 cima",
+      "aviso": "Parte de cima da escada",
+      "posicao": {
+        "x": 20.0,
+        "y": 140.0
+      },
+      "acessivel": true,
+      "vizinhos": {
+        "1701918287088": {
+          "pdi_inicial": 1701918323007,
+          "pdi_final": 1701918287088,
+          "distancia": 2.0,
+          "aviso": "",
+          "acessivel": true
+        },
+        "1701918400362": {
+          "pdi_inicial": 1701918323007,
+          "pdi_final": 1701918400362,
+          "distancia": 0.0,
+          "aviso": "",
+          "acessivel": true
+        },
+        "1701918444073": {
+          "pdi_inicial": 1701918323007,
+          "pdi_final": 1701918444073,
+          "distancia": 40.0,
+          "aviso": "",
+          "acessivel": true
+        }
+      }
+    },
+    "1701918182567": {
+      "id": 1701918182567,
+      "nome": "e2 baixo",
+      "aviso": "Parte de baixo da escada e2",
+      "posicao": {
+        "x": 20.0,
+        "y": 105.0
+      },
+      "acessivel": true,
+      "vizinhos": {
+        "1701918041941": {
+          "pdi_inicial": 1701918182567,
+          "pdi_final": 1701918041941,
+          "distancia": 20.0,
+          "aviso": "",
+          "acessivel": true
+        },
+        "1701918212777": {
+          "pdi_inicial": 1701918182567,
+          "pdi_final": 1701918212777,
+          "distancia": 2.0,
+          "aviso": "",
+          "acessivel": true
+        }
+      }
+    },
+    "1701918257890": {
+      "id": 1701918257890,
+      "nome": "Laboratório 8",
+      "aviso": "Laboratório",
+      "posicao": {
+        "x": 22.0,
+        "y": 135.0
+      },
+      "acessivel": true,
+      "vizinhos": {
+        "1701918287088": {
+          "pdi_inicial": 1701918257890,
+          "pdi_final": 1701918287088,
+          "distancia": 5.0,
+          "aviso": "",
+          "acessivel": true
+        },
+        "1701918233887": {
+          "pdi_inicial": 1701918257890,
+          "pdi_final": 1701918233887,
+          "distancia": 10.0,
+          "aviso": "",
+          "acessivel": true
+        }
+      }
+    },
+    "1701912157956": {
+      "id": 1701912157956,
+      "nome": "Portaria",
+      "aviso": "",
+      "posicao": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "acessivel": true,
+      "vizinhos": {
+        "1701917969951": {
+          "pdi_inicial": 1701912157956,
+          "pdi_final": 1701917969951,
+          "distancia": 100.0,
+          "aviso": "",
+          "acessivel": true
+        }
+      }
+    },
+    "1701918063759": {
+      "id": 1701918063759,
+      "nome": "Auditório",
+      "aviso": "",
+      "posicao": {
+        "x": -20.0,
+        "y": 105.0
+      },
+      "acessivel": true,
+      "vizinhos": {
+        "1701918041941": {
+          "pdi_inicial": 1701918063759,
+          "pdi_final": 1701918041941,
+          "distancia": 20.0,
+          "aviso": "",
+          "acessivel": true
+        },
+        "1701918444073": {
+          "pdi_inicial": 1701918063759,
+          "pdi_final": 1701918444073,
+          "distancia": 35.0,
+          "aviso": "",
+          "acessivel": true
+        }
+      }
+    },
+    "1701918400362": {
+      "id": 1701918400362,
+      "nome": "LACA",
+      "aviso": "Laboratório de Computação Aplicada",
+      "posicao": {
+        "x": 20.0,
+        "y": 140.0
+      },
+      "acessivel": true,
+      "vizinhos": {
+        "1701918323007": {
+          "pdi_inicial": 1701918400362,
+          "pdi_final": 1701918323007,
+          "distancia": 0.0,
+          "aviso": "",
+          "acessivel": true
+        }
+      }
+    },
+    "1701918444073": {
+      "id": 1701918444073,
+      "nome": "r1",
+      "aviso": "Rampa",
+      "posicao": {
+        "x": -20.0,
+        "y": 140.0
+      },
+      "acessivel": true,
+      "vizinhos": {
+        "1701918323007": {
+          "pdi_inicial": 1701918444073,
+          "pdi_final": 1701918323007,
+          "distancia": 40.0,
+          "aviso": "",
+          "acessivel": true
+        },
+        "1701918063759": {
+          "pdi_inicial": 1701918444073,
+          "pdi_final": 1701918063759,
+          "distancia": 35.0,
+          "aviso": "",
+          "acessivel": true
+        }
+      }
+    },
+    "1701918212777": {
+      "id": 1701918212777,
+      "nome": "Laboratório 6",
+      "aviso": "Laboratório",
+      "posicao": {
+        "x": 22.0,
+        "y": 105.0
+      },
+      "acessivel": true,
+      "vizinhos": {
+        "1701918233887": {
+          "pdi_inicial": 1701918212777,
+          "pdi_final": 1701918233887,
+          "distancia": 20.0,
+          "aviso": "",
+          "acessivel": true
+        },
+        "1701918182567": {
+          "pdi_inicial": 1701918212777,
+          "pdi_final": 1701918182567,
+          "distancia": 2.0,
+          "aviso": "",
+          "acessivel": true
+        }
+      }
+    }
+  }
+}
