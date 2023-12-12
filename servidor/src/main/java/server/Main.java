@@ -1,4 +1,4 @@
-package client;
+package server;
 
 import fr.brouillard.oss.cssfx.CSSFX;
 import io.github.palexdev.materialfx.theming.JavaFXThemes;
@@ -12,8 +12,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
-public class Gui extends Application {
-
+public class Main extends Application {
     public static void main(String[] args) {
         launch(args);
     }
@@ -29,7 +28,7 @@ public class Gui extends Application {
                 .setResolveAssets(true)
                 .build()
                 .setGlobal();
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/LoginScreen.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/interface.fxml"));
         Parent root = loader.load();
         Scene scene = new Scene(root);
         scene.setFill(Color.TRANSPARENT);
@@ -39,5 +38,4 @@ public class Gui extends Application {
         stage.setMaximized(true);
         stage.show();
     }
-
 }

@@ -1,11 +1,12 @@
 package server;
 
 import helper.json.JsonHelper;
+import protocol.commons.dto.CreateUser;
 import protocol.request.RequisitionOperations;
+import protocol.response.FindUserResponse;
 import protocol.response.LogoutResponse;
 import protocol.response.Response;
 import server.controller.UserController;
-import protocol.commons.dto.CreateUser;
 import server.exceptions.ServerResponseException;
 import server.layer.initialLayer.*;
 import server.router.Router;
@@ -26,8 +27,9 @@ public class Server extends Thread {
 
         clientSocket = clientSoc;
         this.connectedUsers = connectedUsers;
-        connectedUsers.addUser(clientSoc.getInetAddress().toString());
-        connectedUsers.showConnectedUsers();
+        var user = new ConnectedUser(clientSocket.getInetAddress().toString(), null);
+        connectedUsers.addUser(user);
+        System.out.println(connectedUsers.getUsers());
         if (routes == null) {
             routes = Router.builder()
                     .addRoute(RequisitionOperations.LOGIN, new StartLogin())
@@ -55,17 +57,19 @@ public class Server extends Thread {
         start();
     }
 
-    public static void main(String[] args) throws ServerResponseException {
+    public static void listen(int port, ConnectedUsers users) {
 
-        UserController.getInstance()
-                .createUser(new CreateUser("admin@admin.com", "123456", "Igor", true));
+        try {
+            UserController.getInstance()
+                    .createUser(new CreateUser("admin@admin.com", "123456", "Igor", true));
 
-        UserController.getInstance()
-                .createUser(new CreateUser("usuario@usuario.com", "123456", "Igor", false));
+            UserController.getInstance()
+                    .createUser(new CreateUser("usuario@usuario.com", "123456", "Igor", false));
+        }
+        catch (Exception ignored) {}
 
-        try (ServerSocket serverSocket = new ServerSocket(24800)) {
+        try (ServerSocket serverSocket = new ServerSocket(port)) {
             System.out.println("Connection Socket Created");
-            ConnectedUsers users = new ConnectedUsers();
             while (true) {
                 try {
                     System.out.println("Waiting for Connection");
@@ -111,6 +115,14 @@ public class Server extends Thread {
 
                 if (response instanceof LogoutResponse)
                     break;
+                if (response instanceof FindUserResponse) {
+                    var connect = new ConnectedUser(clientSocket.getInetAddress().toString(),
+                            JsonHelper.fromJson(jsonResponse, FindUserResponse.class).payload().email());
+
+                    System.out.println("FIND USER   " + connect);
+                    connectedUsers.removeUser(connect);
+                    connectedUsers.addUser(connect);
+                }
             }
             if(clientSocket.isClosed() || !clientSocket.isConnected())  {
                 System.out.println("Client closed connection");
@@ -121,7 +133,7 @@ public class Server extends Thread {
         System.out.println("connection closed");
         assert (clientSocket.isClosed() && !clientSocket.isConnected());
 
-        connectedUsers.removeUser(clientSocket.getInetAddress().toString());
-        connectedUsers.showConnectedUsers();
+        connectedUsers.removeUser(new ConnectedUser(clientSocket.getInetAddress().toString(), null));
     }
+
 }

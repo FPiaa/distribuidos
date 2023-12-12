@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import io.github.palexdev.materialfx.controls.MFXButton?>
+<?import io.github.palexdev.materialfx.controls.MFXPaginatedTableView?>
+<?import io.github.palexdev.materialfx.controls.MFXTextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/21.0.1" xmlns:fx="http://javafx.com/fxml/1"
+fx:controller="server.InterfaceController">
+   <children>
+      <MFXTextField fx:id="portField" floatMode="BORDER" floatingText="Porta do Servidor" layoutX="400.0" layoutY="87.0" prefHeight="51.0" prefWidth="223.0" />
+      <MFXButton buttonType="RAISED" layoutX="725.0" layoutY="93.0" onAction="#createServer" prefHeight="40.0" prefWidth="142.0" text="Ligar Servidor" />
+      <MFXPaginatedTableView fx:id="tableView" layoutX="400.0" layoutY="178.0" prefHeight="317.0" prefWidth="467.0" rowsPerPage="8" />
+   </children>
+</AnchorPane>
