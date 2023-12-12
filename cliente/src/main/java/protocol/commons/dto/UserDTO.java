@@ -2,7 +2,6 @@ package protocol.commons.dto;
 
 import com.google.gson.annotations.SerializedName;
 import jakarta.validation.constraints.*;
-import server.entity.User;
 
 public record UserDTO(
         @NotBlank
@@ -20,10 +19,4 @@ public record UserDTO(
         @SerializedName(value = "registro")
         Long id
 ) {
-    public static UserDTO of(User userEntity) {
-        if (userEntity == null) {
-            return null;
-        }
-        return new UserDTO(userEntity.getNome(), userEntity.getEmail(), userEntity.getIsAdmin(), userEntity.getId());
-    }
 }
