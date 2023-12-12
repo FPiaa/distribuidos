@@ -56,7 +56,7 @@ public class PathsController implements Initializable {
                             if (res instanceof FindRouteResponse) {
                                 Platform.runLater(() -> {
                                     var path = ((FindRouteResponse) res).payload();
-                                    commands.setAll(path);
+                                    commands.setAll(path.comandos());
                                     tableView.setCurrentPage(0);
                                     tableView.autosize();
 

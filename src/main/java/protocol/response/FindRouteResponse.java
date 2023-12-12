@@ -4,5 +4,10 @@ import protocol.commons.Command;
 
 import java.util.List;
 
-public record FindRouteResponse(List<Command> payload) implements Response<List<Command>>{
+public record FindRouteResponse(Payload payload) implements Response<FindRouteResponse.Payload>{
+    public FindRouteResponse(List<Command> commands) {
+       this(new Payload(commands));
+    }
+
+    public record Payload (List<Command> comandos) {}
 }

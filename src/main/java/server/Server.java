@@ -20,9 +20,14 @@ import java.net.Socket;
 public class Server extends Thread {
     private final Socket clientSocket;
     private Router routes = null;
+    private final ConnectedUsers connectedUsers;
 
-    private Server(Socket clientSoc) {
+    private Server(Socket clientSoc, ConnectedUsers connectedUsers) {
+
         clientSocket = clientSoc;
+        this.connectedUsers = connectedUsers;
+        connectedUsers.addUser(clientSoc.getInetAddress().toString());
+        connectedUsers.showConnectedUsers();
         if (routes == null) {
             routes = Router.builder()
                     .addRoute(RequisitionOperations.LOGIN, new StartLogin())
@@ -60,10 +65,11 @@ public class Server extends Thread {
 
         try (ServerSocket serverSocket = new ServerSocket(24800)) {
             System.out.println("Connection Socket Created");
+            ConnectedUsers users = new ConnectedUsers();
             while (true) {
                 try {
                     System.out.println("Waiting for Connection");
-                    new Server(serverSocket.accept());
+                    new Server(serverSocket.accept(), users);
                 } catch (IOException e) {
                     System.err.println("Accept failed.");
                     System.exit(1);
@@ -114,5 +120,8 @@ public class Server extends Thread {
         }
         System.out.println("connection closed");
         assert (clientSocket.isClosed() && !clientSocket.isConnected());
+
+        connectedUsers.removeUser(clientSocket.getInetAddress().toString());
+        connectedUsers.showConnectedUsers();
     }
 }
