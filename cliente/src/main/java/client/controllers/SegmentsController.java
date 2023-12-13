@@ -313,15 +313,15 @@ public class SegmentsController implements Initializable {
     }
 
     private void setupTable() {
-        MFXTableColumn<SegmentDTO> pdi_inicial = new MFXTableColumn<>("ID Inicial", true, Comparator.comparing(SegmentDTO::pdi_inicial));
-        MFXTableColumn<SegmentDTO> pdi_final = new MFXTableColumn<>("Id Final", true, Comparator.comparing(SegmentDTO::pdi_final));
+        MFXTableColumn<SegmentDTO> pdi_inicial = new MFXTableColumn<>("Nome Inicio", true, Comparator.comparing(this::findInitialName));
+        MFXTableColumn<SegmentDTO> pdi_final = new MFXTableColumn<>("Nome Final", true, Comparator.comparing(this::findEndName));
         MFXTableColumn<SegmentDTO> distancia = new MFXTableColumn<>("Distancia", true);
         MFXTableColumn<SegmentDTO> warningColumn = new MFXTableColumn<>("Aviso", true, Comparator.comparing(SegmentDTO::aviso));
         MFXTableColumn<SegmentDTO> acessibleColumn = new MFXTableColumn<>("Acessível", true, Comparator.comparing(SegmentDTO::acessivel));
 
 
-        pdi_inicial.setRowCellFactory(userDTO -> new MFXTableRowCell<>(SegmentDTO::pdi_inicial));
-        pdi_final.setRowCellFactory(userDTO -> new MFXTableRowCell<>(SegmentDTO::pdi_final));
+        pdi_inicial.setRowCellFactory(userDTO -> new MFXTableRowCell<>(this::findInitialName));
+        pdi_final.setRowCellFactory(userDTO -> new MFXTableRowCell<>(this::findEndName));
         distancia.setRowCellFactory(userDTO -> new MFXTableRowCell<>(SegmentDTO::distancia));
         warningColumn.setRowCellFactory(device -> new MFXTableRowCell<>(SegmentDTO::aviso));
         acessibleColumn.setRowCellFactory(device -> new MFXTableRowCell<>(SegmentDTO::acessivel));
@@ -339,4 +339,12 @@ public class SegmentsController implements Initializable {
         });
     }
 
+
+    private String findInitialName(SegmentDTO segment) {
+        return pdis.stream().filter(x -> Objects.equals(x.id(), segment.pdi_inicial())).toList().get(0).nome();
+    }
+
+    private String findEndName(SegmentDTO segment) {
+        return pdis.stream().filter(x -> Objects.equals(x.id(), segment.pdi_final())).toList().get(0).nome();
+    }
 }
