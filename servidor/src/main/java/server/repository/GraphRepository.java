@@ -148,9 +148,9 @@ public class GraphRepository {
                     session.createNativeQuery("""
                             prepare update_segment(agtype) as
                             select * from cypher(%s, $$
-                            	match (a\\:Poi)-[s\\:CONNECTS]->(b\\:Poi),(b\\:Poi)-[r\\:CONNECTS]->(a\\:Poi)
+                            	match (a\\:Poi)-[s\\:CONNECTS]->(b\\:Poi)
                             	where a.id = \\$pdi_inicial and b.id = \\$pdi_final
-                            	set s.acessivel = \\$acessivel, s.aviso = \\$aviso, r.acessivel = \\$acessivel, r.aviso = \\$aviso
+                            	set s.acessivel = \\$acessivel, s.aviso = \\$aviso
                             	return s
                             $$, \\$1) as (s agtype);
                             """.formatted(graphName), Agtype.class).executeUpdate();
